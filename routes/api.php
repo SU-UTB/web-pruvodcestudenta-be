@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\SectionController;
 use Illuminate\Http\Request;
@@ -23,4 +24,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('sections', SectionController::class);
 Route::resource('locations', LocationController::class);
-Route::resource('contents', LocationController::class);
+Route::resource('contents', ContentController::class);
