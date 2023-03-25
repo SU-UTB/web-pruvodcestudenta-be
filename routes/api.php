@@ -23,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('sections', SectionController::class);
 Route::resource('locations', LocationController::class);
+Route::resource('contents', LocationController::class);
