@@ -1,0 +1,27 @@
+on:
+  push:
+    branches:
+      - main
+name: Deploy website on main push
+jobs:
+  web-deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v3
+
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .env
+            .env.example
+            .index.php
+            .htaccess
