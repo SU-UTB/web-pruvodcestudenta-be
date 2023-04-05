@@ -1,11 +1,7 @@
-import {Head, router} from '@inertiajs/react';
+import {Head, router, useForm} from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 export default function Edit({auth, sections}) {
-    function handleSubmit(e) {
-        e.preventDefault()
-        router.put('/admin/sections/id', values)
-    }
 
     return (
         <AuthenticatedLayout
@@ -33,28 +29,40 @@ export default function Edit({auth, sections}) {
                 <tbody className="bg-white divide-y divide-gray-200">
                 {
                     sections.map(s =>
-
-                        <tr id={s.id.toString()}>
-                            <form name="add-blog-post-form" id="add-blog-post-form" method="post"
-                                  action="{{ route('admin.sections.update', $s->id) }}">
-                                <input type="hidden" name="_method" value="put"/>
-                                @csrf
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                    <input name='title' value={s.title}/>
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    <input name='description' value={s.description}/>
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="#" className="text-indigo-600 hover:text-indigo-900">Save</a>
-                                </td>
-                            </form>
-                        </tr>)
+                        <SectionRow section={s}/>
+                    )
                 }
 
                 </tbody>
             </table>
 
         </AuthenticatedLayout>
+    );
+}
+
+const SectionRow = ({section}) => {
+    const {data, setData, post, processing, errors} = useForm({
+        title: section.title,
+        description: section.description,
+    })
+
+    function submit(e) {
+        e.preventDefault()
+        router.put(`/admin/sections/${section.id}`, data)
+    }
+
+    return (
+        <tr id={section.id.toString()}>
+            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <input name='title' value={data.title} onChange={e => setData('title', e.target.value)}/>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <input name='description' value={data.description}
+                       onChange={e => setData('description', e.target.value)}/>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <button onClick={submit} className="text-indigo-600 hover:text-indigo-900">Save</button>
+            </td>
+        </tr>
     );
 }
