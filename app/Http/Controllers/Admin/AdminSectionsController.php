@@ -20,7 +20,10 @@ class AdminSectionsController extends Controller
     public function update(Request $request, $id)
     {
         $section = Section::find($id);
-        $section->update(['title' => $request->input('title')]);
+        $section->update([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            ]);
 
         return $this->index();
     }
