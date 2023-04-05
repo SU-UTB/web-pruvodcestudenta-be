@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminContentsController;
 use App\Http\Controllers\Admin\AdminSectionsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -34,6 +35,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin/sections', [AdminSectionsController::class, 'index'])->name('admin.sections');
     Route::put('/admin/sections/{id}', [AdminSectionsController::class, 'update'])->name('admin.sections.update');
+
+    Route::get('/admin/contents', [AdminContentsController::class, 'index'])->name('admin.contents');
+    Route::put('/admin/contents/{id}', [AdminContentsController::class, 'update'])->name('admin.contents.update');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
