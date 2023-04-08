@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminContentsController;
+use App\Http\Controllers\Admin\AdminLandingController;
 use App\Http\Controllers\Admin\AdminSectionsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -27,17 +28,15 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/admin', [AdminLandingController::class, 'index'])->name('dashboard');
 
     Route::get('/admin/sections', [AdminSectionsController::class, 'index'])->name('admin.sections');
     Route::put('/admin/sections/{id}', [AdminSectionsController::class, 'update'])->name('admin.sections.update');
 
-    Route::get('/admin/contents', [AdminContentsController::class, 'index'])->name('admin.contents');
-    Route::put('/admin/contents/{id}', [AdminContentsController::class, 'update'])->name('admin.contents.update');
+    Route::get('/admin/topics', [AdminContentsController::class, 'index'])->name('admin.topics');
+    Route::put('/admin/topics/{id}', [AdminContentsController::class, 'update'])->name('admin.topics.update');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

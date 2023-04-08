@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Content;
+use App\Models\Topic;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class ContentController extends Controller
+class TopicController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class ContentController extends Controller
      */
     public function index()
     {
-        return Content::all();
+        return Topic::all();
     }
 
 
@@ -28,7 +28,7 @@ class ContentController extends Controller
      */
     public function store(Request $request): Response
     {
-        return Content::create($request->all());
+        return Topic::create($request->all());
     }
 
     /**
@@ -39,7 +39,7 @@ class ContentController extends Controller
      */
     public function show(int $id)
     {
-        return Content::find($id);
+        return Topic::find($id);
     }
 
 
@@ -52,7 +52,7 @@ class ContentController extends Controller
      */
     public function update(Request $request, int $id): Response
     {
-        $content = Content::find($id);
+        $content = Topic::find($id);
         $content->update($request->all());
         return $content;
     }
@@ -65,6 +65,6 @@ class ContentController extends Controller
      */
     public function destroy(int $id): int
     {
-        return Content::destroy($id);
+        return Topic::destroy($id);
     }
 }
