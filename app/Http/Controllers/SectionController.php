@@ -14,7 +14,7 @@ class SectionController extends Controller
      *
      * @return Collection
      */
-    public function index(): Collection
+    public static function index(): Collection
     {
         return Section::all();
     }
