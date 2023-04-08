@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminContentsController;
+use App\Http\Controllers\Admin\AdminLandingController;
 use App\Http\Controllers\Admin\AdminSectionsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -29,9 +30,7 @@ Route::get('/', function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/admin', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/admin', [AdminLandingController::class, 'index'])->name('dashboard');
 
     Route::get('/admin/sections', [AdminSectionsController::class, 'index'])->name('admin.sections');
     Route::put('/admin/sections/{id}', [AdminSectionsController::class, 'update'])->name('admin.sections.update');
