@@ -25,5 +25,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('pages/landing', LandingController::class);
 Route::resource('sections', SectionController::class);
+Route::resource('topics', TopicController::class);
 Route::resource('locations', LocationController::class);
-Route::resource('contents', TopicController::class);
