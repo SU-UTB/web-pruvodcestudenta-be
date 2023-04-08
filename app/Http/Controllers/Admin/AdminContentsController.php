@@ -12,7 +12,7 @@ class AdminContentsController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Admin/Contents', [
+        return Inertia::render('Admin/Topics', [
             'contents' => Topic::all(),
         ]);
     }

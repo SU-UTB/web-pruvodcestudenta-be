@@ -36,8 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/sections', [AdminSectionsController::class, 'index'])->name('admin.sections');
     Route::put('/admin/sections/{id}', [AdminSectionsController::class, 'update'])->name('admin.sections.update');
 
-    Route::get('/admin/contents', [AdminContentsController::class, 'index'])->name('admin.contents');
-    Route::put('/admin/contents/{id}', [AdminContentsController::class, 'update'])->name('admin.contents.update');
+    Route::get('/admin/topics', [AdminContentsController::class, 'index'])->name('admin.topics');
+    Route::put('/admin/topics/{id}', [AdminContentsController::class, 'update'])->name('admin.topics.update');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
