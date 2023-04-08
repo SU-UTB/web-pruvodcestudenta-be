@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ContentController;
+use App\Http\Controllers\TopicController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\SectionController;
@@ -26,4 +26,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('pages/landing', LandingController::class);
 Route::resource('sections', SectionController::class);
 Route::resource('locations', LocationController::class);
-Route::resource('contents', ContentController::class);
+Route::resource('contents', TopicController::class);

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Content;
+use App\Models\Topic;
 use App\Models\Section;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -42,7 +42,7 @@ class SectionController extends Controller
     {
         return \response([
             'section' => Section::find($id),
-            'topics' => Content::where('section_id', $id)->get()
+            'topics' => Topic::where('section_id', $id)->get()
         ], 200);
     }
 
