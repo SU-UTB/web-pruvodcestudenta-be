@@ -1,7 +1,7 @@
 import {Head, router, useForm} from '@inertiajs/react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import TextInput from "@/Components/TextInput";
-import PrimaryButton from "@/Components/PrimaryButton";
+import AuthenticatedLayout from './Layouts/AuthenticatedLayout';
+import TextInput from "./components/TextInput";
+import PrimaryButton from "./components/PrimaryButton";
 
 export default function Edit({auth, contents}) {
 
