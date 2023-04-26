@@ -1,10 +1,10 @@
-import {useState} from "react";
+import { useState } from "react";
 import ApplicationLogo from "../components/ApplicationLogo";
 import Dropdown from "../components/Dropdown";
-import {NavbarBrand} from "flowbite-react/lib/esm/components/Navbar/NavbarBrand";
-import {NavbarLink} from "flowbite-react/lib/esm/components/Navbar/NavbarLink";
+import { NavbarBrand } from "flowbite-react/lib/esm/components/Navbar/NavbarBrand";
+import { NavbarLink } from "flowbite-react/lib/esm/components/Navbar/NavbarLink";
 
-export default function Authenticated(auth: any, header: any, children: any) {
+export default function Authenticated({ children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
@@ -16,15 +16,12 @@ export default function Authenticated(auth: any, header: any, children: any) {
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <NavbarBrand>
-                                    <ApplicationLogo/>
+                                    <ApplicationLogo />
                                 </NavbarBrand>
-
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavbarLink href="/">
-                                    Dashboard
-                                </NavbarLink>
+                                <NavbarLink href="/">Dashboard</NavbarLink>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavbarLink href="/sections">
@@ -32,9 +29,7 @@ export default function Authenticated(auth: any, header: any, children: any) {
                                 </NavbarLink>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavbarLink href="/topics">
-                                    Topics
-                                </NavbarLink>
+                                <NavbarLink href="/topics">Topics</NavbarLink>
                             </div>
                         </div>
 
@@ -47,7 +42,7 @@ export default function Authenticated(auth: any, header: any, children: any) {
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-{/*TODO
+                                                {/*TODO
                                                 {auth.auth.user.name}
 */}
 
@@ -71,9 +66,7 @@ export default function Authenticated(auth: any, header: any, children: any) {
                                         <Dropdown.Link href="profile/edit">
                                             Profile
                                         </Dropdown.Link>
-                                        <Dropdown.Link
-                                            href="logout"
-                                        >
+                                        <Dropdown.Link href="logout">
                                             Log Out
                                         </Dropdown.Link>
                                     </Dropdown.Content>
@@ -131,15 +124,9 @@ export default function Authenticated(auth: any, header: any, children: any) {
                     }
                 >
                     <div className="pt-2 pb-3 space-y-1">
-                        <NavbarLink href="/">
-                            Dashboard
-                        </NavbarLink>
-                        <NavbarLink href="/sections">
-                            Sections
-                        </NavbarLink>
-                        <NavbarLink href="/topics">
-                            Topics
-                        </NavbarLink>
+                        <NavbarLink href="/">Dashboard</NavbarLink>
+                        <NavbarLink href="/sections">Sections</NavbarLink>
+                        <NavbarLink href="/topics">Topics</NavbarLink>
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
@@ -157,9 +144,7 @@ export default function Authenticated(auth: any, header: any, children: any) {
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <NavbarLink href="profile/edit">
-                                Profile
-                            </NavbarLink>
+                            <NavbarLink href="profile/edit">Profile</NavbarLink>
                             {/*     <NavbarLink
 
                                 href="logout"
@@ -172,15 +157,13 @@ export default function Authenticated(auth: any, header: any, children: any) {
                 </div>
             </nav>
 
-
             <header className="bg-white shadow">
                 <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-{/*TODO
+                    {/*TODO
                     {header}
 */}
                 </div>
             </header>
-
 
             <main>{children}</main>
         </div>
