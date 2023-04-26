@@ -22,17 +22,17 @@ export default function Authenticated(auth: any, header: any, children: any) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavbarLink href="dashboard">
+                                <NavbarLink href="/">
                                     Dashboard
                                 </NavbarLink>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavbarLink href="admin.sections">
+                                <NavbarLink href="/sections">
                                     Sections
                                 </NavbarLink>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavbarLink href="admin.topics">
+                                <NavbarLink href="/topics">
                                     Topics
                                 </NavbarLink>
                             </div>
@@ -131,13 +131,13 @@ export default function Authenticated(auth: any, header: any, children: any) {
                     }
                 >
                     <div className="pt-2 pb-3 space-y-1">
-                        <NavbarLink href="dashboard">
+                        <NavbarLink href="/">
                             Dashboard
                         </NavbarLink>
-                        <NavbarLink href="admin.sections">
+                        <NavbarLink href="/sections">
                             Sections
                         </NavbarLink>
-                        <NavbarLink href="admin.topics">
+                        <NavbarLink href="/topics">
                             Topics
                         </NavbarLink>
                     </div>
@@ -157,7 +157,7 @@ export default function Authenticated(auth: any, header: any, children: any) {
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <NavbarLink href="profile.edit">
+                            <NavbarLink href="profile/edit">
                                 Profile
                             </NavbarLink>
                             {/*     <NavbarLink

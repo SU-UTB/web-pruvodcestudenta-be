@@ -12,9 +12,7 @@ class AdminSectionsController extends Controller
 {
     public function index()
     {
-        return response([
-            'sections' => Section::all(),
-        ]);
+        return  Section::all();
     }
 
     public function update(Request $request, $id)
