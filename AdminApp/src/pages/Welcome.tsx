@@ -1,6 +1,6 @@
 import {Head} from '@inertiajs/react';
 
-export default function Welcome(props) {
+export default function Welcome(props : any) {
     return (
         <>
             <Head title="Welcome"/>
