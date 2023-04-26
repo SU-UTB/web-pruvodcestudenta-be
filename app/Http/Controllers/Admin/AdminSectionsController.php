@@ -10,9 +10,9 @@ use Inertia\Response;
 
 class AdminSectionsController extends Controller
 {
-    public function index(): Response
+    public function index()
     {
-        return Inertia::render('Admin/Sections', [
+        return response([
             'sections' => Section::all(),
         ]);
     }
