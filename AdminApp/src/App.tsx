@@ -1,15 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Dashboard from './pages/Dashboard'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [count, setCount] = useState(0);
 
-  return (
-    <Dashboard />
-/*     <div className="App">
+    return (
+        <Dashboard
+            auth={{
+                user: {
+                    name: "x",
+                },
+            }}
+        />
+        /*     <div className="App">
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -31,7 +37,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </div> */
-  )
+    );
 }
 
-export default App
+export default App;
