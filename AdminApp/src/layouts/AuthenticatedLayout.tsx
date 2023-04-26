@@ -1,13 +1,13 @@
-import { useState } from "react";
+import {useState} from "react";
 import ApplicationLogo from "../components/ApplicationLogo";
 import Dropdown from "../components/Dropdown";
-import NavLink from "../components/NavLink";
-import ResponsiveNavLink from "../components/ResponsiveNavLink";
+import {NavbarBrand} from "flowbite-react/lib/esm/components/Navbar/NavbarBrand";
+import {NavbarLink} from "flowbite-react/lib/esm/components/Navbar/NavbarLink";
 
 export default function Authenticated(auth: any, header: any, children: any) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
-        
+
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
@@ -15,25 +15,26 @@ export default function Authenticated(auth: any, header: any, children: any) {
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
-                                <NavLink href="/dashboard">
-{/*                                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
- */}                                </NavLink>
+                                <NavbarBrand>
+                                    <ApplicationLogo/>
+                                </NavbarBrand>
+
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href="dashboard" active={false}>
+                                <NavbarLink href="dashboard">
                                     Dashboard
-                                </NavLink>
+                                </NavbarLink>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href="admin.sections" active={false}>
+                                <NavbarLink href="admin.sections">
                                     Sections
-                                </NavLink>
+                                </NavbarLink>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href="admin.topics" active={false}>
+                                <NavbarLink href="admin.topics">
                                     Topics
-                                </NavLink>
+                                </NavbarLink>
                             </div>
                         </div>
 
@@ -46,7 +47,9 @@ export default function Authenticated(auth: any, header: any, children: any) {
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
+{/*TODO
                                                 {auth.auth.user.name}
+*/}
 
                                                 <svg
                                                     className="ml-2 -mr-0.5 h-4 w-4"
@@ -70,8 +73,6 @@ export default function Authenticated(auth: any, header: any, children: any) {
                                         </Dropdown.Link>
                                         <Dropdown.Link
                                             href="logout"
-                                            method="post"
-                                            as="button"
                                         >
                                             Log Out
                                         </Dropdown.Link>
@@ -130,50 +131,56 @@ export default function Authenticated(auth: any, header: any, children: any) {
                     }
                 >
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href="dashboard" active={false}>
+                        <NavbarLink href="dashboard">
                             Dashboard
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink href="admin.sections" active={false}>
+                        </NavbarLink>
+                        <NavbarLink href="admin.sections">
                             Sections
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink href="admin.topics" active={false}>
+                        </NavbarLink>
+                        <NavbarLink href="admin.topics">
                             Topics
-                        </ResponsiveNavLink>
+                        </NavbarLink>
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
                         <div className="px-4">
                             <div className="font-medium text-base text-gray-800">
+                                {/*TODO
                                 {auth.auth.user.name}
+*/}
                             </div>
                             <div className="font-medium text-sm text-gray-500">
+                                {/*TODO
                                 {auth.auth.user.email}
+*/}
                             </div>
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href="profile.edit">
+                            <NavbarLink href="profile.edit">
                                 Profile
-                            </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                method="post"
+                            </NavbarLink>
+                            {/*     <NavbarLink
+
                                 href="logout"
-                                as="button"
+
                             >
                                 Log Out
-                            </ResponsiveNavLink>
+                            </NavbarLink>*/}
                         </div>
                     </div>
                 </div>
             </nav>
 
-            {header && (
-                <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {header}
-                    </div>
-                </header>
-            )}
+
+            <header className="bg-white shadow">
+                <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+{/*TODO
+                    {header}
+*/}
+                </div>
+            </header>
+
 
             <main>{children}</main>
         </div>

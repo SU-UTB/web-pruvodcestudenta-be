@@ -1,9 +1,8 @@
 import mainLogo from '../../../public/logo.png';
 
-export default function ApplicationLogo(props) {
+export default function ApplicationLogo() {
     return (
-        <div className='w-10'>
-            <img src={mainLogo} alt="logo"/>
-        </div>
+        <img src={mainLogo} alt="logo" className="mr-3 h-6 sm:h-9"
+        />
     );
 }
