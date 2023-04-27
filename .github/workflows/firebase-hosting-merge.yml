@@ -16,6 +16,7 @@ jobs:
           working-directory: AdminApp
       - name: Build
         run: npm ci && npm run dev
+        working-directory: AdminApp
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
