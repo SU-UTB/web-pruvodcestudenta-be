@@ -21,6 +21,8 @@ jobs:
           exclude: |
             **/.git*
             **/.git*/**
+            **/.idea*
+            **/.idea*/**
             .env
             .env.example
             .index.php

@@ -1,12 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminContentsController;
-use App\Http\Controllers\Admin\AdminLandingController;
-use App\Http\Controllers\Admin\AdminSectionsController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +21,11 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
+Route::get('migrate', function () {
+    //$exitCode = Artisan::call('migrate:fresh --seed --force');
+    $exitCode = Artisan::call('migrate');
+    return $exitCode;
+});
 
 
 require __DIR__ . '/auth.php';
