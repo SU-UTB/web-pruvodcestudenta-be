@@ -11,12 +11,7 @@ export default function Sections(auth: any) {
         <div />
     ) : (
         <AuthenticatedLayout
-            auth={auth}
-            header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Sections
-                </h2>
-            }
+    
         >
             {/*
             <Head title="Sections"/>

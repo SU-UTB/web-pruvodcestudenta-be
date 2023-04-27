@@ -1,11 +1,17 @@
-import { Transition } from "@headlessui/react";
+import { Props } from "../layouts/AuthenticatedLayout";
+
+const Dropdown = ({ children }: Props) => {
+    return <></>;
+};
+/* import { Transition } from "@headlessui/react";
 import { useState, createContext, useContext, Fragment } from "react";
 import { Link } from "react-router-dom";
 import React from "react";
+import { Props } from "../layouts/AuthenticatedLayout";
 
-const DropDownContext = createContext();
+const DropDownContext = createContext(false);
 
-const Dropdown = ({ children }) => {
+const Dropdown = ({ children } : Props) => {
     const [open, setOpen] = useState(false);
 
     const toggleOpen = () => {
@@ -19,7 +25,7 @@ const Dropdown = ({ children }) => {
     );
 };
 
-const Trigger = ({ children }) => {
+const Trigger = ({ children } : Props) => {
     const { open, setOpen, toggleOpen } = useContext(DropDownContext);
 
     return (
@@ -36,13 +42,11 @@ const Trigger = ({ children }) => {
     );
 };
 
-const Content = ({
-    align = "right",
-    width = "48",
-    contentClasses = "py-1 bg-white",
-    children,
-}) => {
-    const { open, setOpen } = useContext(DropDownContext);
+const Content = ({ children }: Props) => {
+    const align = "right";
+    const width = "48";
+    const contentClasses = "py-1 bg-white";
+    const [open, setOpen] = useContext(DropDownContext);
 
     let alignmentClasses = "origin-top";
 
@@ -88,14 +92,13 @@ const Content = ({
     );
 };
 
-const DropdownLink = ({ className = "", children, ...props }) => {
+const DropdownLink = ({ children, ...props }: Props) => {
     return (
         <Link
             to={""}
             {...props}
             className={
-                "block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out " +
-                className
+                "block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out "
             }
         >
             {children}
@@ -108,3 +111,4 @@ Dropdown.Content = Content;
 Dropdown.Link = DropdownLink;
 
 export default Dropdown;
+ */

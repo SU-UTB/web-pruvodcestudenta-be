@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import ApplicationLogo from "../components/ApplicationLogo";
-import Dropdown from "../components/Dropdown";
 import { NavbarBrand } from "flowbite-react/lib/esm/components/Navbar/NavbarBrand";
 import { NavbarLink } from "flowbite-react/lib/esm/components/Navbar/NavbarLink";
 
-export default function Authenticated({ children }) {
+export interface Props {
+    children?: ReactNode;
+    // any props that come into the component
+}
+
+export default function Authenticated({ children, ...props }: Props) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
@@ -35,16 +39,14 @@ export default function Authenticated({ children }) {
 
                         <div className="hidden sm:flex sm:items-center sm:ml-6">
                             <div className="ml-3 relative">
-                                <Dropdown>
+{/*                                 <Dropdown>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {/*TODO
-                                                {auth.auth.user.name}
-*/}
+                 
 
                                                 <svg
                                                     className="ml-2 -mr-0.5 h-4 w-4"
@@ -70,7 +72,7 @@ export default function Authenticated({ children }) {
                                             Log Out
                                         </Dropdown.Link>
                                     </Dropdown.Content>
-                                </Dropdown>
+                                </Dropdown> */}
                             </div>
                         </div>
 
@@ -159,9 +161,7 @@ export default function Authenticated({ children }) {
 
             <header className="bg-white shadow">
                 <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {/*TODO
-                    {header}
-*/}
+                <h2 className="font-semibold text-xl text-gray-800 leading-tight">HEADER prop</h2>
                 </div>
             </header>
 
