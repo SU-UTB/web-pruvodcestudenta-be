@@ -10,11 +10,9 @@ use Inertia\Response;
 
 class AdminSectionsController extends Controller
 {
-    public function index(): Response
+    public function index()
     {
-        return Inertia::render('Admin/Sections', [
-            'sections' => Section::all(),
-        ]);
+        return  Section::all();
     }
 
     public function update(Request $request, $id)

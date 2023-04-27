@@ -10,11 +10,9 @@ use Inertia\Response;
 
 class AdminContentsController extends Controller
 {
-    public function index(): Response
+    public function index()
     {
-        return Inertia::render('Admin/Topics', [
-            'contents' => Topic::all(),
-        ]);
+        return  Topic::all();
     }
 
     public function update(Request $request, $id)

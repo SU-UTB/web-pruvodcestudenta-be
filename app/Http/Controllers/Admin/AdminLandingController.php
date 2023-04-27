@@ -11,7 +11,7 @@ class AdminLandingController extends Controller
 {
     function index()
     {
-        return Inertia::render('Dashboard', [
+        return response([
             'countOfSections' => Section::count(),
             'countOfTopics' => Topic::count(),
         ]);

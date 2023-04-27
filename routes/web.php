@@ -1,13 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminContentsController;
-use App\Http\Controllers\Admin\AdminLandingController;
-use App\Http\Controllers\Admin\AdminSectionsController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,26 +21,11 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
 Route::get('migrate', function () {
     //$exitCode = Artisan::call('migrate:fresh --seed --force');
     $exitCode = Artisan::call('migrate');
     return $exitCode;
 });
 
-
-Route::middleware('auth')->group(function () {
-    Route::get('/admin', [AdminLandingController::class, 'index'])->name('dashboard');
-
-    Route::get('/admin/sections', [AdminSectionsController::class, 'index'])->name('admin.sections');
-    Route::put('/admin/sections/{id}', [AdminSectionsController::class, 'update'])->name('admin.sections.update');
-
-    Route::get('/admin/topics', [AdminContentsController::class, 'index'])->name('admin.topics');
-    Route::put('/admin/topics/{id}', [AdminContentsController::class, 'update'])->name('admin.topics.update');
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 require __DIR__ . '/auth.php';
