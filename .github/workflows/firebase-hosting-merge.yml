@@ -16,6 +16,9 @@ jobs:
           working-directory: AdminApp
       - name: Clean
         run: npm ci
+      - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: AdminApp
       - name: Build
         run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
