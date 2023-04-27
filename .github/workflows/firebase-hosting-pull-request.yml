@@ -8,11 +8,10 @@ jobs:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     steps:
-      - working-directory: ./AdminApp
       - uses: actions/checkout@v3
       - name: Build AdminApp
         run: |
-          ls
+          cd AdminApp
           npm ci
           npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
