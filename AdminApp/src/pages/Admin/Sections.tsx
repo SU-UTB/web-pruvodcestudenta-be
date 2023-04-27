@@ -10,9 +10,7 @@ export default function Sections(auth: any) {
     return isLoading ? (
         <div />
     ) : (
-        <AuthenticatedLayout
-    
-        >
+        <AuthenticatedLayout>
             {/*
             <Head title="Sections"/>
 */}
@@ -108,6 +106,7 @@ const SectionRow = (section: ISection) => {
                 <TextInput
                     name="link"
                     value={section.link}
+                    disabled={true}
                     onChange={(e) =>
                         setData({
                             ...data,
