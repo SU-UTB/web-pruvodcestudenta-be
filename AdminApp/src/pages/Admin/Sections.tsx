@@ -3,6 +3,7 @@ import { Button, TextInput } from "flowbite-react";
 import useFetchSections from "../../hooks/sections/useFetchSections";
 import { ISection } from "../../lib/interfaces/ISection";
 import { useState } from "react";
+import { Api } from "../../api/Api";
 
 export default function Sections() {
     const { data: sections, isLoading } = useFetchSections();
@@ -70,9 +71,7 @@ const SectionRow = (section: ISection) => {
     // @ts-ignore
     function submit(e) {
         e.preventDefault();
-        /*
-                    router.put(`/admin/sections/${section.id}`, data)
-        */
+        Api.Instance.client.put(`/sections/${section.id}`, data);
     }
 
     return (
@@ -119,12 +118,12 @@ const SectionRow = (section: ISection) => {
                 <TextInput
                     name="bg_color"
                     value={section.bgColor}
-                    onChange={(e) =>
+                    onChange={(e) => {
                         setData({
                             ...data,
                             bgColor: e.target.value,
-                        })
-                    }
+                        });
+                    }}
                 />
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
