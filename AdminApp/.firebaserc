@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "utb-pruvodce-studenta"
-  }
+  },
+  "targets": {
+    "utb-pruvodce-studenta": {
+      "hosting": {
+        "utb-pruvodce-studenta": [
+          "utb-pruvodce-studenta"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
