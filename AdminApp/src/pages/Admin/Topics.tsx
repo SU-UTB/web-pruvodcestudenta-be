@@ -4,6 +4,7 @@ import useFetchTopics from "../../hooks/topics/useFetchTopics";
 import { ISection } from "../../lib/interfaces/ISection";
 import { useState } from "react";
 import { IContent } from "../../lib/interfaces/IContent";
+import { Api } from "../../api/Api";
 
 export default function Topics() {
     const { data: topics, isLoading } = useFetchTopics();
@@ -71,9 +72,7 @@ const ContentRow = (topic: IContent) => {
     // @ts-ignore
     function submit(e) {
         e.preventDefault();
-        /*
-                    router.put(`/admin/sections/${section.id}`, data)
-        */
+        Api.Instance.client.put(`/topics/${topic.id}`, data);
     }
 
     return (

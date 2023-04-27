@@ -13,10 +13,10 @@ export class Api {
         return this._instance || (this._instance = new this());
     }
 
-    #client: AxiosInstance = axios.create({
+    client: AxiosInstance = axios.create({
         baseURL: Constants.API_URL,
     });
 
-    sections: ApiSections = new ApiSections(this.#client);
-    topics: ApiTopics = new ApiTopics(this.#client);
+    sections: ApiSections = new ApiSections(this.client);
+    topics: ApiTopics = new ApiTopics(this.client);
 }
