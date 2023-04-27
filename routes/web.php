@@ -29,18 +29,5 @@ Route::get('/', function () {
 });
 
 
-Route::middleware('auth')->group(function () {
-    Route::get('/admin', [AdminLandingController::class, 'index'])->name('dashboard');
-
-    Route::get('/admin/sections', [AdminSectionsController::class, 'index'])->name('admin.sections');
-    Route::put('/admin/sections/{id}', [AdminSectionsController::class, 'update'])->name('admin.sections.update');
-
-    Route::get('/admin/topics', [AdminContentsController::class, 'index'])->name('admin.topics');
-    Route::put('/admin/topics/{id}', [AdminContentsController::class, 'update'])->name('admin.topics.update');
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 require __DIR__ . '/auth.php';

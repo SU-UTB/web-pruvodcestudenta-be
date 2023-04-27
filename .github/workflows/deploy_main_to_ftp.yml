@@ -25,3 +25,4 @@ jobs:
             .env.example
             .index.php
             .htaccess
+            /AdminApp
