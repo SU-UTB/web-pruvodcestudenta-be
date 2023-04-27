@@ -12,7 +12,7 @@ class AdminContentsController extends Controller
 {
     public function index()
     {
-        return response(['contents' => Topic::all()]);
+        return  Topic::all();
     }
 
     public function update(Request $request, $id)

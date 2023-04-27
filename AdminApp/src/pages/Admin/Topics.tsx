@@ -1,11 +1,12 @@
 import AuthenticatedLayout from "../../layouts/AuthenticatedLayout";
 import { Button, TextInput } from "flowbite-react";
-import useFetchSections from "../../hooks/sections/useFetchSections";
+import useFetchTopics from "../../hooks/topics/useFetchTopics";
 import { ISection } from "../../lib/interfaces/ISection";
 import { useState } from "react";
+import { IContent } from "../../lib/interfaces/IContent";
 
-export default function Sections() {
-    const { data: sections, isLoading } = useFetchSections();
+export default function Topics() {
+    const { data: topics, isLoading } = useFetchTopics();
 
     return isLoading ? (
         <div />
@@ -14,6 +15,7 @@ export default function Sections() {
             {/*
             <Head title="Sections"/>
 */}
+
             <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                     <tr>
@@ -47,15 +49,14 @@ export default function Sections() {
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                    {sections.map((s: ISection) => (
-                        <SectionRow
-                            key={s.id.toString()}
-                            bgColor={""}
-                            description={s.description}
-                            id={s.id}
-                            link={s.link}
-                            title={s.title}
-                            topics={s.topics}
+                    {topics.map((t: IContent) => (
+                        <ContentRow
+                            key={t.id.toString()}
+                            description={t.description}
+                            id={t.id}
+                            link={t.link}
+                            title={t.title}
+                            bgColor={t.bgColor}
                         />
                     ))}
                 </tbody>
@@ -64,8 +65,8 @@ export default function Sections() {
     );
 }
 
-const SectionRow = (section: ISection) => {
-    const [data, setData] = useState<ISection>(section);
+const ContentRow = (topic: IContent) => {
+    const [data, setData] = useState<IContent>(topic);
 
     // @ts-ignore
     function submit(e) {
@@ -76,11 +77,11 @@ const SectionRow = (section: ISection) => {
     }
 
     return (
-        <tr>
+        <tr id={topic.id.toString()}>
             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                 <TextInput
                     name="title"
-                    value={section.title}
+                    value={data.title}
                     onChange={(e) =>
                         setData({
                             ...data,
@@ -93,7 +94,7 @@ const SectionRow = (section: ISection) => {
                 <textarea
                     rows={5}
                     name="description"
-                    value={section.description}
+                    value={data.description}
                     onChange={(e) =>
                         setData({
                             ...data,
@@ -105,8 +106,7 @@ const SectionRow = (section: ISection) => {
             <td>
                 <TextInput
                     name="link"
-                    value={section.link}
-                    disabled={true}
+                    value={data.link}
                     onChange={(e) =>
                         setData({
                             ...data,
@@ -118,7 +118,7 @@ const SectionRow = (section: ISection) => {
             <td>
                 <TextInput
                     name="bg_color"
-                    value={section.bgColor}
+                    value={data.bgColor}
                     onChange={(e) =>
                         setData({
                             ...data,
