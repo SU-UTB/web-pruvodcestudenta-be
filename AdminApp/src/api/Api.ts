@@ -2,6 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { ApiSections } from "./ApiSections";
 import { Constants } from "../tools/Constants";
 import { ApiTopics } from "./ApiTopics";
+import { ApiGeneral } from "./ApiGeneral";
 
 export class Api {
     private static _instance: Api;
@@ -19,4 +20,5 @@ export class Api {
 
     sections: ApiSections = new ApiSections(this.client);
     topics: ApiTopics = new ApiTopics(this.client);
+    general: ApiGeneral = new ApiGeneral(this.client);
 }

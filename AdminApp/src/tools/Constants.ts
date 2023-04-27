@@ -6,5 +6,6 @@ export class Constants {
     static API_URL = isDev() ? Constants.API_TEST_URL : Constants.API_BASE_URL;
     static SECTIONS: string = "sections";
     static TOPICS: string = "topics";
+    static DASHBOARD: string = "/";
     static PAGES_LANDING: string = "pages/landing";
 }
