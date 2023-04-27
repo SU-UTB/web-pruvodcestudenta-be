@@ -12,12 +12,8 @@ jobs:
       - uses: bahmutov/npm-install@v1
         with:
           working-directory: AdminApp
-      - name: Clean
-        run: npm ci
       - name: Build
-        with:
-          working-directory: AdminApp
-        run: npm run build
+        run: npm ci && npm run dev
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
