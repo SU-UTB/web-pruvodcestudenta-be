@@ -7,6 +7,9 @@
       "hosting": {
         "utb-pruvodce-studenta": [
           "utb-pruvodce-studenta"
+        ],
+        "utb-pruvodce-studenta-admin": [
+          "utb-pruvodce-studenta-admin"
         ]
       }
     }
