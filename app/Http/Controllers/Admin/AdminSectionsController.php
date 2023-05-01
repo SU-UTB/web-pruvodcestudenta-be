@@ -12,7 +12,7 @@ class AdminSectionsController extends Controller
 {
     public function index()
     {
-        return  Section::all();
+        return Section::all();
     }
 
     public function update(Request $request, $id)
@@ -21,8 +21,30 @@ class AdminSectionsController extends Controller
         $section->update([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
-            ]);
+        ]);
 
         return $this->index();
+    }
+
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'link' => 'required',
+            'bgColor' => 'required'
+        ]);
+
+        $section = Section::create(
+            [
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+                'link' => $request->input('link'),
+                'bg_color' => $request->input('bgColor'),
+            ]
+        );
+
+        return response()->json($section, 200);
     }
 }

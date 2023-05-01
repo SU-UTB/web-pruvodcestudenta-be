@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::get('/admin', [AdminLandingController::class, 'index'])->name('dashboard');
 
     Route::get('/admin/sections', [AdminSectionsController::class, 'index'])->name('admin.sections');
+    Route::post('/admin/sections', [AdminSectionsController::class, 'store'])->name('admin.sections.create');
     Route::put('/admin/sections/{id}', [AdminSectionsController::class, 'update'])->name('admin.sections.update');
 
     Route::get('/admin/topics', [AdminContentsController::class, 'index'])->name('admin.topics');
