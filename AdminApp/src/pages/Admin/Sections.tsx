@@ -95,6 +95,9 @@ export default function Sections() {
                             <th scope="col" className="relative px-6 py-3">
                                 <span className="sr-only">Edit</span>
                             </th>
+                            <th scope="col" className="relative px-6 py-3">
+                                <span className="sr-only">Delete</span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -200,9 +203,16 @@ const SectionRow = (section: ISection) => {
     const [data, setData] = useState<ISection>(section);
 
     // @ts-ignore
-    function submit(e) {
+    async function submit(e) {
         e.preventDefault();
-        Api.Instance.client.put(`/sections/${section.id}`, data);
+        await Api.Instance.client.put(`/sections/${section.id}`, data);
+        window.location.reload();
+    }
+
+    async function deleteSection(e: any) {
+        e.preventDefault();
+        await Api.Instance.client.delete(`/sections/${section.id}`);
+        window.location.reload();
     }
 
     const updateFields = (fields: Partial<ISection>) => {
@@ -247,6 +257,11 @@ const SectionRow = (section: ISection) => {
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <Button onClick={submit}>Save</Button>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <Button onClick={deleteSection} color="failure">
+                    Delete
+                </Button>
             </td>
         </tr>
     );

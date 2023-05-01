@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Reservation;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -42,9 +43,21 @@ class AdminSectionsController extends Controller
                 'description' => $request->input('description'),
                 'link' => $request->input('link'),
                 'bg_color' => $request->input('bgColor'),
+                'image' => ''
             ]
         );
 
         return response()->json($section, 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return int
+     */
+    public function destroy($id)
+    {
+        return Section::destroy($id);
     }
 }
