@@ -25,4 +25,7 @@ class AdminContentsController extends Controller
 
         return $this->index();
     }
+
+    //TODO Topics view
+
 }
