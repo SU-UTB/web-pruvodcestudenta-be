@@ -22,6 +22,9 @@ class AdminSectionsController extends Controller
         $section->update([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
+            'link' => $section->link,
+            'bg_color' => $section->bg_color,
+            'image' => $section->image,
         ]);
 
         return $this->index();
@@ -53,7 +56,7 @@ class AdminSectionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return int
      */
     public function destroy($id)
