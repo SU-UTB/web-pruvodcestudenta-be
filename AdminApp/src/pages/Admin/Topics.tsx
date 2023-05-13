@@ -197,9 +197,10 @@ const ContentRow = (topic: IContent) => {
     const [data, setData] = useState<IContent>(topic);
 
     // @ts-ignore
-    function submit(e) {
+    async function submit(e) {
         e.preventDefault();
-        Api.Instance.client.put(`/topics/${topic.id}`, data);
+        await Api.Instance.client.put(`/topics/${topic.id}`, data);
+        window.location.reload();
     }
 
     async function deleteTopic(e: any) {

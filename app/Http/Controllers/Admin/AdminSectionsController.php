@@ -20,8 +20,8 @@ class AdminSectionsController extends Controller
     {
         $section = Section::find($id);
         $section->update([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
+            'title' => $request->input('title') ?? '',
+            'description' => $request->input('description') ?? '',
             'link' => $section->link,
             'bg_color' => $section->bg_color,
             'image' => $section->image,
