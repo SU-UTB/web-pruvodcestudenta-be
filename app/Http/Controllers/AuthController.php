@@ -32,6 +32,7 @@ class AuthController extends Controller
 
         return response($response, 201);
     }
+
     /**
      * @OA\Post(
      *   tags={"Authentication"},
@@ -41,7 +42,6 @@ class AuthController extends Controller
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             @OA\Schema(
-
      *                 @OA\Property(
      *                     property="email",
      *                     type="string"
@@ -50,7 +50,6 @@ class AuthController extends Controller
      *                     property="password",
      *                     type="string"
      *                 ),
-
      *                 example={ "email": "sedlar@sutb.cz", "password": "examplePasword"}
      *             )
      *         )
@@ -91,12 +90,12 @@ class AuthController extends Controller
 
         return response($response, 201);
     }
+
     /**
      * @OA\Post(
      *   tags={"Authentication"},
      *   path="/api/logout",
      *   summary="Logs out",
-
      *   @OA\Response(response=200, description="OK"),
      *   @OA\Response(response=401, description="Unauthorized"),
      *   @OA\Response(response=404, description="Not Found")

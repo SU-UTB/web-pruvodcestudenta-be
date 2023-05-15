@@ -231,7 +231,7 @@ const SectionRow = (section: ISection) => {
                 />
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                <textarea
+                <Textarea
                     rows={5}
                     name="description"
                     defaultValue={section.description}
