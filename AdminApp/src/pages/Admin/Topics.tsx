@@ -86,6 +86,12 @@ export default function Topics() {
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
+                            Section
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
                             Link
                         </th>
                         <th
@@ -94,7 +100,9 @@ export default function Topics() {
                         >
                             Color
                         </th>
-                        <th scope="col" className="relative px-6 py-3">
+                        <th scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
                             <span className="sr-only">Edit</span>
                         </th>
                     </tr>
@@ -103,12 +111,8 @@ export default function Topics() {
                     {topics.map((t: IContent) => (
                         <ContentRow
                             key={t.id.toString()}
-                            description={t.description}
-                            id={t.id}
-                            link={t.link}
-                            title={t.title}
-                            bgColor={t.bgColor}
-                            section_id={t.section_id}
+                            topic={t}
+                            sections={sections}
                         />
                     ))}
                     </tbody>
@@ -216,7 +220,13 @@ export default function Topics() {
     );
 }
 
-const ContentRow = (topic: IContent) => {
+
+interface ITopicRowProps {
+    topic: IContent;
+    sections: Array<ISection>;
+}
+
+const ContentRow = ({topic, sections}: ITopicRowProps) => {
     const [data, setData] = useState<IContent>(topic);
 
     // @ts-ignore
@@ -238,7 +248,6 @@ const ContentRow = (topic: IContent) => {
         });
     };
 
-    //TODO Section pick dropdown
     return (
         <tr id={topic.id.toString()}>
             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -258,6 +267,25 @@ const ContentRow = (topic: IContent) => {
                     }
                 />
             </td>
+
+            <td>
+                <Select
+                    id="row_section_id"
+                    name="section_id"
+                    defaultValue={topic.section_id}
+                    required={true}
+                    onChange={(e) =>
+                        updateFields({section_id: parseInt(e.target.value)})
+                    }
+                >
+                    {sections.map((s) => (
+                        <option key={"row-option-" + s.id} value={s.id}>
+                            {s.title}
+                        </option>
+                    ))}
+                </Select>
+
+            </td>
             <td>
                 <TextInput
                     name="link"
@@ -275,8 +303,7 @@ const ContentRow = (topic: IContent) => {
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <Button onClick={submit}>Save</Button>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+
                 <Button onClick={deleteTopic} color="failure">
                     Delete
                 </Button>

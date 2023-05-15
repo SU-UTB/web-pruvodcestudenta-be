@@ -19,9 +19,12 @@ class AdminContentsController extends Controller
     {
         $content = Topic::find($id);
         $content->update([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'bg_color' => $request->input('bg_color') ?? '',
+            'title' => $request->input('title') ?? $content->title ?? '',
+            'description' => $request->input('description') ?? $content->description ?? '',
+            'bg_color' => $request->input('bg_color') ?? $content->bg_color ?? '',
+            'image' => $request->input('image') ?? $content->image ?? '',
+            'section_id' => $request->input('section_id') ?? $content->section_id ?? 1,
+            'location_id' => $request->input('location_id') ?? $content->location_id ?? 3,
         ]);
 
         return $this->index();
