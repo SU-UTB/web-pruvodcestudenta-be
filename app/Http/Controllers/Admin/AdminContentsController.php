@@ -12,7 +12,7 @@ class AdminContentsController extends Controller
 {
     public function index()
     {
-        return  Topic::all();
+        return Topic::all();
     }
 
     public function update(Request $request, $id)
@@ -21,11 +21,36 @@ class AdminContentsController extends Controller
         $content->update([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
+            'bg_color' => $request->input('bg_color') ?? '',
         ]);
 
         return $this->index();
     }
 
-    //TODO Topics view
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'link' => 'required',
+            'bgColor' => 'required',
+            'section_id' => 'required'
+        ]);
+        return $request->input('section_id');
+
+        $topic = Topic::create(
+            [
+                'title' => $request->input('title') ?? '',
+                'description' => $request->input('description') ?? '',
+                'link' => $request->input('link') ?? '',
+                'bg_color' => $request->input('bgColor') ?? '',
+                'image' => '',
+                'section_id' => $request->input('section_id'),
+                'location_id' => 3
+            ]
+        );
+
+        return response()->json($topic, 200);
+    }
 
 }

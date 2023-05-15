@@ -1,7 +1,9 @@
 import AuthenticatedLayout from "../../layouts/AuthenticatedLayout";
 import {
     Button,
+    Dropdown,
     Modal,
+    Select,
     Spinner,
     Textarea,
     TextInput,
@@ -12,9 +14,11 @@ import { ISection } from "../../lib/interfaces/ISection";
 import React, { useState } from "react";
 import { IContent } from "../../lib/interfaces/IContent";
 import { Api } from "../../api/Api";
+import useFetchSections from "../../hooks/sections/useFetchSections";
 
 export default function Topics() {
-    const { data: topics, isLoading } = useFetchTopics();
+    const { data: topics, isLoading: isTopicsLoading } = useFetchTopics();
+    const { data: sections, isLoading: isSectionsLoading } = useFetchSections();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [topicData, setTopicData] = useState<IContent>({
         id: 0,
@@ -22,6 +26,7 @@ export default function Topics() {
         link: "",
         bgColor: "",
         description: "",
+        section_id: 0,
     });
 
     const [buttonLoading, setButtonLoading] = useState(false);
@@ -47,7 +52,7 @@ export default function Topics() {
             return { ...prev, ...fields };
         });
     };
-    return isLoading ? (
+    return isTopicsLoading && isSectionsLoading ? (
         <div />
     ) : (
         <React.Fragment>
@@ -103,6 +108,7 @@ export default function Topics() {
                                 link={t.link}
                                 title={t.title}
                                 bgColor={t.bgColor}
+                                section_id={t.section_id}
                             />
                         ))}
                     </tbody>
@@ -156,7 +162,20 @@ export default function Topics() {
                             }
                         />
                         <br />
+                        <Select
+                            id="section_id"
+                            name="section_id"
+                            defaultValue={topicData.section_id}
+                            required={true}
+                        >
+                            {sections.map((s) => (
+                                <option key={"option-" + s.id} value={s.id}>
+                                    {s.title}
+                                </option>
+                            ))}
+                        </Select>
 
+                        <br />
                         <TextInput
                             name="link"
                             required
@@ -208,6 +227,7 @@ const ContentRow = (topic: IContent) => {
         await Api.Instance.client.delete(`/topics/${topic.id}`);
         window.location.reload();
     }
+
     const updateFields = (fields: Partial<IContent>) => {
         setData((prev) => {
             return { ...prev, ...fields };

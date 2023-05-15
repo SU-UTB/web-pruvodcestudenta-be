@@ -37,6 +37,7 @@ Route::delete('/admin/sections/{id}', [AdminSectionsController::class, 'destroy'
 
 //TODO Topics view
 Route::get('/admin/topics', [AdminContentsController::class, 'index'])->name('admin.topics');
+Route::post('/admin/topics', [AdminContentsController::class, 'store'])->name('admin.topics.create');
 Route::put('/admin/topics/{id}', [AdminContentsController::class, 'update'])->name('admin.topics.update');
 
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
