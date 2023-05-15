@@ -26,7 +26,7 @@ const useCheckLogin = () => {
 
         const getData = async () => {
             try {
-                localStorage.setItem("user", JSON.stringify(person));
+               // localStorage.setItem("user", JSON.stringify(person));
 
                 const stringifiedPerson = localStorage.getItem("user");
                 if (stringifiedPerson === null) {
@@ -37,7 +37,7 @@ const useCheckLogin = () => {
                 }
 
                 const personAsObjectAgain =
-                    JSON.parse<IUserData>(stringifiedPerson);
+                    JSON.parse(stringifiedPerson);
                 const { data } = await Api.Instance.user.getUser();
                 setData(data);
                 setError(null);
