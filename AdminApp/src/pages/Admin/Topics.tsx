@@ -10,15 +10,15 @@ import {
     Toast,
 } from "flowbite-react";
 import useFetchTopics from "../../hooks/topics/useFetchTopics";
-import { ISection } from "../../lib/interfaces/ISection";
-import React, { useState } from "react";
-import { IContent } from "../../lib/interfaces/IContent";
-import { Api } from "../../api/Api";
+import {ISection} from "../../lib/interfaces/ISection";
+import React, {useState} from "react";
+import {IContent} from "../../lib/interfaces/IContent";
+import {Api} from "../../api/Api";
 import useFetchSections from "../../hooks/sections/useFetchSections";
 
 export default function Topics() {
-    const { data: topics, isLoading: isTopicsLoading } = useFetchTopics();
-    const { data: sections, isLoading: isSectionsLoading } = useFetchSections();
+    const {data: topics, isLoading: isTopicsLoading} = useFetchTopics();
+    const {data: sections, isLoading: isSectionsLoading} = useFetchSections();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [topicData, setTopicData] = useState<IContent>({
         id: 0,
@@ -37,9 +37,10 @@ export default function Topics() {
         setModalError(null);
         try {
             const response = await Api.Instance.topics.createTopic(topicData);
+            console.log(response);
             setButtonLoading(false);
             setIsModalVisible(false);
-            window.location.reload();
+          //  window.location.reload();
         } catch (e: any) {
             setModalError(e.response.data.message.toString());
         } finally {
@@ -49,11 +50,11 @@ export default function Topics() {
 
     const updateModalFields = (fields: Partial<IContent>) => {
         setTopicData((prev) => {
-            return { ...prev, ...fields };
+            return {...prev, ...fields};
         });
     };
     return isTopicsLoading && isSectionsLoading ? (
-        <div />
+        <div/>
     ) : (
         <React.Fragment>
             <AuthenticatedLayout
@@ -69,48 +70,48 @@ export default function Topics() {
             >
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
-                        <tr>
-                            <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            >
-                                Title
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            >
-                                Description
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            >
-                                Link
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            >
-                                Color
-                            </th>
-                            <th scope="col" className="relative px-6 py-3">
-                                <span className="sr-only">Edit</span>
-                            </th>
-                        </tr>
+                    <tr>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Title
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Description
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Link
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Color
+                        </th>
+                        <th scope="col" className="relative px-6 py-3">
+                            <span className="sr-only">Edit</span>
+                        </th>
+                    </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {topics.map((t: IContent) => (
-                            <ContentRow
-                                key={t.id.toString()}
-                                description={t.description}
-                                id={t.id}
-                                link={t.link}
-                                title={t.title}
-                                bgColor={t.bgColor}
-                                section_id={t.section_id}
-                            />
-                        ))}
+                    {topics.map((t: IContent) => (
+                        <ContentRow
+                            key={t.id.toString()}
+                            description={t.description}
+                            id={t.id}
+                            link={t.link}
+                            title={t.title}
+                            bgColor={t.bgColor}
+                            section_id={t.section_id}
+                        />
+                    ))}
                     </tbody>
                 </table>
 
@@ -126,7 +127,8 @@ export default function Topics() {
                                 modalError !== null ? "visible" : "hidden"
                             }
                         >
-                            <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
+                            <div
+                                className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
                                 {/*
                                 <HiX className="h-5 w-5" />
 */}
@@ -134,9 +136,9 @@ export default function Topics() {
                             <div className="ml-3 text-sm font-normal">
                                 {modalError}
                             </div>
-                            <Toast.Toggle />
+                            <Toast.Toggle/>
                         </Toast>
-                        <br />
+                        <br/>
 
                         <TextInput
                             name="title"
@@ -144,10 +146,10 @@ export default function Topics() {
                             defaultValue={topicData.title}
                             placeholder="Title"
                             onBlur={(e) =>
-                                updateModalFields({ title: e.target.value })
+                                updateModalFields({title: e.target.value})
                             }
                         />
-                        <br />
+                        <br/>
 
                         <Textarea
                             rows={5}
@@ -161,12 +163,15 @@ export default function Topics() {
                                 })
                             }
                         />
-                        <br />
+                        <br/>
                         <Select
                             id="section_id"
                             name="section_id"
                             defaultValue={topicData.section_id}
                             required={true}
+                            onChange={(e) =>
+                                updateModalFields({section_id: parseInt(e.target.value)})
+                            }
                         >
                             {sections.map((s) => (
                                 <option key={"option-" + s.id} value={s.id}>
@@ -175,29 +180,29 @@ export default function Topics() {
                             ))}
                         </Select>
 
-                        <br />
+                        <br/>
                         <TextInput
                             name="link"
                             required
                             defaultValue={topicData.link}
                             placeholder="Link (e.g. pruvodce.cz/NejakaSekce/_link_)"
                             onBlur={(e) =>
-                                updateModalFields({ link: e.target.value })
+                                updateModalFields({link: e.target.value})
                             }
                         />
-                        <br />
+                        <br/>
                         <TextInput
                             name="bg_color"
                             defaultValue={topicData.bgColor}
                             placeholder="Background color (e.g. #FFF111)"
                             onBlur={(e) =>
-                                updateModalFields({ bgColor: e.target.value })
+                                updateModalFields({bgColor: e.target.value})
                             }
                         />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={onAddTopic} disabled={buttonLoading}>
-                            {buttonLoading ? <Spinner /> : "Add"}
+                            {buttonLoading ? <Spinner/> : "Add"}
                         </Button>
                         <Button
                             color="gray"
@@ -230,7 +235,7 @@ const ContentRow = (topic: IContent) => {
 
     const updateFields = (fields: Partial<IContent>) => {
         setData((prev) => {
-            return { ...prev, ...fields };
+            return {...prev, ...fields};
         });
     };
 
@@ -241,7 +246,7 @@ const ContentRow = (topic: IContent) => {
                 <TextInput
                     name="title"
                     defaultValue={topic.title}
-                    onBlur={(e) => updateFields({ title: e.target.value })}
+                    onBlur={(e) => updateFields({title: e.target.value})}
                 />
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -250,7 +255,7 @@ const ContentRow = (topic: IContent) => {
                     name="description"
                     defaultValue={topic.description}
                     onBlur={(e) =>
-                        updateFields({ description: e.target.value })
+                        updateFields({description: e.target.value})
                     }
                 />
             </td>
@@ -259,14 +264,14 @@ const ContentRow = (topic: IContent) => {
                     name="link"
                     disabled={true}
                     defaultValue={topic.link}
-                    onBlur={(e) => updateFields({ link: e.target.value })}
+                    onBlur={(e) => updateFields({link: e.target.value})}
                 />
             </td>
             <td>
                 <TextInput
                     name="bg_color"
                     defaultValue={topic.bgColor}
-                    onBlur={(e) => updateFields({ bgColor: e.target.value })}
+                    onBlur={(e) => updateFields({bgColor: e.target.value})}
                 />
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

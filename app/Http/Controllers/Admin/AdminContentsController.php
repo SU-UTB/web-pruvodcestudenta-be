@@ -36,7 +36,6 @@ class AdminContentsController extends Controller
             'bgColor' => 'required',
             'section_id' => 'required'
         ]);
-        return $request->input('section_id');
 
         $topic = Topic::create(
             [
