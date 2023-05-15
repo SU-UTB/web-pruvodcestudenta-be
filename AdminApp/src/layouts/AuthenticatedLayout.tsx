@@ -2,16 +2,25 @@ import { ReactNode, useState } from "react";
 import ApplicationLogo from "../components/ApplicationLogo";
 import { NavbarBrand } from "flowbite-react/lib/esm/components/Navbar/NavbarBrand";
 import { NavbarLink } from "flowbite-react/lib/esm/components/Navbar/NavbarLink";
+import { Button } from "flowbite-react";
 
 export interface Props {
     children?: ReactNode;
+    actions?: ReactNode;
+    header: string;
     // any props that come into the component
 }
 
-export default function Authenticated({ children, ...props }: Props) {
+export default function Authenticated({
+    children,
+    actions,
+    header,
+    ...props
+}: Props) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
+    // @ts-ignore
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
@@ -39,14 +48,14 @@ export default function Authenticated({ children, ...props }: Props) {
 
                         <div className="hidden sm:flex sm:items-center sm:ml-6">
                             <div className="ml-3 relative">
-{/*                                 <Dropdown>
+                                {/*                                 <Dropdown>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                 
+
 
                                                 <svg
                                                     className="ml-2 -mr-0.5 h-4 w-4"
@@ -159,9 +168,12 @@ export default function Authenticated({ children, ...props }: Props) {
                 </div>
             </nav>
 
-            <header className="bg-white shadow">
-                <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">HEADER prop</h2>
+            <header className="bg-white shadow ">
+                <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex flex-row justify-center items-center">
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                        {header}
+                    </h2>
+                    {actions}
                 </div>
             </header>
 

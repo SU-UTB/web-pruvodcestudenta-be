@@ -3,6 +3,7 @@ import { ApiSections } from "./ApiSections";
 import { Constants } from "../tools/Constants";
 import { ApiTopics } from "./ApiTopics";
 import { ApiGeneral } from "./ApiGeneral";
+import { ApiUser } from "./ApiUser";
 
 export class Api {
     private static _instance: Api;
@@ -16,9 +17,11 @@ export class Api {
 
     client: AxiosInstance = axios.create({
         baseURL: Constants.API_URL,
+        headers: { "Content-Type": "application/json" },
     });
 
     sections: ApiSections = new ApiSections(this.client);
     topics: ApiTopics = new ApiTopics(this.client);
     general: ApiGeneral = new ApiGeneral(this.client);
+    user: ApiUser = new ApiUser(this.client);
 }

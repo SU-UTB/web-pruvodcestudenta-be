@@ -4,4 +4,5 @@ export interface IContent {
     link: string;
     bgColor: string;
     description: string;
+    section_id: number;
 }
