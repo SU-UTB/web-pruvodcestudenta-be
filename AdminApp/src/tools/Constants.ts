@@ -7,5 +7,6 @@ export class Constants {
     static SECTIONS: string = "sections";
     static TOPICS: string = "topics";
     static DASHBOARD: string = "/";
+    static USER: string = "user";
     static PAGES_LANDING: string = "pages/landing";
 }

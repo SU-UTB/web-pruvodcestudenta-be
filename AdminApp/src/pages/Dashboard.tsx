@@ -8,7 +8,7 @@ export default function Dashboard(props: any) {
     return isLoading ? (
         <div />
     ) : (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout header={'Dashboard'}>
             {/*     <Head title="Dashboard"/> */}
 
             <div className="py-12">

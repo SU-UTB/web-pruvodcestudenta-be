@@ -18,7 +18,7 @@ export class ApiUser {
             password: password,
         });
     };
-    /*  getUser = async () => {
+      getUser = async () => {
         return await this.#client.get<IUser>(Constants.USER);
-    };*/
+    };
 }

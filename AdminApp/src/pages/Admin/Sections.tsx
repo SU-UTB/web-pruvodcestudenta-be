@@ -8,14 +8,14 @@ import {
     Toast,
 } from "flowbite-react";
 import useFetchSections from "../../hooks/sections/useFetchSections";
-import { ISection } from "../../lib/interfaces/ISection";
-import { useState } from "react";
-import { Api } from "../../api/Api";
+import {ISection} from "../../lib/interfaces/ISection";
+import {useState} from "react";
+import {Api} from "../../api/Api";
 import React from "react";
-import { AxiosError } from "axios";
+import {AxiosError} from "axios";
 
 export default function Sections() {
-    const { data: sections, isLoading } = useFetchSections();
+    const {data: sections, isLoading} = useFetchSections();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [sectionData, setSectionData] = useState<ISection>({
         id: 0,
@@ -24,6 +24,7 @@ export default function Sections() {
         bgColor: "",
         description: "",
         topics: [],
+        section_id: 0
     });
     const [buttonLoading, setButtonLoading] = useState(false);
     const [modalError, setModalError] = useState(null);
@@ -47,11 +48,11 @@ export default function Sections() {
 
     const updateModalFields = (fields: Partial<ISection>) => {
         setSectionData((prev) => {
-            return { ...prev, ...fields };
+            return {...prev, ...fields};
         });
     };
     return isLoading ? (
-        <div />
+        <div/>
     ) : (
         <React.Fragment>
             <AuthenticatedLayout
@@ -67,51 +68,51 @@ export default function Sections() {
             >
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
-                        <tr>
-                            <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            >
-                                Title
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            >
-                                Description
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            >
-                                Link
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            >
-                                Color
-                            </th>
-                            <th scope="col" className="relative px-6 py-3">
-                                <span className="sr-only">Edit</span>
-                            </th>
-                            <th scope="col" className="relative px-6 py-3">
-                                <span className="sr-only">Delete</span>
-                            </th>
-                        </tr>
+                    <tr>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Title
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Description
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Link
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Color
+                        </th>
+                        <th scope="col" className="relative px-6 py-3">
+                            <span className="sr-only">Edit</span>
+                        </th>
+                        <th scope="col" className="relative px-6 py-3">
+                            <span className="sr-only">Delete</span>
+                        </th>
+                    </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {sections.map((s: ISection) => (
-                            <SectionRow
-                                key={s.id.toString()}
-                                bgColor={""}
-                                description={s.description}
-                                id={s.id}
-                                link={s.link}
-                                title={s.title}
-                                topics={s.topics}
-                            />
-                        ))}
+                    {sections.map((s: ISection) => (
+                        <SectionRow
+                            key={s.id.toString()}
+                            bgColor={""}
+                            description={s.description}
+                            id={s.id}
+                            link={s.link}
+                            title={s.title}
+                            topics={s.topics}
+                         section_id={0}/>
+                    ))}
                     </tbody>
                 </table>
 
@@ -126,7 +127,8 @@ export default function Sections() {
                                 modalError !== null ? "visible" : "hidden"
                             }
                         >
-                            <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
+                            <div
+                                className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
                                 {/*
                                 <HiX className="h-5 w-5" />
 */}
@@ -134,9 +136,9 @@ export default function Sections() {
                             <div className="ml-3 text-sm font-normal">
                                 {modalError}
                             </div>
-                            <Toast.Toggle />
+                            <Toast.Toggle/>
                         </Toast>
-                        <br />
+                        <br/>
 
                         <TextInput
                             name="title"
@@ -144,10 +146,10 @@ export default function Sections() {
                             defaultValue={sectionData.title}
                             placeholder="Title"
                             onBlur={(e) =>
-                                updateModalFields({ title: e.target.value })
+                                updateModalFields({title: e.target.value})
                             }
                         />
-                        <br />
+                        <br/>
 
                         <Textarea
                             rows={5}
@@ -161,7 +163,7 @@ export default function Sections() {
                                 })
                             }
                         />
-                        <br />
+                        <br/>
 
                         <TextInput
                             name="link"
@@ -169,22 +171,22 @@ export default function Sections() {
                             defaultValue={sectionData.link}
                             placeholder="Link (e.g. pruvodce.cz/_link_/clanek1)"
                             onBlur={(e) =>
-                                updateModalFields({ link: e.target.value })
+                                updateModalFields({link: e.target.value})
                             }
                         />
-                        <br />
+                        <br/>
                         <TextInput
                             name="bg_color"
                             defaultValue={sectionData.bgColor}
                             placeholder="Background color (e.g. #FFF111)"
                             onBlur={(e) =>
-                                updateModalFields({ bgColor: e.target.value })
+                                updateModalFields({bgColor: e.target.value})
                             }
                         />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={onAddSection} disabled={buttonLoading}>
-                            {buttonLoading ? <Spinner /> : "Add"}
+                            {buttonLoading ? <Spinner/> : "Add"}
                         </Button>
                         <Button
                             color="gray"
@@ -217,7 +219,7 @@ const SectionRow = (section: ISection) => {
 
     const updateFields = (fields: Partial<ISection>) => {
         setData((prev) => {
-            return { ...prev, ...fields };
+            return {...prev, ...fields};
         });
     };
 
@@ -227,7 +229,7 @@ const SectionRow = (section: ISection) => {
                 <TextInput
                     name="title"
                     defaultValue={section.title}
-                    onBlur={(e) => updateFields({ title: e.target.value })}
+                    onBlur={(e) => updateFields({title: e.target.value})}
                 />
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -236,7 +238,7 @@ const SectionRow = (section: ISection) => {
                     name="description"
                     defaultValue={section.description}
                     onBlur={(e) =>
-                        updateFields({ description: e.target.value })
+                        updateFields({description: e.target.value})
                     }
                 />
             </td>
@@ -245,14 +247,14 @@ const SectionRow = (section: ISection) => {
                     name="link"
                     disabled={true}
                     defaultValue={section.link}
-                    onBlur={(e) => updateFields({ link: e.target.value })}
+                    onBlur={(e) => updateFields({link: e.target.value})}
                 />
             </td>
             <td>
                 <TextInput
                     name="bg_color"
                     defaultValue={section.bgColor}
-                    onBlur={(e) => updateFields({ bgColor: e.target.value })}
+                    onBlur={(e) => updateFields({bgColor: e.target.value})}
                 />
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

@@ -40,6 +40,8 @@ class Section implements ISection {
     link: string;
     title: string;
     topics: IContent[];
+    //TODO remove!!!
+    section_id: number;
 
     constructor(
         bgColor: string,
@@ -47,7 +49,8 @@ class Section implements ISection {
         id: number,
         link: string,
         title: string,
-        topics: IContent[]
+        topics: IContent[],
+        section_id: number
     ) {
         this.bgColor = bgColor;
         this.description = description;
@@ -55,5 +58,6 @@ class Section implements ISection {
         this.link = link;
         this.title = title;
         this.topics = topics;
+        this.section_id = section_id;
     }
 }
