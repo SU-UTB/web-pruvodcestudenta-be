@@ -52,4 +52,14 @@ class AdminContentsController extends Controller
         return response()->json($topic, 200);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return int
+     */
+    public function destroy($id)
+    {
+        return Topic::destroy($id);
+    }
 }

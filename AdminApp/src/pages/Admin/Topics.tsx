@@ -36,11 +36,10 @@ export default function Topics() {
         setButtonLoading(true);
         setModalError(null);
         try {
-            const response = await Api.Instance.topics.createTopic(topicData);
-            console.log(response);
+            await Api.Instance.topics.createTopic(topicData);
             setButtonLoading(false);
             setIsModalVisible(false);
-          //  window.location.reload();
+            window.location.reload();
         } catch (e: any) {
             setModalError(e.response.data.message.toString());
         } finally {
