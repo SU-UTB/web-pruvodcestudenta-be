@@ -24,6 +24,7 @@ export default function Topics() {
         id: 0,
         title: "",
         link: "",
+        url: "",
         bgColor: "",
         description: "",
         section_id: 0,
@@ -80,19 +81,13 @@ export default function Topics() {
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                            Description
-                        </th>
-                        <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
                             Section
                         </th>
                         <th
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                            Link
+                            Url
                         </th>
                         <th
                             scope="col"
@@ -109,7 +104,7 @@ export default function Topics() {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
                     {topics.map((t: IContent) => (
-                        <ContentRow
+                        <TopicRow
                             key={t.id.toString()}
                             topic={t}
                             sections={sections}
@@ -185,12 +180,12 @@ export default function Topics() {
 
                         <br/>
                         <TextInput
-                            name="link"
+                            name="url"
                             required
-                            defaultValue={topicData.link}
-                            placeholder="Link (e.g. pruvodce.cz/NejakaSekce/_link_)"
+                            defaultValue={topicData.url}
+                            placeholder="www.someAddress.com"
                             onBlur={(e) =>
-                                updateModalFields({link: e.target.value})
+                                updateModalFields({url: e.target.value})
                             }
                         />
                         <br/>
@@ -226,7 +221,7 @@ interface ITopicRowProps {
     sections: Array<ISection>;
 }
 
-const ContentRow = ({topic, sections}: ITopicRowProps) => {
+const TopicRow = ({topic, sections}: ITopicRowProps) => {
     const [data, setData] = useState<IContent>(topic);
 
     // @ts-ignore
@@ -249,65 +244,69 @@ const ContentRow = ({topic, sections}: ITopicRowProps) => {
     };
 
     return (
-        <tr id={topic.id.toString()}>
-            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                <TextInput
-                    name="title"
-                    defaultValue={topic.title}
-                    onBlur={(e) => updateFields({title: e.target.value})}
-                />
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                <Textarea
-                    rows={5}
-                    name="description"
-                    defaultValue={topic.description}
-                    onBlur={(e) =>
-                        updateFields({description: e.target.value})
-                    }
-                />
-            </td>
+        <>
+            <tr id={topic.id.toString()}>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <TextInput
+                        name="title"
+                        defaultValue={topic.title}
+                        onBlur={(e) => updateFields({title: e.target.value})}
+                    />
+                </td>
 
-            <td>
-                <Select
-                    id="row_section_id"
-                    name="section_id"
-                    defaultValue={topic.section_id}
-                    required={true}
-                    onChange={(e) =>
-                        updateFields({section_id: parseInt(e.target.value)})
-                    }
-                >
-                    {sections.map((s) => (
-                        <option key={"row-option-" + s.id} value={s.id}>
-                            {s.title}
-                        </option>
-                    ))}
-                </Select>
 
-            </td>
-            <td>
-                <TextInput
-                    name="link"
-                    disabled={true}
-                    defaultValue={topic.link}
-                    onBlur={(e) => updateFields({link: e.target.value})}
-                />
-            </td>
-            <td>
-                <TextInput
-                    name="bg_color"
-                    defaultValue={topic.bgColor}
-                    onBlur={(e) => updateFields({bgColor: e.target.value})}
-                />
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <Button onClick={submit}>Save</Button>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <Select
+                        id="row_section_id"
+                        name="section_id"
+                        defaultValue={topic.section_id}
+                        required={true}
+                        onChange={(e) =>
+                            updateFields({section_id: parseInt(e.target.value)})
+                        }
+                    >
+                        {sections.map((s) => (
+                            <option key={"row-option-" + s.id} value={s.id}>
+                                {s.title}
+                            </option>
+                        ))}
+                    </Select>
 
-                <Button onClick={deleteTopic} color="failure">
-                    Delete
-                </Button>
-            </td>
-        </tr>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <TextInput
+                        name="url"
+                        defaultValue={topic.url}
+                        onBlur={(e) => updateFields({url: e.target.value})}
+                    />
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <TextInput
+                        name="bg_color"
+                        defaultValue={topic.bgColor}
+                        onBlur={(e) => updateFields({bgColor: e.target.value})}
+                    />
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <Button onClick={submit}>Save</Button>
+                    <br/>
+                    <Button onClick={deleteTopic} color="failure">
+                        Delete
+                    </Button>
+                </td>
+            </tr>
+            <tr>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500" colSpan={5}>
+                    <Textarea
+                        rows={3}
+                        name="description"
+                        defaultValue={topic.description}
+                        onBlur={(e) =>
+                            updateFields({description: e.target.value})
+                        }
+                    />
+                </td>
+            </tr>
+        </>
     );
 };
