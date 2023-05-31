@@ -29,6 +29,7 @@ class AdminTopicsController extends Controller
             'image' => $request->input('image') ?? $content->image ?? '',
             'section_id' => $request->input('section_id') ?? $content->section_id ?? 1,
             'location_id' => $request->input('location_id') ?? $content->location_id ?? 3,
+            'url' => $request->input('url') ?? $content->url ?? ''
         ]);
 
         return $this->index();
@@ -39,9 +40,8 @@ class AdminTopicsController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'link' => 'required',
-            'bgColor' => 'required',
-            'section_id' => 'required'
+            'section_id' => 'required',
+            'location_id' => 'required'
         ]);
 
         $topic = Topic::create(
@@ -49,10 +49,11 @@ class AdminTopicsController extends Controller
                 'title' => $request->input('title') ?? '',
                 'description' => $request->input('description') ?? '',
                 'link' => $request->input('link') ?? '',
-                'bg_color' => $request->input('bgColor') ?? '',
+                'url' => $request->input('url') ?? '',
+                'bg_color' => $request->input('bg_color') ?? '',
                 'image' => '',
                 'section_id' => $request->input('section_id'),
-                'location_id' => 3
+                'location_id' => $request->input('location_id')
             ]
         );
 

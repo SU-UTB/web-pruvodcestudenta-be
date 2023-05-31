@@ -87,7 +87,8 @@ export default function Topics() {
                             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
                             Section
-                        </th>    <th
+§                        </th>
+                        <th
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
@@ -183,16 +184,32 @@ export default function Topics() {
                             }
                         >
                             {data!.sections.map((s) => (
-                                <option key={"option-" + s.id} value={s.id}>
+                                <option key={"opt-section-" + s.id} value={s.id}>
                                     {s.title}
                                 </option>
                             ))}
                         </Select>
+                        <br/>
+                        <Select
+                            id="row_location_id"
+                            name="location_id"
+                            defaultValue={topicData.location_id}
+                            required={true}
+                            onChange={(e) =>
+                                updateModalFields({location_id: parseInt(e.target.value)})
+                            }
+                        >
+                            {data!.locations.map((l) => (
+                                <option key={"opt-location-" + l.id} value={l.id}>
+                                    {l.name}
+                                </option>
+                            ))}
+                        </Select>
+
 
                         <br/>
                         <TextInput
                             name="url"
-                            required
                             defaultValue={topicData.url}
                             placeholder="www.someAddress.com"
                             onBlur={(e) =>
@@ -200,13 +217,10 @@ export default function Topics() {
                             }
                         />
                         <br/>
-                        <TextInput
-                            name="bg_color"
-                            defaultValue={topicData.bg_color}
-                            placeholder="Background color (e.g. #FFF111)"
-                            onBlur={(e) =>
-                                updateModalFields({bg_color: e.target.value})
-                            }
+                        <TwitterPicker
+                            color={topicData.bg_color}
+                            onChange={(e) => updateModalFields({bg_color: e.hex})}
+
                         />
                     </Modal.Body>
                     <Modal.Footer>
