@@ -9,6 +9,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\SectionController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +47,9 @@ Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.up
 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 /* TODO !!!  });*/
 
+Route::get('/migrate', function () {
+    return response(Artisan::call('migrate'));
+});
 
 Route::resource('pages/landing', LandingController::class);
 Route::resource('sections', SectionController::class);
