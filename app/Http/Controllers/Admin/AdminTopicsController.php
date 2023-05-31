@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class AdminContentsController extends Controller
+class AdminTopicsController extends Controller
 {
     public function index()
     {

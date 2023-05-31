@@ -3,7 +3,7 @@ export interface IContent {
     title: string;
     link: string;
     url: string;
-    bgColor: string;
+    bg_color: string;
     description: string;
     section_id: number;
 }

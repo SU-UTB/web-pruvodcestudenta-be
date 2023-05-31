@@ -15,6 +15,8 @@ import React, {useState} from "react";
 import {IContent} from "../../lib/interfaces/IContent";
 import {Api} from "../../api/Api";
 import useFetchSections from "../../hooks/sections/useFetchSections";
+import {TwitterPicker} from "react-color";
+
 
 export default function Topics() {
     const {data: topics, isLoading: isTopicsLoading} = useFetchTopics();
@@ -25,7 +27,7 @@ export default function Topics() {
         title: "",
         link: "",
         url: "",
-        bgColor: "",
+        bg_color: "",
         description: "",
         section_id: 0,
     });
@@ -191,10 +193,10 @@ export default function Topics() {
                         <br/>
                         <TextInput
                             name="bg_color"
-                            defaultValue={topicData.bgColor}
+                            defaultValue={topicData.bg_color}
                             placeholder="Background color (e.g. #FFF111)"
                             onBlur={(e) =>
-                                updateModalFields({bgColor: e.target.value})
+                                updateModalFields({bg_color: e.target.value})
                             }
                         />
                     </Modal.Body>
@@ -281,11 +283,13 @@ const TopicRow = ({topic, sections}: ITopicRowProps) => {
                     />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    <TextInput
-                        name="bg_color"
-                        defaultValue={topic.bgColor}
-                        onBlur={(e) => updateFields({bgColor: e.target.value})}
+
+                    <TwitterPicker
+                        color={topic.bg_color}
+                        onChange={(e) => updateFields({bg_color: e.hex})}
+
                     />
+
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <Button onClick={submit}>Save</Button>
