@@ -4,6 +4,7 @@ import { Constants } from "../tools/Constants";
 import { ApiTopics } from "./ApiTopics";
 import { ApiGeneral } from "./ApiGeneral";
 import { ApiUser } from "./ApiUser";
+import {ApiAdmin} from "./ApiAdmin";
 
 export class Api {
     private static _instance: Api;
@@ -24,4 +25,5 @@ export class Api {
     topics: ApiTopics = new ApiTopics(this.client);
     general: ApiGeneral = new ApiGeneral(this.client);
     user: ApiUser = new ApiUser(this.client);
+    admin: ApiAdmin = new ApiAdmin(this.client);
 }

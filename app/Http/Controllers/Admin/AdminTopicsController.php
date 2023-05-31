@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Location;
+use App\Models\Section;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -12,7 +14,9 @@ class AdminTopicsController extends Controller
 {
     public function index()
     {
-        return Topic::all();
+        return ['topics' => Topic::all(),
+            'sections' => Section::all(),
+            'locations' => Location::all()];
     }
 
     public function update(Request $request, $id)

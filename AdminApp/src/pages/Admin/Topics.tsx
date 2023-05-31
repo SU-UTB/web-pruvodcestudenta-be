@@ -12,17 +12,19 @@ import {
 import useFetchTopics from "../../hooks/topics/useFetchTopics";
 import {ISection} from "../../lib/interfaces/ISection";
 import React, {useState} from "react";
-import {IContent} from "../../lib/interfaces/IContent";
+import {ITopic} from "../../lib/interfaces/ITopic";
 import {Api} from "../../api/Api";
 import useFetchSections from "../../hooks/sections/useFetchSections";
 import {TwitterPicker} from "react-color";
+import useFetchAdminTopics from "../../hooks/admin/useFetchAdminTopics";
+import {ILocation} from "../../lib/interfaces/ILocation";
 
 
 export default function Topics() {
-    const {data: topics, isLoading: isTopicsLoading} = useFetchTopics();
-    const {data: sections, isLoading: isSectionsLoading} = useFetchSections();
+    //TODO fetch all page data
+    const {data: data, isLoading} = useFetchAdminTopics();
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [topicData, setTopicData] = useState<IContent>({
+    const [topicData, setTopicData] = useState<ITopic>({
         id: 0,
         title: "",
         link: "",
@@ -30,6 +32,7 @@ export default function Topics() {
         bg_color: "",
         description: "",
         section_id: 0,
+        location_id: 0
     });
 
     const [buttonLoading, setButtonLoading] = useState(false);
@@ -50,12 +53,12 @@ export default function Topics() {
         }
     }
 
-    const updateModalFields = (fields: Partial<IContent>) => {
+    const updateModalFields = (fields: Partial<ITopic>) => {
         setTopicData((prev) => {
             return {...prev, ...fields};
         });
     };
-    return isTopicsLoading && isSectionsLoading ? (
+    return (isLoading) ? (
         <div/>
     ) : (
         <React.Fragment>
@@ -84,6 +87,11 @@ export default function Topics() {
                             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
                             Section
+                        </th>    <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Location
                         </th>
                         <th
                             scope="col"
@@ -105,11 +113,12 @@ export default function Topics() {
                     </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                    {topics.map((t: IContent) => (
+                    {data!.topics.map((t: ITopic) => (
                         <TopicRow
                             key={t.id.toString()}
                             topic={t}
-                            sections={sections}
+                            sections={data!.sections}
+                            locations={data!.locations}
                         />
                     ))}
                     </tbody>
@@ -173,7 +182,7 @@ export default function Topics() {
                                 updateModalFields({section_id: parseInt(e.target.value)})
                             }
                         >
-                            {sections.map((s) => (
+                            {data!.sections.map((s) => (
                                 <option key={"option-" + s.id} value={s.id}>
                                     {s.title}
                                 </option>
@@ -219,12 +228,13 @@ export default function Topics() {
 
 
 interface ITopicRowProps {
-    topic: IContent;
+    topic: ITopic;
     sections: Array<ISection>;
+    locations: Array<ILocation>;
 }
 
-const TopicRow = ({topic, sections}: ITopicRowProps) => {
-    const [data, setData] = useState<IContent>(topic);
+const TopicRow = ({topic, sections, locations}: ITopicRowProps) => {
+    const [data, setData] = useState<ITopic>(topic);
 
     // @ts-ignore
     async function submit(e) {
@@ -239,7 +249,7 @@ const TopicRow = ({topic, sections}: ITopicRowProps) => {
         window.location.reload();
     }
 
-    const updateFields = (fields: Partial<IContent>) => {
+    const updateFields = (fields: Partial<ITopic>) => {
         setData((prev) => {
             return {...prev, ...fields};
         });
@@ -268,8 +278,26 @@ const TopicRow = ({topic, sections}: ITopicRowProps) => {
                         }
                     >
                         {sections.map((s) => (
-                            <option key={"row-option-" + s.id} value={s.id}>
+                            <option key={"row-section-option-" + s.id} value={s.id}>
                                 {s.title}
+                            </option>
+                        ))}
+                    </Select>
+
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <Select
+                        id="row_location_id"
+                        name="location_id"
+                        defaultValue={topic.location_id}
+                        required={true}
+                        onChange={(e) =>
+                            updateFields({location_id: parseInt(e.target.value)})
+                        }
+                    >
+                        {locations.map((l) => (
+                            <option key={"row-location-option-" + l.id} value={l.id}>
+                                {l.name}
                             </option>
                         ))}
                     </Select>
@@ -300,7 +328,7 @@ const TopicRow = ({topic, sections}: ITopicRowProps) => {
                 </td>
             </tr>
             <tr>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500" colSpan={5}>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500" colSpan={6}>
                     <Textarea
                         rows={3}
                         name="description"

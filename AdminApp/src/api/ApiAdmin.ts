@@ -3,8 +3,9 @@ import { AxiosInstance } from "axios";
 import { Constants } from "../tools/Constants";
 import { ITopic } from "../lib/interfaces/ITopic";
 import { ISection } from "../lib/interfaces/ISection";
+import {IAdminTopics} from "../lib/interfaces/IAdminTopics";
 
-export class ApiTopics {
+export class ApiAdmin {
     #client: AxiosInstance;
 
     constructor(client: AxiosInstance) {
@@ -12,7 +13,7 @@ export class ApiTopics {
     }
 
     getTopics = async () => {
-        return await this.#client.get<Array<ITopic>>(Constants.TOPICS);
+        return await this.#client.get<IAdminTopics>(Constants.TOPICS);
     };
     getTopic = async (id: number) => {
         return await this.#client.get<ITopic>(`${Constants.TOPICS}/${id}`);

@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
 
 import { Constants } from "../tools/Constants";
-import { IContent } from "../lib/interfaces/IContent";
+import { ITopic } from "../lib/interfaces/ITopic";
 import { IDashboard } from "../lib/interfaces/IDashboard";
 import { IUser } from "../hooks/user/useCheckLogin";
 

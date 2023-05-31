@@ -1,8 +1,8 @@
-import { AxiosInstance } from "axios";
+import {AxiosInstance} from "axios";
 
-import { Constants } from "../tools/Constants";
-import { IContent } from "../lib/interfaces/IContent";
-import { ISection } from "../lib/interfaces/ISection";
+import {Constants} from "../tools/Constants";
+import {ITopic} from "../lib/interfaces/ITopic";
+import {ISection} from "../lib/interfaces/ISection";
 
 export class ApiSections {
     #client: AxiosInstance;
@@ -34,30 +34,36 @@ export class ApiSections {
 }
 
 class Section implements ISection {
-    bgColor: string;
+    bg_color: string;
     description: string;
     id: number;
     link: string;
     title: string;
-    topics: IContent[];
+    topics: ITopic[];
     //TODO remove!!!
     section_id: number;
+    location_id: number;
+    url: string;
 
     constructor(
-        bgColor: string,
+        bg_color: string,
         description: string,
         id: number,
         link: string,
+        url: string,
         title: string,
-        topics: IContent[],
-        section_id: number
+        topics: ITopic[],
+        section_id: number,
+        location_id: number
     ) {
-        this.bgColor = bgColor;
+        this.bg_color = bg_color;
         this.description = description;
         this.id = id;
         this.link = link;
+        this.url = url;
         this.title = title;
         this.topics = topics;
         this.section_id = section_id;
+        this.location_id = location_id;
     }
 }

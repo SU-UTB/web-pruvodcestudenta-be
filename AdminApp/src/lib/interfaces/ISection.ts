@@ -1,5 +1,5 @@
-import {IContent} from "./IContent";
+import {ITopic} from "./ITopic";
 
-export interface ISection extends IContent {
-    topics: IContent[]
+export interface ISection extends ITopic {
+    topics: ITopic[]
 }

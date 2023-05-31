@@ -1,4 +1,4 @@
-export interface IContent {
+export interface ITopic {
     id: number;
     title: string;
     link: string;
@@ -6,4 +6,5 @@ export interface IContent {
     bg_color: string;
     description: string;
     section_id: number;
+    location_id: number;
 }
