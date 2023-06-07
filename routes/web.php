@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminSectionsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -28,8 +29,10 @@ Route::get('/admin/migrate', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin/', [\App\Http\Controllers\Admin\AdminLandingController::class, 'index'])->name('dashboard');
-    Route::get('/admin/sections', [\App\Http\Controllers\Admin\AdminSectionsController::class, 'index'])->name('sections');
-
+    Route::get('/admin/sections/', [\App\Http\Controllers\Admin\AdminSectionsController::class, 'index'])->name('sections');
+    Route::post('/admin/sections/search/', [AdminSectionsController::class, 'sectionsSearch'])->name('search-sections');
+    Route::get('/admin/sections/{id}/', [AdminSectionsController::class, 'save'])->name('saveSection');
+    Route::get('/admin/sections/{id}/', [AdminSectionsController::class, 'cancel'])->name('deleteSection');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -37,4 +40,4 @@ Route::middleware('auth')->group(function () {
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

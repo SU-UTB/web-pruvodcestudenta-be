@@ -13,7 +13,7 @@ class AdminSectionsController extends Controller
 {
     public function index()
     {
-        return Section::all();
+        return view('administration/sections', ['sections' => Section::all(), "search" => ""]);
     }
 
     public function update(Request $request, $id)
@@ -52,6 +52,31 @@ class AdminSectionsController extends Controller
 
         return response()->json($section, 200);
     }
+
+
+    public function save(Request $request, $id)
+    {
+        dd($id);
+    }
+
+    public function cancel(Request $request, $id)
+    {
+        dd($id);
+   /*     $seats = Seat::where('rezervace', '=', $id)->get();
+
+        foreach ($seats as $seat) {
+            $seat->rezervace = null;
+            $seat->save();
+        }
+        $availableStands = AvailableStands::find(1);
+        $availableStands->update([
+            'count' =>  $availableStands->count + Reservation::find($id)->stand,
+        ]);
+        $availableStands->save();
+        $this->destroy($id);
+        return AdminSectionsController::();*/
+    }
+
 
     /**
      * Remove the specified resource from storage.
