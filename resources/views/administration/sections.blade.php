@@ -1,8 +1,7 @@
 <x-app-layout>
-
     <br>
-    <div class="mx-auto" style="width: 250px;">
-        <form name="search-reservation-form" id="search-reservation-form" method="POST"
+    <div class="mx-auto d-flex justify-center items-center">
+        <form style="width: 250px;" name="search-reservation-form" id="search-reservation-form" method="POST"
               action="{{route('search-sections')}}">
             @csrf
 
@@ -11,9 +10,10 @@
                                value="{{$search}}"
                                onchange="this.form.submit();"/>
         </form>
-        <x-bladewind.button
-            onclick="showModal('add-section')">
-           Add Section
+        <div style="width: 100px"></div>
+        <x-bladewind.button class="mb-3"
+                            onclick="showModal('add-section')">
+            Add Section
         </x-bladewind.button>
     </div>
     <br>
@@ -26,39 +26,53 @@
             <th>Actions</th>
         </x-slot>
         @foreach ($sections as $section)
-            <tr>
-                <td>
-                    <x-bladewind.input value="{{ $section['title'] }}"/>
-                </td>
-                <td>
-                    <x-bladewind.textarea
-                        placeholder="Description..."> {{ $section['description'] }}</x-bladewind.textarea>
-                </td>
-                <td>{{ $section['link'] }}</td>
-                <td>
-                    <div id="cp{{ $loop->index }}" class="input-group colorpicker-component">
+            <form action="/admin/sections/{{$section['id']}}" method="POST">
+                @csrf
+                @method('PUT')
+                <tr>
 
-                        <label>
-                            <input type="text" value="#00AABB" class="form-control"/>
-                        </label>
+                    <td>
+                        <x-bladewind.input
+                            name="title"
+                            value="{{ $section['title'] }}"/>
+                    </td>
+                    <td>
+                        <x-bladewind.textarea
+                            name="description"
+                            placeholder="Description..."
+                            selected_value="{{ $section['description'] }}"
+                        />
+                    </td>
+                    <td>{{ $section['link'] }}</td>
+                    <td>
+                        <div id="cp{{ $loop->index }}" class="input-group colorpicker-component">
 
-                        <span class="input-group-addon"><i></i></span>
-                    </div>{{--{{ $section['color'] }}--}}</td>
+                            <label>
+                                <x-bladewind.input
+                                    name="bg_color"
+                                    type="text" value="{{$section['bg_color']}}" class="form-control"/>
+                            </label>
+
+                            <span class="input-group-addon"><i></i></span>
+                        </div>{{--{{ $section['color'] }}--}}</td>
 
 
-                <script type="text/javascript">
-                    $('#cp{{ $loop->index }}').colorpicker();
-                </script>
-                <td>
-                    <div class="flex flex-col">
-                        <x-bladewind.button type="submit" class="btn btn-orange">Save</x-bladewind.button>
-
-                        <x-bladewind.button type="submit" class="btn btn-orange">
-                            <a href="{{ route('deleteSection', $section['id']) }}">Delete</a></x-bladewind.button>
-                    </div>
-                </td>
-            </tr>
-
+                    <script type="text/javascript">
+                        $('#cp{{ $loop->index }}').colorpicker();
+                    </script>
+                    <td>
+                        <div class="d-flex flex-column">
+                            <x-bladewind.button size="tiny"
+                                                canSubmit="true"
+                            >Save
+                            </x-bladewind.button>
+                            <br/>
+                            <x-bladewind.button size="tiny" color="red">
+                                <a href="{{ route('deleteSection', $section['id']) }}">Delete</a></x-bladewind.button>
+                        </div>
+                    </td>
+                </tr>
+            </form>
         @endforeach
     </x-bladewind.table>
 
@@ -66,19 +80,16 @@
         name="add-section"
         title="Add section"
         class="min-w-[200px]">
-        <x-bladewind.notification>
-            <div
-                class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
-                {/*
-                {{--
-                            <HiX class="h-5 w-5" />
-                --}}
-                */}
-            </div>
-            <div class="ml-3 text-sm font-normal">
-                {modalError}
-            </div>
-        </x-bladewind.notification>
+        @if($errors->any())
+            <x-bladewind.alert>
+
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </x-bladewind.alert>
+        @endif
         <br/>
 
         <x-bladewind.input

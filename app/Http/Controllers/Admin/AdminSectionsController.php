@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Reservation;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use function GuzzleHttp\Promise\all;
 
 class AdminSectionsController extends Controller
 {
-    public function index()
+    public static function index()
     {
         return view('administration/sections', ['sections' => Section::all(), "search" => ""]);
     }
@@ -23,7 +23,7 @@ class AdminSectionsController extends Controller
             'title' => $request->input('title') ?? '',
             'description' => $request->input('description') ?? '',
             'link' => $section->link,
-            'bg_color' => $request->input('bg_color') ?? $section->bg_color,
+            'bg_color' => $request->input('bg_color') ?? '',
             'image' => $section->image,
         ]);
 
@@ -54,27 +54,46 @@ class AdminSectionsController extends Controller
     }
 
 
-    public function save(Request $request, $id)
-    {
-        dd($id);
-    }
-
     public function cancel(Request $request, $id)
     {
         dd($id);
-   /*     $seats = Seat::where('rezervace', '=', $id)->get();
+        /*     $seats = Seat::where('rezervace', '=', $id)->get();
 
-        foreach ($seats as $seat) {
-            $seat->rezervace = null;
-            $seat->save();
+             foreach ($seats as $seat) {
+                 $seat->rezervace = null;
+                 $seat->save();
+             }
+             $availableStands = AvailableStands::find(1);
+             $availableStands->update([
+                 'count' =>  $availableStands->count + Reservation::find($id)->stand,
+             ]);
+             $availableStands->save();
+             $this->destroy($id);
+             return AdminSectionsController::();*/
+    }
+
+    public function sectionsSearch(Request $request)
+    {
+        $search = $request->input('search');
+
+        if ($search == '') {
+            return AdminSectionsController::index();
+        } else {
+
+            $data = Section::whereRaw('LOWER(`title`) LIKE ? ', [trim(strtolower($search)) . '%'])->get();
+
+            return view('administration/sections', ["sections" => $data, "search" => $search]);
         }
-        $availableStands = AvailableStands::find(1);
-        $availableStands->update([
-            'count' =>  $availableStands->count + Reservation::find($id)->stand,
-        ]);
-        $availableStands->save();
-        $this->destroy($id);
-        return AdminSectionsController::();*/
+    }
+
+    private static function array_any(array $array, callable $fn)
+    {
+        foreach ($array as $value) {
+            if ($fn($value)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
