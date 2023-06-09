@@ -12,24 +12,26 @@ use Inertia\Response;
 
 class AdminTopicsController extends Controller
 {
-    public function index()
+    public static function index()
     {
-        return ['topics' => Topic::all(),
-            'sections' => Section::all(),
-            'locations' => Location::all()];
+
+        return view('administration/topics',
+            ['topics' => Topic::all(),
+                'sections' => Section::all()->toArray(),
+                'locations' => Location::all()->toArray(), "search" => ""]);
     }
 
     public function update(Request $request, $id)
     {
         $content = Topic::find($id);
         $content->update([
-            'title' => $request->input('title') ?? $content->title ?? '',
-            'description' => $request->input('description') ?? $content->description ?? '',
-            'bg_color' => $request->input('bg_color') ?? $content->bg_color ?? '',
-            'image' => $request->input('image') ?? $content->image ?? '',
-            'section_id' => $request->input('section_id') ?? $content->section_id ?? 1,
-            'location_id' => $request->input('location_id') ?? $content->location_id ?? 3,
-            'url' => $request->input('url') ?? $content->url ?? ''
+            'title' => $request->input('title') ?? '',
+            'description' => $request->input('description') ?? '',
+            'bg_color' => $request->input('bg_color') ?? '',
+            'image' => $request->input('image') ?? '',
+            'section_id' => $request->input('section_id') ?? 1,
+            'location_id' => $request->input('location_id') ?? 3,
+            'url' => $request->input('url') ?? ''
         ]);
 
         return $this->index();
@@ -58,6 +60,20 @@ class AdminTopicsController extends Controller
         );
 
         return response()->json($topic, 200);
+    }
+
+    public function topicsSearch(Request $request)
+    {
+        $search = $request->input('search');
+
+        if ($search == '') {
+            return AdminTopicsController::index();
+        } else {
+
+            $data = Topic::whereRaw('LOWER(`title`) LIKE ? ', [trim(strtolower($search)) . '%'])->get();
+
+            return view('administration/topics', ["topics" => $data, "search" => $search]);
+        }
     }
 
     /**
