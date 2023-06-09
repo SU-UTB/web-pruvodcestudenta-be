@@ -11,24 +11,21 @@
     }
 @endphp
 
-<ul class="nav nav-tabs">
-    <li class="nav-item active">
-        <a class="nav-link {{ $aDashboard }}" href="/admin/">Dashboard </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link {{ $aSections }}" href="/admin/sections/">Sections</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link {{ $aTopics }}" href="/admin/topics/">Topics</a>
-    </li>
-    <li class="nav-item ml-auto">
-        <form method="POST" action="{{ route('logout') }}" name="logout-form" id="logout-form">
-            @csrf
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/admin/">
+        <img src="{{asset('images/utb.png')}}" width="30" height="30" class="d-inline-block align-top" alt="">
+        Pruvodce studenta
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-            <div class="form-group">
-                <button type="submit" class="btn btn-blue">Logout</button>
-            </div>
-        </form>
-    </li>
-</ul>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link {{$aDashboard}}" href="/admin/">Dashboard <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link {{$aSections}}" href="/admin/sections/">Sections</a>
+            <a class="nav-item nav-link {{$aTopics}}" href="/admin/topics">Topics</a>
+        </div>
+    </div>
+</nav>
 
