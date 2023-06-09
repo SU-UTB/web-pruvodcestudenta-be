@@ -1,128 +1,120 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<x-app-layout>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <br>
+    <div class="mx-auto" style="width: 250px;">
+        <form name="search-reservation-form" id="search-reservation-form" method="POST"
+              action="{{route('search-sections')}}">
+            @csrf
 
-    <title>{{ config('app.name', 'Pruvodce studenta | Admin') }}</title>
-
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
-
-    <!-- Scripts -->
-    <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
-
-</head>
-
-<body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
-</script>
-<div class="min-h-screen bg-gray-100">
-
-    <x-navbar></x-navbar>
-    <!-- Page Content -->
-    <main>
-
-        <br>
-        <div class="mx-auto" style="width: 250px;">
-            <form name="search-reservation-form" id="search-reservation-form" method="POST"
-                  action="{{route('search-sections')}}">
-                @csrf
-
-                <input type="text" class="form-control" id="search" name="search" placeholder="Search by name..."
-                       value="{{$search}}"
-                       onchange="this.form.submit();">
-            </form>
-        </div>
-        <br>
-        <table class="table table-striped">
-            <thead class="bg-gray-50">
+            <x-bladewind.input type="text" class="form-control" id="search" name="search"
+                               placeholder="Search by name..."
+                               value="{{$search}}"
+                               onchange="this.form.submit();"/>
+        </form>
+        <x-bladewind.button
+            onclick="showModal('add-section')">
+           Add Section
+        </x-bladewind.button>
+    </div>
+    <br>
+    <x-bladewind.table>
+        <x-slot name="header">
+            <th>Title</th>
+            <th>Description</th>
+            <th>Link</th>
+            <th>Color</th>
+            <th>Actions</th>
+        </x-slot>
+        @foreach ($sections as $section)
             <tr>
-                <th scope="col">#</th>
-                <th
-                    scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                    Title
-                </th>
-                <th
-                    scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                    Description
-                </th>
-                <th
-                    scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                    Link
-                </th>
-                <th
-                    scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                    Color
-                </th>
-                <th scope="col" class="relative px-6 py-3">
-                    <span class="sr-only">Save</span>
-                </th>
-                <th scope="col" class="relative px-6 py-3">
-                    <span class="sr-only">Delete</span>
-                </th>
+                <td>
+                    <x-bladewind.input value="{{ $section['title'] }}"/>
+                </td>
+                <td>
+                    <x-bladewind.textarea
+                        placeholder="Description..."> {{ $section['description'] }}</x-bladewind.textarea>
+                </td>
+                <td>{{ $section['link'] }}</td>
+                <td>
+                    <div id="cp{{ $loop->index }}" class="input-group colorpicker-component">
+
+                        <label>
+                            <input type="text" value="#00AABB" class="form-control"/>
+                        </label>
+
+                        <span class="input-group-addon"><i></i></span>
+                    </div>{{--{{ $section['color'] }}--}}</td>
+
+
+                <script type="text/javascript">
+                    $('#cp{{ $loop->index }}').colorpicker();
+                </script>
+                <td>
+                    <div class="flex flex-col">
+                        <x-bladewind.button type="submit" class="btn btn-orange">Save</x-bladewind.button>
+
+                        <x-bladewind.button type="submit" class="btn btn-orange">
+                            <a href="{{ route('deleteSection', $section['id']) }}">Delete</a></x-bladewind.button>
+                    </div>
+                </td>
             </tr>
-            </thead>
-            <tbody>
-            @foreach ($sections as $section)
-                <tr>
-                    <th scope="row">
 
-                    </th>
-                    <td>
-                        <label>
-                            <input value="{{ $section['title'] }}"/>
-                        </label>
-                    </td>
-                    <td>
-                        <label>
-                            <textarea> {{ $section['description'] }}</textarea>
-                        </label>
-                    </td>
-                    <td>{{ $section['link'] }}</td>
-                    <td>{{ $section['color'] }}</td>
-                    <td>
-                        <button type="submit" class="btn btn-orange">{{--
-                            <a href="{{ route('saveSection', $section['id']) }}">Save</a>--}}</button>
-                    </td>
-                    <td>
-                        <button type="submit" class="btn btn-orange">
-                            <a href="{{ route('deleteSection', $section['id']) }}">Delete</a></button>
-                    </td>
-                </tr>
+        @endforeach
+    </x-bladewind.table>
 
-            @endforeach
+    <x-bladewind.modal
+        name="add-section"
+        title="Add section"
+        class="min-w-[200px]">
+        <x-bladewind.notification>
+            <div
+                class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
+                {/*
+                {{--
+                            <HiX class="h-5 w-5" />
+                --}}
+                */}
+            </div>
+            <div class="ml-3 text-sm font-normal">
+                {modalError}
+            </div>
+        </x-bladewind.notification>
+        <br/>
 
+        <x-bladewind.input
+            name="title"
+            required
+            defaultValue={sectionData.title}
+            placeholder="Title"
 
-            </tbody>
-        </table>
+        />
+        <br/>
 
-    </main>
-</div>
+        <x-bladewind.textarea
+            rows={5}
+            required
+            name="description"
+            defaultValue={sectionData.description}
+            placeholder="Description"
 
+        />
+        <br/>
 
-</body>
+        <x-bladewind.input
+            name="link"
+            required
+            defaultValue={sectionData.link}
+            placeholder="Link (e.g. pruvodce.cz/_link_/clanek1)"
 
+        />
+        <br/>
+        <x-color-picker name="bg_color"/>
+        {{--        <x-bladewind.input
+                    name="bg_color"
+                    defaultValue={sectionData.bgColor}
+                    placeholder="Background color (e.g. #FFF111)"
 
-</html>
+                />--}}
+    </x-bladewind.modal>
 
-<script>
-    function onSearch(params) {
-        console.log(params);
-    }
-</script>
+</x-app-layout>
