@@ -46,18 +46,18 @@
                     </td>
                     <td>
                         <x-bladewind.dropdown
-                            id="section-{{$loop->index}}"
-                            name="section_id"
+                            id="section_{{$loop->index}}"
+                            name="section_id_{{$loop->index}}"
                             label_key="title"
                             value_key="id"
                             selectedValue="{{$topic['section_id']}}"
-                            data="{{ json_encode(array_replace([], $sections)) }}"
+                            data="{{ json_encode( $sections) }}"
                         />
                     </td>
                     <td>
                         <x-bladewind.dropdown
-                            id="location-{{$loop->index}}"
-                            name="location_id"
+                            id="location_{{$loop->index}}"
+                            name="location_id_{{$loop->index}}"
                             labelKey="name"
                             valueKey="id"
                             selectedValue="{{$topic['location_id']}}"

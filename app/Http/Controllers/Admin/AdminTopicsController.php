@@ -17,13 +17,25 @@ class AdminTopicsController extends Controller
 
         return view('administration/topics',
             ['topics' => Topic::all(),
-                'sections' => Section::all()->toArray(),
-                'locations' => Location::all()->toArray(), "search" => ""]);
+                'sections' => Section::all(),
+                'locations' => Location::all(), "search" => ""]);
     }
 
     public function update(Request $request, $id)
     {
         $content = Topic::find($id);
+
+        $sectionId = null;
+        $locationId = null;
+
+        foreach ($request->input() as $key => $value)
+            if (preg_match('/^section_id/', $key))
+                $sectionId = $value;
+            else if (preg_match('/^location_id/', $key))
+                $locationId = $value;
+
+        dd($sectionId . ' ' . $locationId);
+
         $content->update([
             'title' => $request->input('title') ?? '',
             'description' => $request->input('description') ?? '',
