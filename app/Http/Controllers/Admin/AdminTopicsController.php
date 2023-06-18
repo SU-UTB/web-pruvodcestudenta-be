@@ -93,16 +93,12 @@ class AdminTopicsController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return int
-     */
-    public function destroy($id)
+    public function delete(Request $request, $id)
     {
-        return Topic::destroy($id);
+        Topic::destroy($id);
+        return $this->index();
     }
+
 
     private function getLinkFromName(string $input)
     {

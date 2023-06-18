@@ -23,6 +23,7 @@
             <th>Description</th>
             <th>Section</th>
             <th>Location</th>
+            <th>Url</th>
             <th>Actions</th>
         </x-slot>
         @foreach ($topics as $topic)
@@ -63,6 +64,11 @@
                             data="{{ json_encode($locations) }}"
 
                         />
+                    </td>
+                    <td>
+                        <x-bladewind.input
+                            name="url"
+                            value="{{ $topic['url'] }}"/>
                     </td>
 
                     <td>

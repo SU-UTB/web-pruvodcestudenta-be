@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/topics/', [AdminTopicsController::class, 'index'])->name('topics');
     Route::post('/admin/topics/search/', [AdminTopicsController::class, 'topicsSearch'])->name('search-topics');
     Route::put('/admin/topics/{id}/', [AdminTopicsController::class, 'update'])->name('saveTopic');
-    Route::get('/admin/topics/{id}/', [AdminTopicsController::class, 'cancel'])->name('deleteTopic');
+    Route::get('/admin/topics/{id}/', [AdminTopicsController::class, 'delete'])->name('deleteTopic');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -53,8 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/admin/sections/{id}', [AdminSectionsController::class, 'destroy'])->name('admin.sections.destroy');
 
     Route::post('/admin/topics', [AdminTopicsController::class, 'store'])->name('admin.topics.create');
-    /*    Route::put('/admin/topics/{id}', [AdminTopicsController::class, 'update'])->name('admin.topics.update');
-        Route::delete('/admin/topics/{id}', [AdminTopicsController::class, 'destroy'])->name('admin.topics.destroy');*/
+    Route::delete('/admin/topics/{id}', [AdminTopicsController::class, 'destroy'])->name('admin.topics.destroy');
 
 
 });
