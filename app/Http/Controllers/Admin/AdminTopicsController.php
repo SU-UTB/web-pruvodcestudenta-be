@@ -34,15 +34,14 @@ class AdminTopicsController extends Controller
             else if (preg_match('/^location_id/', $key))
                 $locationId = $value;
 
-        dd($sectionId . ' ' . $locationId);
 
         $content->update([
             'title' => $request->input('title') ?? '',
             'description' => $request->input('description') ?? '',
             'bg_color' => $request->input('bg_color') ?? '',
             'image' => $request->input('image') ?? '',
-            'section_id' => $request->input('section_id') ?? 1,
-            'location_id' => $request->input('location_id') ?? 3,
+            'section_id' => $sectionId ?? 1,
+            'location_id' => $locationId ?? 3,
             'url' => $request->input('url') ?? ''
         ]);
 
