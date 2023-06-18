@@ -1,6 +1,6 @@
 @props([
     // determines types of icon to display. Available options: info, success, error, warning
-    // only the blank type (type='') has no icon. useful if you want your modal to contain a form 
+    // only the blank type (type='') has no icon. useful if you want your modal to contain a form
     // or other custom content
     'type' => '',
     // title text to display. example: Confirm your delete action
@@ -13,11 +13,11 @@
     // text to display on secondary button. default is Cancel
     'cancel_button_label' => 'Cancel',
     'cancelButtonLabel' => 'Cancel',
-    // action to perform when secondary button is clicked. default is close. 
+    // action to perform when secondary button is clicked. default is close.
     // provide a custom js function as string to execute that function. example "saveUser"
     'ok_button_action' => 'close',
     'okButtonAction' => 'close',
-    // action to perform when primary button is clicked. default is close. 
+    // action to perform when primary button is clicked. default is close.
     // provide a custom js function as a string to execute that function. example "confirmAction"
     'cancel_button_action' => 'close',
     'cancelButtonAction' => 'close',
@@ -81,15 +81,15 @@
 
 <span class="sm:w-1/6 sm:w-1/5 sm:w-1/4 sm:w-1/3 sm:w-2/5 sm:w-2/3 sm:w-11/12"></span>
 
-<div 
-    class="w-full h-full bg-black/40 fixed left-0 top-0 backdrop-blur-md z-40 flex bw-modal bw-{{$name}}-modal hidden" 
+<div
+    class="w-full h-full bg-black/40 fixed left-0 top-0 backdrop-blur-md z-40 flex bw-modal bw-{{$name}}-modal hidden"
     aria-backdrop-can-close="{{$backdrop_can_close}}">
     <div class="sm:{{$sizes[$size]}} w-full p-4 m-auto bw-{{$name}}">
         <div class="bg-white dark:bg-slate-900 dark:border dark:border-slate-800 rounded-lg drop-shadow-2xl">
             <div class="flex">
                 @if($type !== '')
                     <div class="modal-icon py-6 pl-6 grow-0">
-                        <x-bladewind::modal-icon type="{{ $type }}"></x-bladewind::modal-icon>
+                        <x-bladewind.modal-icon type="{{ $type }}"></x-bladewind.modal-icon>
                     </div>
                 @endif
                 <div class="modal-body grow p-6">
@@ -101,16 +101,16 @@
             </div>
             @if( $show_action_buttons )
                 <div class="modal-footer @if($center_action_buttons || in_array($size, ['tiny', 'small', 'medium'])) text-center @else text-right @endif bg-gray-100 dark:bg-slate-800/50 dark:border-t dark:border-slate-800 py-3 px-6 rounded-br-lg rounded-bl-lg">
-                    <x-bladewind::button 
-                        type="secondary"  
-                        size="{{$button_size}}" 
+                    <x-bladewind.button
+                        type="secondary"
+                        size="{{$button_size}}"
                         onclick="{!! $cancelAction !!}"
-                        class="cancel {{ $cancelCss }}">{{$cancel_button_label}}</x-bladewind::button>
-                        
-                    <x-bladewind::button
-                        size="{{$button_size}}" 
+                        class="cancel {{ $cancelCss }}">{{$cancel_button_label}}</x-bladewind.button>
+
+                    <x-bladewind.button
+                        size="{{$button_size}}"
                         onclick="{!! $okAction !!}"
-                        class="okay ml-3 {{ $okCss }}">{{$ok_button_label}}</x-bladewind::button>
+                        class="okay ml-3 {{ $okCss }}">{{$ok_button_label}}</x-bladewind.button>
                 </div>
             @endif
         </div>
@@ -118,13 +118,13 @@
 </div>
 
 <script>
-    dom_el('.bw-{{$name}}-modal').addEventListener('click', function (e){ 
+    dom_el('.bw-{{$name}}-modal').addEventListener('click', function (e){
         let backdrop_can_close = this.getAttribute('aria-backdrop-can-close');
         if(backdrop_can_close) hide('.bw-{{$name}}-modal');
     });
 
-    dom_el('.bw-{{$name}}').addEventListener('click', function (e){ 
-        e.stopImmediatePropagation(); 
+    dom_el('.bw-{{$name}}').addEventListener('click', function (e){
+        e.stopImmediatePropagation();
     });
 
     if(dom_els('.bw-{{$name}}-modal .modal-footer>button')){

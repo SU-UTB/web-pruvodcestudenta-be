@@ -29,7 +29,7 @@
     <div class="flex {{ $name }}-boxes">
         <div class="flex space-x-3 mx-auto">
             @for ($x = 0; $x < $total_digits; $x++)
-                <x-bladewind::input
+                <x-bladewind.input
                     numeric="true"
                     with_dots="false"
                     add_clearing="false"
@@ -45,7 +45,7 @@
         {!! $error_message !!}
     </div>
     <div class="bg-white/10 absolute w-full text-center hidden top-0 py-4 bw-{{ $name }}-pin-spinner">
-        <x-bladewind::spinner/>
+        <x-bladewind.spinner/>
     </div>
     <div class="bg-white/10 absolute w-full text-center hidden top-0 py-1 bw-{{ $name }}-pin-valid">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-500 mx-auto" viewBox="0 0 20 20" fill="currentColor">
@@ -53,7 +53,7 @@
         </svg>
     </div>
 </div>
-<x-bladewind::input type="hidden" name="{{ $name }}"/>
+<x-bladewind.input type="hidden" name="{{ $name }}"/>
 
 <script>
     movePinNext = (name , index , total_digits , user_function , evt) => {

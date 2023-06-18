@@ -51,7 +51,7 @@
 @endphp
 <span class="!border-red-400 hidden"></span>
 <div class="w-full bw-alert rounded-md flex p-3 {{$color[$shade][$type] }} {{ $color[$shade][$type.'_text'] }} {{ $class }}">
-    @if($show_icon) <div class="pt-[1px]"><x-bladewind::modal-icon type="{{$type}}" class="!h-6 !w-6 {{ $color[$shade][$type.'_icon_color']??'' }}" /></div> @endif
+    @if($show_icon) <div class="pt-[1px]"><x-bladewind.modal-icon type="{{$type}}" class="!h-6 !w-6 {{ $color[$shade][$type.'_icon_color']??'' }}" /></div> @endif
     <div class="grow pl-2 pr-5">{{ $slot }}</div>
-    @if($show_close_icon) <div class="text-right"><x-bladewind::icon name="x-circle" class="h-5 w-5 inline cursor-pointer ml-3 opacity-60 hover:opacity-100 pt-[1px] dark:text-slate-100" /></div> @endif
+    @if($show_close_icon) <div class="text-right"><x-bladewind.icon name="x-circle" class="h-5 w-5 inline cursor-pointer ml-3 opacity-60 hover:opacity-100 pt-[1px] dark:text-slate-100" /></div> @endif
 </div>
