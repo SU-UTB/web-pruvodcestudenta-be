@@ -54,7 +54,8 @@
                             </label>
 
                             <span class="input-group-addon"><i></i></span>
-                        </div>{{--{{ $section['color'] }}--}}</td>
+                        </div>
+                    </td>
 
 
                     <script type="text/javascript">
@@ -72,6 +73,7 @@
                         </div>
                     </td>
                 </tr>
+
             </form>
         @endforeach
     </x-bladewind.table>
@@ -79,53 +81,60 @@
     <x-bladewind.modal
         name="add-section"
         title="Add section"
-        class="min-w-[200px]">
-        @if($errors->any())
-            <x-bladewind.alert>
+        size="large"
+        show_action_buttons="false">
+        <form name="create-section-form" id="create-section-form" method="POST"
+              action="{{route('admin.sections.create')}}">
+            @csrf
+            @if($errors->any())
+                <x-bladewind.alert>
 
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </x-bladewind.alert>
-        @endif
-        <br/>
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </x-bladewind.alert>
+            @endif
+            <br/>
 
-        <x-bladewind.input
-            name="title"
-            required
-            defaultValue={sectionData.title}
-            placeholder="Title"
+            <x-bladewind.input
+                name="title"
+                required
+                placeholder="Title"
 
-        />
-        <br/>
+            />
+            <br/>
 
-        <x-bladewind.textarea
-            rows={5}
-            required
-            name="description"
-            defaultValue={sectionData.description}
-            placeholder="Description"
+            <x-bladewind.textarea
+                rows={5}
+                required
+                name="description"
+                placeholder="Description"
 
-        />
-        <br/>
+            />
+            <br/>
 
-        <x-bladewind.input
-            name="link"
-            required
-            defaultValue={sectionData.link}
-            placeholder="Link (e.g. pruvodce.cz/_link_/clanek1)"
+            <div id="cp-modal" class="input-group colorpicker-component">
 
-        />
-        <br/>
-        <x-color-picker name="bg_color"/>
-        {{--        <x-bladewind.input
+                <x-bladewind.input
                     name="bg_color"
-                    defaultValue={sectionData.bgColor}
-                    placeholder="Background color (e.g. #FFF111)"
+                    type="text" class="form-control"
+                    placeholder="Color (#FFFFFF)"
+                />
 
-                />--}}
+                <span class="input-group-addon"><i></i></span>
+
+                <script type="text/javascript">
+                    $('#cp-modal').colorpicker();
+                </script>
+            </div>
+            <br/>
+            <x-bladewind.button size="tiny"
+                                canSubmit="true">
+                Add Section
+            </x-bladewind.button>
+        </form>
     </x-bladewind.modal>
 
 </x-app-layout>

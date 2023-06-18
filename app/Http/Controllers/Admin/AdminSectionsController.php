@@ -7,6 +7,7 @@ use App\Models\Section;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Transliterator;
 use function GuzzleHttp\Promise\all;
 
 class AdminSectionsController extends Controller
@@ -36,21 +37,19 @@ class AdminSectionsController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'link' => 'required',
-            'bgColor' => 'required'
         ]);
 
         $section = Section::create(
             [
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
-                'link' => $request->input('link'),
-                'bg_color' => $request->input('bgColor'),
+                'link' => $request->input('link') ?? $this->getLinkFromName($request->input('title')),
+                'bg_color' => $request->input('bg_color') ?? '#FF9F63',
                 'image' => ''
             ]
         );
 
-        return response()->json($section, 200);
+        return $this->index();
     }
 
 
@@ -106,5 +105,13 @@ class AdminSectionsController extends Controller
     public function destroy($id)
     {
         return Section::destroy($id);
+    }
+
+    private function getLinkFromName(string $input)
+    {
+        $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: Lower(); :: NFC;', Transliterator::FORWARD);
+        $normalized = $transliterator->transliterate($input);
+
+        return str_replace(" ", "-", $normalized);
     }
 }
