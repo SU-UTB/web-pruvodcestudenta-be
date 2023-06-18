@@ -11,7 +11,7 @@ class AdminLandingController extends Controller
 {
     function index()
     {
-        return response([
+        return view('dashboard',[
             'countOfSections' => Section::count(),
             'countOfTopics' => Topic::count(),
         ]);
