@@ -30,21 +30,21 @@
 @endphp
 <div class="border-gray-500"></div>
 <div class="relative px-2 py-3 border-2 border-dashed border-gray-300 dark:text-slate-300 dark:border-slate-700 dark:bg-slate-800 hover:dark:border-slate-600 text-center cursor-pointer rounded-md bw-fp-{{ $name }} @if($add_clearing) mb-3 @endif">
-    <x-bladewind::icon name="document-text" class="h-6 w-6 absolute z-20 left-4 text-gray-300" />
+    <x-bladewind.icon name="document-text" class="h-6 w-6 absolute z-20 left-4 text-gray-300" />
     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute z-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
     </svg>
-    <x-bladewind::icon name="x-circle" class="absolute right-3 h-8 w-8 text-gray-600 hover:text-gray-800 clear cursor-pointer hidden" type="solid" />
+    <x-bladewind.icon name="x-circle" class="absolute right-3 h-8 w-8 text-gray-600 hover:text-gray-800 clear cursor-pointer hidden" type="solid" />
     <span class="text-gray-400/80 px-6 pl-10 zoom-out inline-block selection">
         {{ $placeholder }}
         @if($required) <span class="text-red-300">*</span>@endif
     </span>
     <div class="w-0 h-0 overflow-hidden">
-        <input 
-            type="file" 
+        <input
+            type="file"
             name="{{ $name }}"
             class="bw-{{ $name }} @if($required) required @endif"
-            id="bw_{{ $name }}" 
+            id="bw_{{ $name }}"
             accept="{{ $accepted_file_types }}" />
             <textarea class="b64-{{ $name }}@if($required) required @endif" name="b64_{{ $name }}"></textarea>
     </div>
@@ -83,7 +83,7 @@
 
             if (file) {
                 if(allowedFileSize(file.size, {{$max_file_size}})) {
-                    dom_el('.bw-fp-{{ $name }} .selection').innerHTML = 
+                    dom_el('.bw-fp-{{ $name }} .selection').innerHTML =
                     ( file.type.indexOf('image') !== -1) ? '<img src="'+ URL.createObjectURL(file) + '" />' : file.name;
                     convertToBase64(file, '.b64-{{ $name }}');
                 } else {
@@ -99,11 +99,11 @@
         changeCss('.bw-fp-{{ $name }} .clear', 'hidden');
         e.stopImmediatePropagation();
     });
-    
+
     convertToBase64 = function(file, el){
         const reader = new FileReader();
         reader.onloadend = () => {
-            const base64String = reader.result;//.replace('data:', '').replace(/^.+,/, ''); 
+            const base64String = reader.result;//.replace('data:', '').replace(/^.+,/, '');
             dom_el(el).value = base64String;
         };
         reader.readAsDataURL(file);

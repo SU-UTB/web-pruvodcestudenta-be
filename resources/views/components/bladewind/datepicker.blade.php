@@ -91,7 +91,7 @@
             x-ref="date"
             :value="datepickerValue"
             value="{{ $default_date }}"   />
-        <x-bladewind::input
+        <x-bladewind.input
             {{-- class="bw-datepicker bw-input block w-full peer {{$name}}" --}}
             class="bw-datepicker"
             x-on:click="showDatepicker = !showDatepicker"
@@ -163,7 +163,7 @@
 @else
     <div class="grid grid-cols-2 gap-2">
         <div>
-            <x-bladewind::datepicker
+            <x-bladewind.datepicker
                 name="{{ $date_from_name }}"
                 type="single"
                 placeholder="{{$date_from_label}}"
@@ -173,7 +173,7 @@
                 format="{{$format}}" />
         </div>
         <div>
-            <x-bladewind::datepicker
+            <x-bladewind.datepicker
                 name="{{ $date_to_name }}"
                 type="single"
                 placeholder="{{$date_to_label}}"

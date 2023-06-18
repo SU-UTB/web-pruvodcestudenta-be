@@ -97,13 +97,13 @@
     @endif
 >
     @if(!empty($icon) && !$icon_right)
-        <x-bladewind::icon name="{{$icon}}" class="h-5 w-5 !-ml-2 mr-1 dark:text-white/80" />
+        <x-bladewind.icon name="{{$icon}}" class="h-5 w-5 !-ml-2 mr-1 dark:text-white/80" />
     @endif
     <span class="{{ $button_text_colour }}">{{ $slot }}</span>
     @if(!empty($icon) && $icon_right && !$has_spinner)
-        <x-bladewind::icon name="{{$icon}}" class="h-5 w-5 !-mr-2 ml-2 dark:text-white/80" />
+        <x-bladewind.icon name="{{$icon}}" class="h-5 w-5 !-mr-2 ml-2 dark:text-white/80" />
     @endif
     @if($has_spinner)
-        <x-bladewind::spinner class="{{ $spinner_css }}"></x-bladewind::spinner>
+        <x-bladewind.spinner class="{{ $spinner_css }}"></x-bladewind.spinner>
     @endif
 </{{$tag}}>
