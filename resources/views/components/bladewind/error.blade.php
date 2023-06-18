@@ -7,7 +7,7 @@
     'buttonUrl' => '/',
     'image' => '',
 ])
-@php 
+@php
     // reset variables for Laravel 8 support
     if ($buttonText !== $button_text) $button_text = $buttonText;
     if ($buttonUrl !== $button_url) $button_url = $buttonUrl;
@@ -20,7 +20,7 @@
             {!! $description !!}
         </p>
         <div class="text-center pt-2">
-            <a href="{{ $button_url }}"><x-bladewind::button type="primary" size="small">{{ $button_text }}</x-bladewind::button></a>
+            <a href="{{ $button_url }}"><x-bladewind.button type="primary" size="small">{{ $button_text }}</x-bladewind.button></a>
         </div>
     </div>
 </div>

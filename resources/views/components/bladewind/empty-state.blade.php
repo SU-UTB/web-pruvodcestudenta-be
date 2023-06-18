@@ -22,8 +22,8 @@
     @if($message != '')<div class="text-slate-600/70 dark:text-slate-500 px-6">{!!$message!!}</div>@endif
     <div class="pt-2">{!! $slot !!}</div>
     @if($button_label != '')
-        <x-bladewind::button
+        <x-bladewind.button
             onclick="{!!$onclick!!}" class="block mx-auto my-4"
-            size="small">{{$button_label}}</x-bladewind::button>
+            size="small">{{$button_label}}</x-bladewind.button>
     @endif
 </div>

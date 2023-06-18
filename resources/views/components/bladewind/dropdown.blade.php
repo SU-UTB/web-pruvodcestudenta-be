@@ -155,7 +155,7 @@
         <div class="dropdown-items border border-gray-300 dark:border-slate-700 divide-y relative w-full">
             @if($searchable)
                 <div class="bg-slate-50 dark:text-slate-300 dark:border-slate-700 dark:bg-slate-900 sticky top-0 min-w-full">
-                    <x-bladewind::input
+                    <x-bladewind.input
                         name="search-dropdown"
                         add_clearing="false"
                         class="w-full bg-transparent border-0 focus:border-0"
@@ -195,7 +195,7 @@
                     data-label="{{ $data[$x]->$label_key }}"
                     data-parent="{{ $name }}">
                     @if ($flag_key != '' && $image_key == '')<i class="{{ $data[$x]->{$flag_key} }} flag"></i>@endif
-                    @if ($image_key != '')<x-bladewind::avatar size="tiny" css="!mr-3" image="{{ $data[$x]->{$image_key} }}" />@endif
+                    @if ($image_key != '')<x-bladewind.avatar size="tiny" css="!mr-3" image="{{ $data[$x]->{$image_key} }}" />@endif
                     <div>{!! $data[$x]->$label_key !!}</div>
                 </div>
             @endfor

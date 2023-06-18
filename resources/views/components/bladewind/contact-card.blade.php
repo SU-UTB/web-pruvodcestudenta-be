@@ -18,7 +18,7 @@
 <div class="bw-contact-card bg-white dark:bg-slate-900 dark:border dark:border-slate-800/50 py-4 pl-6 pr-4 rounded-lg @if($has_shadow) shadow-2xl shadow-gray-200/40 dark:shadow-xl dark:shadow-slate-900 @endif {{ $css }}">
     <div class="flex items-start">
         <div>
-            <x-bladewind::avatar image="{{ $image }}" />
+            <x-bladewind.avatar image="{{ $image }}" />
         </div>
         <div class="grow pl-3">
             <strong>{{ $name }}</strong>

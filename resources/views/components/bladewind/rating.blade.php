@@ -11,14 +11,14 @@
         'big' => 14,
     ],
 ])
-@php 
-    $name = str_replace(' ', '-', $name); 
+@php
+    $name = str_replace(' ', '-', $name);
     $size_adjustment = ($size == 'big') ? 2 : 1;
 @endphp
-<x-bladewind::input type="hidden" css="rating-value-{{$name}}" selected_value="{{$rating}}" />
+<x-bladewind.input type="hidden" css="rating-value-{{$name}}" selected_value="{{$rating}}" />
 <div class="h-{{$sizing[$size]+$size_adjustment}} overflow-hidden inline-block">
-@for ($x = 1; $x < 6; $x++) 
-    <div class="inline bw-rating-{{$x}} {{$name}}@if($rating!= 0 && $x <= $rating*1) rated @endif" onmouseover="flipStars('{{$name}}', {{$rating}}, {{$x}}, 'on')" onmouseout="flipStars('{{$name}}', {{$rating}}, {{$x}}, 'off')" data-rating="{{$x}}" onclick="setRating('{{$name}}', {{$x}});{!!$onclick!!}">   
+@for ($x = 1; $x < 6; $x++)
+    <div class="inline bw-rating-{{$x}} {{$name}}@if($rating!= 0 && $x <= $rating*1) rated @endif" onmouseover="flipStars('{{$name}}', {{$rating}}, {{$x}}, 'on')" onmouseout="flipStars('{{$name}}', {{$rating}}, {{$x}}, 'off')" data-rating="{{$x}}" onclick="setRating('{{$name}}', {{$x}});{!!$onclick!!}">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-{{$sizing[$size]+$size_adjustment}} w-{{$sizing[$size]+$size_adjustment}} filled @if($rating==0 || $x > $rating*1) hidden @endif inline text-{{$color}}-500 cursor-pointer @if($size=='big') mx-[-3px] @else mr-[-2px] @endif mt-[-1px]" viewBox="0 0 20 20" fill="currentColor">
         @if($type == 'heart')
             <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
@@ -65,7 +65,7 @@
             for(x=rate; x<=6; x++){
                 unhide(`.bw-rating-${x}.${name} .empty`);
                 hide(`.bw-rating-${x}.${name} .filled`);
-            }    
+            }
         }
         for(x=1; x<=rate; x++){
             unhide(`.bw-rating-${x}.${name} .filled`);
