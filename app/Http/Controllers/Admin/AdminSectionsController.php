@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Section;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -53,22 +54,19 @@ class AdminSectionsController extends Controller
     }
 
 
-    public function cancel(Request $request, $id)
+    public function delete(Request $request, $id)
     {
-        dd($id);
-        /*     $seats = Seat::where('rezervace', '=', $id)->get();
+        $section = Section::find($id);
 
-             foreach ($seats as $seat) {
-                 $seat->rezervace = null;
-                 $seat->save();
-             }
-             $availableStands = AvailableStands::find(1);
-             $availableStands->update([
-                 'count' =>  $availableStands->count + Reservation::find($id)->stand,
-             ]);
-             $availableStands->save();
-             $this->destroy($id);
-             return AdminSectionsController::();*/
+        $topics = Topic::where('section_id', '=', $id)->get();
+
+        if (count($topics) !== 0) {
+            return response("Section has topics, please remove them first, then delete section!", 400);
+        }
+
+        Section::destroy($id);
+
+        return $this->index();
     }
 
     public function sectionsSearch(Request $request)

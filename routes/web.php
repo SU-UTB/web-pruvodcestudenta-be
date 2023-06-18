@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/sections/', [AdminSectionsController::class, 'index'])->name('sections');
     Route::post('/admin/sections/search/', [AdminSectionsController::class, 'sectionsSearch'])->name('search-sections');
     Route::put('/admin/sections/{id}/', [AdminSectionsController::class, 'update'])->name('saveSection');
-    Route::get('/admin/sections/{id}/', [AdminSectionsController::class, 'cancel'])->name('deleteSection');
+    Route::get('/admin/sections/{id}/', [AdminSectionsController::class, 'delete'])->name('deleteSection');
 
     Route::get('/admin/topics/', [AdminTopicsController::class, 'index'])->name('topics');
     Route::post('/admin/topics/search/', [AdminTopicsController::class, 'topicsSearch'])->name('search-topics');
