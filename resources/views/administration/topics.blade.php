@@ -23,7 +23,6 @@
             <th>Description</th>
             <th>Section</th>
             <th>Location</th>
-            <th>Color</th>
             <th>Actions</th>
         </x-slot>
         @foreach ($topics as $topic)
@@ -65,21 +64,7 @@
 
                         />
                     </td>
-                    <td>
-                        <div id="cp{{ $loop->index }}" class="input-group colorpicker-component">
 
-                            <label>
-                                <x-bladewind.input
-                                    name="bg_color"
-                                    type="text" value="{{$topic['bg_color']}}" class="form-control"/>
-                            </label>
-
-                            <span class="input-group-addon"><i></i></span>
-
-
-                    <script type="text/javascript">
-                        $('#cp{{ $loop->index }}').colorpicker();
-                    </script>
                     <td>
                         <div class="d-flex flex-column">
                             <x-bladewind.button size="tiny"
@@ -97,55 +82,74 @@
     </x-bladewind.table>
 
     <x-bladewind.modal
-        name="add-section"
+        name="add-topic"
         title="Add topic"
-        class="min-w-[200px]">
-        @if($errors->any())
-            <x-bladewind.alert>
+        size="large"
+        show_action_buttons="false">
+        <form name="create-topic-form" id="create-topic-form" method="POST"
+              action="{{route('admin.topics.create')}}">
+            @csrf
 
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </x-bladewind.alert>
-        @endif
-        <br/>
+            @if($errors->any())
+                <x-bladewind.alert>
 
-        <x-bladewind.input
-            name="title"
-            required
-            defaultValue={sectionData.title}
-            placeholder="Title"
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </x-bladewind.alert>
+            @endif
+            <br/>
 
-        />
-        <br/>
+            <x-bladewind.input
+                name="title"
+                required
+                placeholder="Title"
 
-        <x-bladewind.textarea
-            rows={5}
-            required
-            name="description"
-            defaultValue={sectionData.description}
-            placeholder="Description"
+            />
+            <br/>
 
-        />
-        <br/>
+            <x-bladewind.textarea
+                rows={5}
+                required
+                name="description"
+                placeholder="Description"
 
-        <x-bladewind.input
-            name="link"
-            required
-            defaultValue={sectionData.link}
-            placeholder="Link (e.g. pruvodce.cz/_link_/clanek1)"
+            />
+            <br/>
 
-        />
-        <br/>
-        <x-color-picker name="bg_color"/>
-        {{--        <x-bladewind.input
-                    name="bg_color"
-                    defaultValue={sectionData.bgColor}
-                    placeholder="Background color (e.g. #FFF111)"
+            <x-bladewind.dropdown
+                id="section_id"
+                name="section_id"
+                label_key="title"
+                value_key="id"
+                placeholder="Section"
+                data="{{ json_encode( $sections) }}"
+            />
+            <br/>
+            <x-bladewind.dropdown
+                id="location_id"
+                name="location_id"
+                labelKey="name"
+                valueKey="id"
+                placeholder="Location"
+                data="{{ json_encode( $locations) }}"
 
-                />--}}
+            />
+            <br/>
+            <x-bladewind.input
+                name="url"
+                placeholder="Url"
+
+            />
+            <br/>
+
+            <x-bladewind.button size="tiny"
+                                canSubmit="true">
+                Add Topic
+            </x-bladewind.button>
+        </form>
     </x-bladewind.modal>
 
 </x-app-layout>

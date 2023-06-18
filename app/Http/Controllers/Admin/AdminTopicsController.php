@@ -9,6 +9,7 @@ use App\Models\Topic;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Transliterator;
 
 class AdminTopicsController extends Controller
 {
@@ -38,7 +39,7 @@ class AdminTopicsController extends Controller
         $content->update([
             'title' => $request->input('title') ?? '',
             'description' => $request->input('description') ?? '',
-            'bg_color' => $request->input('bg_color') ?? '',
+            'bg_color' => $request->input('bg_color') ?? isset($content->bg_color) ? $content->bg_color : '#FF9F63',
             'image' => $request->input('image') ?? '',
             'section_id' => $sectionId ?? 1,
             'location_id' => $locationId ?? 3,
@@ -50,6 +51,7 @@ class AdminTopicsController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -57,20 +59,22 @@ class AdminTopicsController extends Controller
             'location_id' => 'required'
         ]);
 
+        $section = Section::find($request->section_id);
+
         $topic = Topic::create(
             [
                 'title' => $request->input('title') ?? '',
                 'description' => $request->input('description') ?? '',
-                'link' => $request->input('link') ?? '',
+                'link' => $this->getLinkFromName($request->input('title')),
                 'url' => $request->input('url') ?? '',
-                'bg_color' => $request->input('bg_color') ?? '',
+                'bg_color' => $section->bg_color,
                 'image' => '',
                 'section_id' => $request->input('section_id'),
                 'location_id' => $request->input('location_id')
             ]
         );
 
-        return response()->json($topic, 200);
+        return $this->index();
     }
 
     public function topicsSearch(Request $request)
@@ -83,7 +87,9 @@ class AdminTopicsController extends Controller
 
             $data = Topic::whereRaw('LOWER(`title`) LIKE ? ', [trim(strtolower($search)) . '%'])->get();
 
-            return view('administration/topics', ["topics" => $data, "search" => $search]);
+            return view('administration/topics', ["topics" => $data, "search" => $search,
+                'sections' => Section::all(),
+                'locations' => Location::all()]);
         }
     }
 
@@ -96,5 +102,13 @@ class AdminTopicsController extends Controller
     public function destroy($id)
     {
         return Topic::destroy($id);
+    }
+
+    private function getLinkFromName(string $input)
+    {
+        $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: Lower(); :: NFC;', Transliterator::FORWARD);
+        $normalized = $transliterator->transliterate($input);
+
+        return str_replace(" ", "-", $normalized);
     }
 }

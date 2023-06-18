@@ -51,12 +51,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/admin/sections', [AdminSectionsController::class, 'store'])->name('admin.sections.create');
     Route::delete('/admin/sections/{id}', [AdminSectionsController::class, 'destroy'])->name('admin.sections.destroy');
-/*
-    //TODO Topics view
-    Route::get('/admin/topics', [AdminTopicsController::class, 'index'])->name('admin.topics');
+
     Route::post('/admin/topics', [AdminTopicsController::class, 'store'])->name('admin.topics.create');
-    Route::put('/admin/topics/{id}', [AdminTopicsController::class, 'update'])->name('admin.topics.update');
-    Route::delete('/admin/topics/{id}', [AdminTopicsController::class, 'destroy'])->name('admin.topics.destroy');*/
+    /*    Route::put('/admin/topics/{id}', [AdminTopicsController::class, 'update'])->name('admin.topics.update');
+        Route::delete('/admin/topics/{id}', [AdminTopicsController::class, 'destroy'])->name('admin.topics.destroy');*/
 
 
 });
