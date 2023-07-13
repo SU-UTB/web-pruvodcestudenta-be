@@ -36,3 +36,8 @@ Route::resource('pages/landing', LandingController::class);
 Route::resource('sections', SectionController::class);
 Route::resource('topics', TopicController::class);
 Route::resource('locations', LocationController::class);
+
+
+Route::post('external/reservation', [\App\Http\Controllers\ExternalApiController::class, 'postReservationEmail']);
+Route::post('external/cancel', [\App\Http\Controllers\ExternalApiController::class, 'postCancelEmail']);
+Route::post('external/contact', [\App\Http\Controllers\ExternalApiController::class, 'postCreateContact']);
