@@ -21,6 +21,22 @@ class AdminTopicsController extends Controller
                 'locations' => Location::all(), "search" => ""]);
     }
 
+    public function topicsSearch(Request $request)
+    {
+        $search = $request->input('search');
+
+        if ($search == '') {
+            return AdminTopicsController::index();
+        } else {
+
+            $data = Topic::whereRaw('LOWER(`title`) LIKE ? ', [trim(strtolower($search)) . '%'])->paginate(10);
+
+            return view('administration/topics', ["paginationTopics" => $data, "search" => $search,
+                'sections' => Section::all(),
+                'locations' => Location::all()]);
+        }
+    }
+
     public function update(Request $request, $id)
     {
         $content = Topic::find($id);
@@ -76,21 +92,6 @@ class AdminTopicsController extends Controller
         return $this->index();
     }
 
-    public function topicsSearch(Request $request)
-    {
-        $search = $request->input('search');
-
-        if ($search == '') {
-            return AdminTopicsController::index();
-        } else {
-
-            $data = Topic::whereRaw('LOWER(`title`) LIKE ? ', [trim(strtolower($search)) . '%'])->get();
-
-            return view('administration/topics', ["topics" => $data, "search" => $search,
-                'sections' => Section::all(),
-                'locations' => Location::all()]);
-        }
-    }
 
     public function delete(Request $request, $id)
     {
