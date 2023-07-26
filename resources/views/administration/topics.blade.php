@@ -91,7 +91,7 @@
     </x-bladewind.table>
 
     <br/>
-    <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+    <nav aria-label="Topics example" class="d-flex justify-content-center">
         <ul class="pagination">
             @for ($i = 1; $i <= $paginationTopics->lastPage(); $i++)
                 @if($i === 1)

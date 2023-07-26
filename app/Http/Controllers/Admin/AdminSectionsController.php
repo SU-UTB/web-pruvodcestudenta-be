@@ -15,7 +15,8 @@ class AdminSectionsController extends Controller
 {
     public static function index()
     {
-        return view('administration/sections', ['sections' => Section::all(), "search" => ""]);
+        return view('administration/sections',
+            ['paginationSections' => Section::paginate(10), "search" => ""]);
     }
 
     public function update(Request $request, $id)

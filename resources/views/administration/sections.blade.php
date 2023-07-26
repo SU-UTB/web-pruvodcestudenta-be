@@ -1,3 +1,6 @@
+@php
+    $sections = $paginationSections->items();
+@endphp
 <x-app-layout>
     <br>
     <div class="mx-auto d-flex justify-center items-center">
@@ -77,6 +80,28 @@
             </form>
         @endforeach
     </x-bladewind.table>
+
+    <br/>
+    <nav aria-label="Sections pagination" class="d-flex justify-content-center">
+        <ul class="pagination">
+            @for ($i = 1; $i <= $paginationSections->lastPage(); $i++)
+                @if($i === 1)
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="{{$paginationSections->previousPageUrl()}}">Previous</a>
+                    </li>
+                @endif
+                <li class="page-item"><a class="page-link" href="/admin/sections?page={{$i}}">{{$i}}</a></li>
+                @if($i === $paginationSections->lastPage())
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="{{$paginationSections->nextPageUrl()}}">Next</a></li>
+                @endif
+            @endfor
+        </ul>
+    </nav>
+
+    <br/>
 
     <x-bladewind.modal
         name="add-section"
