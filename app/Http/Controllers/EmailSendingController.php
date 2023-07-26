@@ -103,6 +103,8 @@ class EmailSendingController extends Controller
                         : file_get_contents(dirname(__DIR__, 2) . '/View/Email/ReservationSubstituteTemplate.htm');
             case EmailContent::Cancel:
                 return file_get_contents(dirname(__DIR__, 2) . '/View/Email/CancelTemplate.htm');
+            case EmailContent::AfterPay:
+                return file_get_contents(dirname(__DIR__, 2) . '/View/Email/AfterPaymentTemplate.htm');
         }
     }
 
@@ -113,6 +115,8 @@ class EmailSendingController extends Controller
                 return !self::isSubstitute($data) ? 'Seznamovák UTB 2023 - Potvrzení rezervace' : 'Seznamovák UTB 2023 - Rezervace náhradníka';
             case EmailContent::Cancel:
                 return 'Seznamovák UTB 2023 - Zrušení rezervace';
+            case EmailContent::AfterPay:
+                return 'Seznamovák UTB 2023 - Zaplacení rezervace';
         }
     }
 
@@ -147,4 +151,5 @@ enum EmailContent
 {
     case Reserve;
     case Cancel;
+    case AfterPay;
 }

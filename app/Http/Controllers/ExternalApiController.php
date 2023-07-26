@@ -44,4 +44,17 @@ class ExternalApiController extends Controller
             return response($e);
         }
     }
+
+    public function postAfterPayEmail(Request $request)
+    {
+        $reservation = $request->all()[0];
+        $startDate = $request->all()['startDate'];
+        try {
+
+            EmailSendingController::sendEmail(EmailContent::AfterPay, $reservation, $startDate);
+            return response("ok");
+        } catch (\Exception $e) {
+            return response($e);
+        }
+    }
 }

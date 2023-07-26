@@ -39,5 +39,6 @@ Route::resource('locations', LocationController::class);
 
 
 Route::post('external/reservation', [\App\Http\Controllers\ExternalApiController::class, 'postReservationEmail']);
+Route::post('external/reservation/paid', [\App\Http\Controllers\ExternalApiController::class, 'postAfterPayEmail']);
 Route::post('external/cancel', [\App\Http\Controllers\ExternalApiController::class, 'postCancelEmail']);
 Route::post('external/contact', [\App\Http\Controllers\ExternalApiController::class, 'postCreateContact']);
