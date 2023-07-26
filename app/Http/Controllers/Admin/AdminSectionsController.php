@@ -15,9 +15,23 @@ class AdminSectionsController extends Controller
 {
     public static function index()
     {
-        return view('administration/sections', ['sections' => Section::all(), "search" => ""]);
+        return view('administration/sections',
+            ['paginationSections' => Section::paginate(10), "search" => ""]);
     }
 
+    public function sectionsSearch(Request $request)
+    {
+        $search = $request->input('search');
+
+        if ($search == '') {
+            return AdminSectionsController::index();
+        } else {
+
+            $data = Section::whereRaw('LOWER(`title`) LIKE ? ', [trim(strtolower($search)) . '%'])->paginate(10);
+
+            return view('administration/sections', ["paginationSections" => $data, "search" => $search]);
+        }
+    }
     public function update(Request $request, $id)
     {
         $section = Section::find($id);
@@ -69,19 +83,6 @@ class AdminSectionsController extends Controller
         return $this->index();
     }
 
-    public function sectionsSearch(Request $request)
-    {
-        $search = $request->input('search');
-
-        if ($search == '') {
-            return AdminSectionsController::index();
-        } else {
-
-            $data = Section::whereRaw('LOWER(`title`) LIKE ? ', [trim(strtolower($search)) . '%'])->get();
-
-            return view('administration/sections', ["sections" => $data, "search" => $search]);
-        }
-    }
 
     private static function array_any(array $array, callable $fn)
     {
