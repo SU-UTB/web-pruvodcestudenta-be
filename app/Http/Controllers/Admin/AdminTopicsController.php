@@ -15,9 +15,8 @@ class AdminTopicsController extends Controller
 {
     public static function index()
     {
-
         return view('administration/topics',
-            ['topics' => Topic::all(),
+            ['paginationTopics' => Topic::paginate(10),
                 'sections' => Section::all(),
                 'locations' => Location::all(), "search" => ""]);
     }
