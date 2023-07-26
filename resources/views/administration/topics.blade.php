@@ -95,14 +95,17 @@
         <ul class="pagination">
             @for ($i = 1; $i <= $paginationTopics->lastPage(); $i++)
                 @if($i === 1)
-                    <li class="page-item">
+                    <li class="page-item {{$paginationTopics->currentPage() === 1 ? 'disabled' : ''}}">
                         <a class="page-link"
                            href="{{$paginationTopics->previousPageUrl()}}">Previous</a>
                     </li>
                 @endif
-                <li class="page-item"><a class="page-link" href="/admin/topics?page={{$i}}">{{$i}}</a></li>
+
+                <li class="page-item {{$i === $paginationTopics->currentPage() ? 'active' : ''}}">
+                    <a class="page-link"
+                       href="/admin/topics?page={{$i}}">{{$i}}</a></li>
                 @if($i === $paginationTopics->lastPage())
-                    <li class="page-item">
+                    <li class="page-item {{$paginationTopics->currentPage() === $paginationTopics->lastPage() ? 'disabled' : ''}}">
                         <a class="page-link"
                            href="{{$paginationTopics->nextPageUrl()}}">Next</a></li>
                 @endif

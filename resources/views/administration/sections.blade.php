@@ -86,14 +86,16 @@
         <ul class="pagination">
             @for ($i = 1; $i <= $paginationSections->lastPage(); $i++)
                 @if($i === 1)
-                    <li class="page-item">
+                    <li class="page-item  {{$paginationSections->currentPage() === 1 ? 'disabled' : ''}}">
                         <a class="page-link"
                            href="{{$paginationSections->previousPageUrl()}}">Previous</a>
                     </li>
                 @endif
-                <li class="page-item"><a class="page-link" href="/admin/sections?page={{$i}}">{{$i}}</a></li>
+                <li class="page-item {{$i ===$paginationSections->currentPage() ? 'active' : ''}}">
+                    <a class="page-link"
+                       href="/admin/sections?page={{$i}}">{{$i}}</a></li>
                 @if($i === $paginationSections->lastPage())
-                    <li class="page-item">
+                    <li class="page-item {{$paginationSections->currentPage() === $paginationSections->lastPage() ? 'disabled' : ''}}">
                         <a class="page-link"
                            href="{{$paginationSections->nextPageUrl()}}">Next</a></li>
                 @endif
