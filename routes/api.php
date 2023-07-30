@@ -33,6 +33,5 @@ Route::get('/migrate', function () {
 });
 
 Route::resource('pages/landing', LandingController::class);
-Route::resource('sections', SectionController::class);
-Route::resource('topics', TopicController::class);
-Route::resource('locations', LocationController::class);
+Route::get('pages/sections/{id}', [SectionController::class, 'show']);
+Route::get('pages/topics/{id}', [TopicController::class, 'show']);

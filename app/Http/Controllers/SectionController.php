@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Topic;
 use App\Models\Section;
 use Illuminate\Database\Eloquent\Collection;
