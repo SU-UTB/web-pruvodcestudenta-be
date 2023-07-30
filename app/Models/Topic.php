@@ -9,15 +9,17 @@ class Topic extends Model
 {
     use HasFactory;
 
-
-    protected $attributes = [
-        'image' => '',
-        'link' => '',
-        'url' => '',
-        'bg_color' => '',
+    protected $fillable = [
+        'title', 'description', 'image', 'color', 'link', 'url'
     ];
 
-    protected $fillable = [
-        'title', 'description', 'image', 'section_id', 'location_id', 'link', 'bg_color'
+    protected $attributes = [
+        'title' => '',
+        'description' => '',
+        'image' => '',
+        'color' => '',
+        'link' => '',
+        'url' => ''
+
     ];
 }

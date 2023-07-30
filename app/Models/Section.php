@@ -10,6 +10,13 @@ class Section extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'description', 'image', 'link', 'bg_color'
+        'title', 'description', 'link', 'color',
+    ];
+
+    protected $attributes = [
+        'title' => '',
+        'description' => '',
+        'link' => '',
+        'color' => '',
     ];
 }

@@ -8,7 +8,7 @@ class LandingController extends Controller
     {
         return response([
             'sections' => SectionController::index(),
-            'searchTags' => SearchTagController::index(),
+            'searchTags' => TagController::index(),
         ], 200);
     }
 }
