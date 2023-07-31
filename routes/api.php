@@ -31,6 +31,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/migrate', function () {
     return response(Artisan::call('migrate'));
 });
+Route::get('/doc', function () {
+    return  response()->file(storage_path('api-docs/api-docs.json'));
+});
 
 Route::get('pages/landing', [LandingController::class, 'index']);
 Route::post('pages/landing/search', [LandingController::class, 'search']);
