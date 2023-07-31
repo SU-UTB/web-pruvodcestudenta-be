@@ -8,24 +8,24 @@
 
     <title>{{ config('app.name', 'PruvodceStudenta | Admin') }}</title>
 
-    <link rel="stylesheet" href="{{URL::asset('css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{URL::secureAsset('css/bootstrap.min.css')}}">
 
-    <link href="{{URL::asset('css/bootstrap-colorpicker.css')}}" rel="stylesheet">
+    <link href="{{URL::secureAsset('css/bootstrap-colorpicker.css')}}" rel="stylesheet">
 
-    <link href="{{ asset('vendor/bladewind/css/animate.min.css') }}" rel="stylesheet"/>
+    <link href="{{ secure_asset('vendor/bladewind/css/animate.min.css') }}" rel="stylesheet"/>
 
-    <link href="{{ asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet"/>
+    <link href="{{ secure_asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet"/>
 
-    <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
+    <script src="{{ secure_asset('vendor/bladewind/js/helpers.js') }}"></script>
 
 </head>
 <body class="font-sans antialiased" style="min-height: 100vh">
 
-<script type="text/javascript" src="{{URL::asset('js/jquery-3.2.1.slim.min.js')}}"></script>
+<script type="text/javascript" src="{{URL::secureAsset('js/jquery-3.2.1.slim.min.js')}}"></script>
 
-<script type="text/javascript" src="{{URL::asset('js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{URL::secureAsset('js/bootstrap.min.js')}}"></script>
 
-<script type="text/javascript" src="{{URL::asset('js/bootstrap-colorpicker.js')}}"></script>
+<script type="text/javascript" src="{{URL::secureAsset('js/bootstrap-colorpicker.js')}}"></script>
 
 <div class="bg-gray-100" style="min-height: 100vh">
     @include('components.navbar')
