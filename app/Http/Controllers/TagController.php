@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SearchTag;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
-class SearchTagController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class SearchTagController extends Controller
      */
     public static function index()
     {
-        return  SearchTag::all();
+        return  Tag::all();
     }
 
     /**
@@ -42,10 +42,10 @@ class SearchTagController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SearchTag  $searchTag
+     * @param  \App\Models\Tag  $searchTag
      * @return \Illuminate\Http\Response
      */
-    public function show(SearchTag $searchTag)
+    public function show(Tag $searchTag)
     {
         //
     }
@@ -53,10 +53,10 @@ class SearchTagController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SearchTag  $searchTag
+     * @param  \App\Models\Tag  $searchTag
      * @return \Illuminate\Http\Response
      */
-    public function edit(SearchTag $searchTag)
+    public function edit(Tag $searchTag)
     {
         //
     }
@@ -65,10 +65,10 @@ class SearchTagController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SearchTag  $searchTag
+     * @param  \App\Models\Tag  $searchTag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SearchTag $searchTag)
+    public function update(Request $request, Tag $searchTag)
     {
         //
     }
@@ -76,10 +76,10 @@ class SearchTagController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SearchTag  $searchTag
+     * @param  \App\Models\Tag  $searchTag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SearchTag $searchTag)
+    public function destroy(Tag $searchTag)
     {
         //
     }

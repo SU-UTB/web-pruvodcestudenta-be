@@ -37,6 +37,19 @@ class TopicController extends Controller
      * @param int $id
      * @return Response
      */
+    /**
+     * @OA\Get(
+     *    path="/api/topics/{id}",
+     *    tags={"Topics"},
+     *    summary="Get topic data",
+     *    description="Get topic data",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/Topic"),
+     *       ),
+     *  )
+     */
     public function show(int $id)
     {
         return Topic::find($id);

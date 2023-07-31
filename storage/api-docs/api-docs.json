@@ -1,0 +1,245 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "PruvodceStudenta UTB - Api Documentation",
+        "description": "Api Documentation for UTB's PruvodceStudenta",
+        "contact": {
+            "name": "Sedlar David",
+            "email": "sedlar@sutb.cz"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api/v1"
+        }
+    ],
+    "paths": {
+        "/api/pages/landing": {
+            "get": {
+                "tags": [
+                    "Pages"
+                ],
+                "summary": "Get content of landing page",
+                "description": "Get content of landing page",
+                "operationId": "2b14d53a1f6435ae102011cf8e0fb6cf",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Section"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/pages/landing/search": {
+            "post": {
+                "tags": [
+                    "Pages"
+                ],
+                "summary": "Search",
+                "operationId": "d2bf13a5d96ada6971a699b5457b226c",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "query": {
+                                        "type": "string"
+                                    },
+                                    "locations": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "sections": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "query": "hospoda",
+                                    "locations": [
+                                        1
+                                    ],
+                                    "sections": [
+                                        2,
+                                        4
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LandingSearchResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/api/sections/{id}": {
+            "get": {
+                "tags": [
+                    "Sections"
+                ],
+                "summary": "Get section data",
+                "description": "Get section data",
+                "operationId": "2bd99c47d320fd4b8b3ab294ec64e84b",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Section"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/topics/{id}": {
+            "get": {
+                "tags": [
+                    "Topics"
+                ],
+                "summary": "Get topic data",
+                "description": "Get topic data",
+                "operationId": "615c928c6685afe8fd57e2961667b24f",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Topic"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "LandingSearchResponse": {
+                "properties": {
+                    "sections": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Section"
+                        }
+                    },
+                    "topics": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Topic"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Location": {},
+            "Section": {
+                "title": "Section",
+                "description": "Section schema",
+                "required": [
+                    "title",
+                    "description",
+                    "color"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "Section title",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "description": {
+                        "description": "Section description",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "link": {
+                        "description": "section link used in URL",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "color": {
+                        "description": "Section color in hex e.g.: #fff",
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Tag": {},
+            "Topic": {
+                "title": "Section",
+                "description": "Topic schema",
+                "required": [
+                    "title",
+                    "description",
+                    "color"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "Topic title",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "description": {
+                        "description": "Topic description",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "link": {
+                        "description": "section link used in URL",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "color": {
+                        "description": "Section color in hex e.g.: #fff",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "url": {
+                        "description": "Url of topic site",
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {}
+        }
+    }
+}
