@@ -19,29 +19,69 @@
         }
     ],
     "paths": {
-        "/api/login": {
+        "/api/pages/landing": {
+            "get": {
+                "tags": [
+                    "Pages"
+                ],
+                "summary": "Get content of landing page",
+                "description": "Get content of landing page",
+                "operationId": "2b14d53a1f6435ae102011cf8e0fb6cf",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Section"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/pages/landing/search": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "Pages"
                 ],
-                "summary": "Logs in",
-                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
+                "summary": "Search",
+                "operationId": "d2bf13a5d96ada6971a699b5457b226c",
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "email": {
+                                    "query": {
                                         "type": "string"
                                     },
-                                    "password": {
-                                        "type": "string"
+                                    "locations": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "sections": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
                                     }
                                 },
                                 "type": "object",
                                 "example": {
-                                    "email": "sedlar@sutb.cz",
-                                    "password": "examplePasword"
+                                    "query": "hospoda",
+                                    "locations": [
+                                        1
+                                    ],
+                                    "sections": [
+                                        2,
+                                        4
+                                    ]
                                 }
                             }
                         }
@@ -51,34 +91,95 @@
                     "200": {
                         "description": "OK"
                     },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "404": {
-                        "description": "Not Found"
+                    "400": {
+                        "description": "Bad request"
                     }
                 }
             }
         },
-        "/api/logout": {
-            "post": {
+        "/api/sections/{id}": {
+            "get": {
                 "tags": [
-                    "Authentication"
+                    "Sections"
                 ],
-                "summary": "Logs out",
-                "operationId": "fe8f3429cd6979b3b4517e186505f9f9",
+                "summary": "Get section data",
+                "description": "Get section data",
+                "operationId": "2bd99c47d320fd4b8b3ab294ec64e84b",
                 "responses": {
                     "200": {
-                        "description": "OK"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "404": {
-                        "description": "Not Found"
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Section"
+                                }
+                            }
+                        }
                     }
                 }
             }
+        },
+        "/api/topics/{id}": {
+            "get": {
+                "tags": [
+                    "Topics"
+                ],
+                "summary": "Get topic data",
+                "description": "Get topic data",
+                "operationId": "615c928c6685afe8fd57e2961667b24f",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Topic"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Location": {},
+            "Section": {
+                "title": "Section",
+                "description": "Section schema",
+                "required": [
+                    "title",
+                    "description",
+                    "color"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "Section title",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "description": {
+                        "description": "Section description",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "link": {
+                        "description": "section link used in URL",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "color": {
+                        "description": "Section color in hex e.g.: #fff",
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Tag": {},
+            "Topic": {},
+            "User": {}
         }
     }
 }

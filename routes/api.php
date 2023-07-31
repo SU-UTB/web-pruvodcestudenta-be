@@ -32,6 +32,7 @@ Route::get('/migrate', function () {
     return response(Artisan::call('migrate'));
 });
 
-Route::resource('pages/landing', LandingController::class);
+Route::get('pages/landing', [LandingController::class, 'index']);
+Route::post('pages/landing/search', [LandingController::class, 'search']);
 Route::get('pages/sections/{id}', [SectionController::class, 'show']);
 Route::get('pages/topics/{id}', [TopicController::class, 'show']);

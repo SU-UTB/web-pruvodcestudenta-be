@@ -39,6 +39,19 @@ class SectionController extends Controller
      * @param int $id
      * @return Response
      */
+    /**
+     * @OA\Get(
+     *    path="/api/sections/{id}",
+     *    tags={"Sections"},
+     *    summary="Get section data",
+     *    description="Get section data",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/Section"),
+     *       ),
+     *  )
+     */
     public function show(int $id): Response
     {
         return \response([
