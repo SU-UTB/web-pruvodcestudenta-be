@@ -89,7 +89,14 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LandingSearchResponse"
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad request"
@@ -144,6 +151,23 @@
     },
     "components": {
         "schemas": {
+            "LandingSearchResponse": {
+                "properties": {
+                    "sections": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Section"
+                        }
+                    },
+                    "topics": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Topic"
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "Location": {},
             "Section": {
                 "title": "Section",
@@ -178,7 +202,43 @@
                 "type": "object"
             },
             "Tag": {},
-            "Topic": {},
+            "Topic": {
+                "title": "Section",
+                "description": "Topic schema",
+                "required": [
+                    "title",
+                    "description",
+                    "color"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "Topic title",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "description": {
+                        "description": "Topic description",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "link": {
+                        "description": "section link used in URL",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "color": {
+                        "description": "Section color in hex e.g.: #fff",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "url": {
+                        "description": "Url of topic site",
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "type": "object"
+            },
             "User": {}
         }
     }

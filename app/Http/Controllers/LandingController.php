@@ -80,7 +80,14 @@ class LandingController extends Controller
      *             )
      *         )
      *     ),
-     *   @OA\Response(response=200, description="OK"),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *      @OA\MediaType(
+     *          mediaType="application/json",
+     *          @OA\Schema(ref="#/components/schemas/LandingSearchResponse")
+     *          )
+     *       ),
      *   @OA\Response(response=400, description="Bad request")
      * )
      */
