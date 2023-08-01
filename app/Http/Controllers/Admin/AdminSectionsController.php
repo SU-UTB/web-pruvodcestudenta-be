@@ -59,8 +59,7 @@ class AdminSectionsController extends Controller
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
                 'link' => $request->input('link') ?? $this->getLinkFromName($request->input('title')),
-                'bg_color' => $request->input('bg_color') ?? '#FF9F63',
-                'image' => ''
+                'color' => $request->input('color') ?? '#FF9F63',
             ]
         );
 

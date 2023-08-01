@@ -145,7 +145,7 @@
             <div id="cp-modal" class="input-group colorpicker-component">
 
                 <x-bladewind.input
-                    name="bg_color"
+                    name="color"
                     type="text" class="form-control"
                     placeholder="Color (#FFFFFF)"
                 />

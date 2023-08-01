@@ -74,7 +74,9 @@ class AdminTopicsController extends Controller
             'location_id' => 'required'
         ]);
 
-        $section = Section::find($request->section_id);
+        $sectionId = $request->section_id;
+
+        $section = Section::find($sectionId);
 
         $topic = Topic::create(
             [
@@ -82,9 +84,9 @@ class AdminTopicsController extends Controller
                 'description' => $request->input('description') ?? '',
                 'link' => $this->getLinkFromName($request->input('title')),
                 'url' => $request->input('url') ?? '',
-                'bg_color' => $section->bg_color,
+                'color' => $section->color ?? '#FF9F63',
                 'image' => '',
-                'section_id' => $request->input('section_id'),
+                'section_id' => $sectionId,
                 'location_id' => $request->input('location_id')
             ]
         );
