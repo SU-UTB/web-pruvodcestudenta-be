@@ -14,9 +14,9 @@
 
     <link href="{{ secure_asset('vendor/bladewind/css/animate.min.css') }}" rel="stylesheet"/>
 
+    <link href="{{ secure_asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet"/>
 
     <script src="{{ secure_asset('vendor/bladewind/js/helpers.js') }}"></script>
-
 
     <link rel="icon" type="image/png" href="{{ secure_asset('logo.png') }}"/>
 
