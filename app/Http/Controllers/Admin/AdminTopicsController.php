@@ -39,7 +39,7 @@ class AdminTopicsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $content = Topic::find($id);
+        $topic = Topic::find($id);
 
         $sectionId = null;
         $locationId = null;
@@ -51,10 +51,10 @@ class AdminTopicsController extends Controller
                 $locationId = $value;
 
 
-        $content->update([
+        $topic->update([
             'title' => $request->input('title') ?? '',
             'description' => $request->input('description') ?? '',
-            'bg_color' => $request->input('bg_color') ?? isset($content->bg_color) ? $content->bg_color : '#FF9F63',
+            'color' => $request->input('color') ?? isset($topic->color) ? $topic->color : '#FF9F63',
             'image' => $request->input('image') ?? '',
             'section_id' => $sectionId ?? 1,
             'location_id' => $locationId ?? 3,
