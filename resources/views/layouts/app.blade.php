@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'PruvodceStudenta | Admin') }}</title>
+    <title>{{ config('app.name', 'PruvodceStudenta UTB | Admin') }}</title>
 
     <link rel="stylesheet" href="{{URL::secureAsset('css/bootstrap.min.css')}}">
 
@@ -17,6 +17,8 @@
     <link href="{{ secure_asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet"/>
 
     <script src="{{ secure_asset('vendor/bladewind/js/helpers.js') }}"></script>
+
+    <link rel="icon" type="image/png" href="{{ secure_asset('logo.png') }}"/>
 
 </head>
 <body class="font-sans antialiased" style="min-height: 100vh">

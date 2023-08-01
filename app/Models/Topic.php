@@ -49,7 +49,7 @@ class Topic extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'description', 'image', 'color', 'link', 'url'
+        'title', 'description', 'image', 'color', 'link', 'url', 'section_id', 'location_id'
     ];
 
     protected $attributes = [
