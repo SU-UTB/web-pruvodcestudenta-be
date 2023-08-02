@@ -9,7 +9,7 @@
             @csrf
 
             <x-bladewind.input type="text" class="form-control" id="search" name="search"
-                               placeholder="Search by name..."
+                               placeholder="Search..."
                                value="{{$search}}"
                                onchange="this.form.submit();"/>
         </form>

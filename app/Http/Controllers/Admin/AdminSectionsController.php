@@ -27,11 +27,13 @@ class AdminSectionsController extends Controller
             return AdminSectionsController::index();
         } else {
 
-            $data = Section::whereRaw('LOWER(`title`) LIKE ? ', [trim(strtolower($search)) . '%'])->paginate(10);
+            $data = Section::where('title', 'LIKE', '%' . trim(strtolower($search)) . '%')->orWhere('description', 'LIKE', '%' . trim(strtolower($search)) . '%')
+                ->paginate(10);
 
             return view('administration/sections', ["paginationSections" => $data, "search" => $search]);
         }
     }
+
     public function update(Request $request, $id)
     {
         $section = Section::find($id);

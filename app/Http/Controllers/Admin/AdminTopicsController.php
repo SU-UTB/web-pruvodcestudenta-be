@@ -29,7 +29,8 @@ class AdminTopicsController extends Controller
             return AdminTopicsController::index();
         } else {
 
-            $data = Topic::whereRaw('LOWER(`title`) LIKE ? ', [trim(strtolower($search)) . '%'])->paginate(10);
+            $data = Topic::where('title', 'LIKE', '%' . trim(strtolower($search)) . '%')->orWhere('description', 'LIKE', '%' . trim(strtolower($search)) . '%')
+                ->paginate(10);
 
             return view('administration/topics', ["paginationTopics" => $data, "search" => $search,
                 'sections' => Section::all(),
