@@ -1,4 +1,5 @@
 @php
+    use Carbon\Carbon;
     $locations = $paginationLocations->items();
 @endphp
 <x-app-layout>
@@ -23,6 +24,7 @@
     <x-bladewind.table>
         <x-slot name="header">
             <th>Name</th>
+            <th>Updated At</th>
             <th>Actions</th>
         </x-slot>
         @foreach ($locations as $location)
@@ -36,7 +38,11 @@
                             name="name"
                             value="{{ $location['name'] }}"/>
                     </td>
-
+                    <td>
+                        {{Carbon::create($location['updated_at'] )->format('d.m.')}}
+                        <br/>
+                        {{Carbon::create($location['updated_at'] )->format('H:i:s')}}
+                    </td>
                     <td>
                         <div class="d-flex flex-column">
                             <x-bladewind.button size="tiny"
