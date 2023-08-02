@@ -60,7 +60,7 @@
             name="location_id"
             labelKey="name"
             valueKey="id"
-            placeholder="Location"
+            selectedValue="{{3}}"
             data="{{ json_encode( $locations) }}"
 
         />

@@ -36,6 +36,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/sections/search/', [AdminSectionsController::class, 'sectionsSearch'])->name('search-sections');
     Route::put('/admin/sections/{id}/', [AdminSectionsController::class, 'update'])->name('saveSection');
     Route::get('/admin/sections/{id}/', [AdminSectionsController::class, 'delete'])->name('deleteSection');
+    Route::post('/admin/sections', [AdminSectionsController::class, 'store'])->name('admin.sections.create');
+    Route::delete('/admin/sections/{id}', [AdminSectionsController::class, 'destroy'])->name('admin.sections.destroy');
+
+    Route::get('/admin/locations/', [\App\Http\Controllers\Admin\LocationsController::class, 'index'])->name('locations');
+    Route::post('/admin/locations/search/', [\App\Http\Controllers\Admin\LocationsController::class, 'sectionsSearch'])->name('search-locations');
+    Route::put('/admin/locations/{id}/', [\App\Http\Controllers\Admin\LocationsController::class, 'update'])->name('saveLocation');
+    Route::get('/admin/locations/{id}/', [\App\Http\Controllers\Admin\LocationsController::class, 'delete'])->name('deleteLocation');
+    Route::post('/admin/locations', [\App\Http\Controllers\Admin\LocationsController::class, 'store'])->name('admin.locations.create');
+    Route::delete('/admin/locations/{id}', [\App\Http\Controllers\Admin\LocationsController::class, 'destroy'])->name('admin.locations.destroy');
 
     Route::get('/admin/topics/', [AdminTopicsController::class, 'index'])->name('topics');
     Route::post('/admin/topics/search/', [AdminTopicsController::class, 'topicsSearch'])->name('search-topics');
@@ -48,9 +57,6 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/admin', [AdminLandingController::class, 'index'])->name('dashboard');
-
-    Route::post('/admin/sections', [AdminSectionsController::class, 'store'])->name('admin.sections.create');
-    Route::delete('/admin/sections/{id}', [AdminSectionsController::class, 'destroy'])->name('admin.sections.destroy');
 
     Route::post('/admin/topics', [AdminTopicsController::class, 'store'])->name('admin.topics.create');
     Route::delete('/admin/topics/{id}', [AdminTopicsController::class, 'destroy'])->name('admin.topics.destroy');
