@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminLandingController;
 use App\Http\Controllers\Admin\AdminSectionsController;
 use App\Http\Controllers\Admin\AdminTopicsController;
+use App\Http\Controllers\Admin\LocationsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -39,12 +40,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/sections', [AdminSectionsController::class, 'store'])->name('admin.sections.create');
     Route::delete('/admin/sections/{id}', [AdminSectionsController::class, 'destroy'])->name('admin.sections.destroy');
 
-    Route::get('/admin/locations/', [\App\Http\Controllers\Admin\LocationsController::class, 'index'])->name('locations');
-    Route::post('/admin/locations/search/', [\App\Http\Controllers\Admin\LocationsController::class, 'sectionsSearch'])->name('search-locations');
-    Route::put('/admin/locations/{id}/', [\App\Http\Controllers\Admin\LocationsController::class, 'update'])->name('saveLocation');
-    Route::get('/admin/locations/{id}/', [\App\Http\Controllers\Admin\LocationsController::class, 'delete'])->name('deleteLocation');
-    Route::post('/admin/locations', [\App\Http\Controllers\Admin\LocationsController::class, 'store'])->name('admin.locations.create');
-    Route::delete('/admin/locations/{id}', [\App\Http\Controllers\Admin\LocationsController::class, 'destroy'])->name('admin.locations.destroy');
+    Route::get('/admin/locations/', [LocationsController::class, 'index'])->name('locations');
+    Route::post('/admin/locations/search/', [LocationsController::class, 'locationsSearch'])->name('search-locations');
+    Route::put('/admin/locations/{id}/', [LocationsController::class, 'update'])->name('saveLocation');
+    Route::get('/admin/locations/{id}/', [LocationsController::class, 'delete'])->name('deleteLocation');
+    Route::post('/admin/locations', [LocationsController::class, 'store'])->name('admin.locations.create');
+    Route::delete('/admin/locations/{id}', [LocationsController::class, 'destroy'])->name('admin.locations.destroy');
 
     Route::get('/admin/topics/', [AdminTopicsController::class, 'index'])->name('topics');
     Route::post('/admin/topics/search/', [AdminTopicsController::class, 'topicsSearch'])->name('search-topics');

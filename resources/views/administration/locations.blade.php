@@ -45,7 +45,7 @@
                             </x-bladewind.button>
                             <br/>
                             <x-bladewind.button size="tiny" color="red">
-                                <a href="{{ route('deleteSection', $location['id']) }}">Delete</a></x-bladewind.button>
+                                <a href="{{ route('deleteLocation', $location['id']) }}">Delete</a></x-bladewind.button>
                         </div>
                     </td>
                 </tr>
