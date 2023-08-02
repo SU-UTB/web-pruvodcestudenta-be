@@ -9,10 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @OA\Schema(schema="LandingSearchResponse")
  */
-class LandingSearchResponse extends Model
+class LandingSearchResponse
 {
-    use HasFactory;
-
     /**
      * @OA\Property(type="array",
      *@OA\Items(ref="#/components/schemas/Section"),
@@ -29,4 +27,11 @@ class LandingSearchResponse extends Model
      * @var Collection
      */
     public Collection $topics;
+
+
+    public function __construct(Collection $topics, Collection $sections)
+    {
+        $this->topics = $topics;
+        $this->sections = $sections;
+    }
 }

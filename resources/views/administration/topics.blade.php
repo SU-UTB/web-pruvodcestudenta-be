@@ -1,4 +1,5 @@
 @php
+    use Carbon\Carbon;
     $topics = $paginationTopics->items();
 @endphp
 <x-app-layout>
@@ -9,7 +10,7 @@
             @csrf
 
             <x-bladewind.input type="text" class="form-control" id="search" name="search"
-                               placeholder="Search by name..."
+                               placeholder="Search..."
                                value="{{$search}}"
                                onchange="this.form.submit();"/>
         </form>
@@ -27,6 +28,7 @@
             <th>Section</th>
             <th>Location</th>
             <th>Url</th>
+            <th>Updated At</th>
             <th>Actions</th>
         </x-slot>
         @foreach ($topics as $topic)
@@ -73,7 +75,11 @@
                             name="url"
                             value="{{ $topic['url'] }}"/>
                     </td>
-
+                    <td>
+                        {{Carbon::create($topic['updated_at'] )->format('d.m.')}}
+                        <br/>
+                        {{Carbon::create($topic['updated_at'] )->format('H:i:s')}}
+                    </td>
                     <td>
                         <div class="d-flex flex-column">
                             <x-bladewind.button size="tiny"

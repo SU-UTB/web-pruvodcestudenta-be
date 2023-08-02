@@ -1,4 +1,5 @@
 @php
+    use Carbon\Carbon;
     $sections = $paginationSections->items();
 @endphp
 <x-app-layout>
@@ -9,7 +10,7 @@
             @csrf
 
             <x-bladewind.input type="text" class="form-control" id="search" name="search"
-                               placeholder="Search by name..."
+                               placeholder="Search..."
                                value="{{$search}}"
                                onchange="this.form.submit();"/>
         </form>
@@ -26,6 +27,7 @@
             <th>Description</th>
             <th>Link</th>
             <th>Color</th>
+            <th>Updated At</th>
             <th>Actions</th>
         </x-slot>
         @foreach ($sections as $section)
@@ -64,6 +66,11 @@
                     <script type="text/javascript">
                         $('#cp{{ $loop->index }}').colorpicker();
                     </script>
+                    <td>
+                        {{Carbon::create($section['updated_at'] )->format('d.m.')}}
+                        <br/>
+                        {{Carbon::create($section['updated_at'] )->format('H:i:s')}}
+                    </td>
                     <td>
                         <div class="d-flex flex-column">
                             <x-bladewind.button size="tiny"
