@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LandingSearchResponse;
+use App\Models\SectionResponse;
 use App\Models\Tag;
 use App\Models\Topic;
 use App\Models\Section;
@@ -48,16 +50,16 @@ class SectionController extends Controller
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *         @OA\JsonContent(ref="#/components/schemas/Section"),
+     *         @OA\JsonContent(ref="#/components/schemas/SectionResponse"),
      *       ),
      *  )
      */
     public function show(int $id): Response
     {
-        return \response([
-            'section' => Section::find($id),
-            'topics' => Topic::where('section_id', $id)->get()
-        ], 200);
+
+        return \response(json_encode(
+            new SectionResponse(Topic::where('section_id', $id)->get(), Section::find($id))
+            , JSON_UNESCAPED_UNICODE), 200);
     }
 
 
