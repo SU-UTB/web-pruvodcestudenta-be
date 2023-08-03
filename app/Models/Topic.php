@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @OA\Schema(
  *   description="Topic schema",
- *   title="Section",
+ *   title="Topic",
  *   required={
  *     "title",
  *     "description",

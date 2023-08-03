@@ -118,7 +118,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Section"
+                                    "$ref": "#/components/schemas/SectionResponse"
                                 }
                             }
                         }
@@ -201,9 +201,32 @@
                 },
                 "type": "object"
             },
+            "SectionResponse": {
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "link": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "topics": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Topic"
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "Tag": {},
             "Topic": {
-                "title": "Section",
+                "title": "Topic",
                 "description": "Topic schema",
                 "required": [
                     "title",
