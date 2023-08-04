@@ -140,13 +140,21 @@
             />
             <br/>
 
-            <x-bladewind.textarea
+            <textarea
                 rows={5}
-                required
                 name="description"
                 placeholder="Description"
+                id="editor"
+            ></textarea>
 
-            />
+            <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+            <script>
+                ClassicEditor
+                    .create(document.querySelector('#editor'))
+                    .catch(error => {
+                        console.error(error);
+                    });
+            </script>
             <br/>
 
             <div id="cp-modal" class="input-group colorpicker-component">
