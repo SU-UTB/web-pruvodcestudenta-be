@@ -21,6 +21,8 @@
         </x-bladewind.button>
     </div>
     <br>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+
     <x-bladewind.table>
         <x-slot name="header">
             <th>Title</th>
@@ -38,15 +40,24 @@
 
                     <td>
                         <x-bladewind.input
-                            name="title"
-                            value="{{ $section['title'] }}"/>
+                                name="title"
+                                value="{{ $section['title'] }}"/>
                     </td>
-                    <td>
-                        <x-bladewind.textarea
-                            name="description"
-                            placeholder="Description..."
-                            selected_value="{{ $section['description'] }}"
-                        />
+                    <td style="max-width: 400px">
+                        <label for="editor{{$loop->index}}"></label>
+                        <textarea
+                                rows={5}
+                                name="description"
+                                placeholder="Description..."
+                                id="editor{{$loop->index}}"
+                        >"{{ $section['description'] }}"</textarea>
+                        <script>
+                            ClassicEditor
+                                .create(document.querySelector('#editor{{$loop->index}}'))
+                                .catch(error => {
+                                    console.error(error);
+                                });
+                        </script>
                     </td>
                     <td>{{ $section['link'] }}</td>
                     <td>
@@ -54,8 +65,8 @@
 
                             <label>
                                 <x-bladewind.input
-                                    name="bg_color"
-                                    type="text" value="{{$section['bg_color']}}" class="form-control"/>
+                                        name="bg_color"
+                                        type="text" value="{{$section['bg_color']}}" class="form-control"/>
                             </label>
 
                             <span class="input-group-addon"><i></i></span>
@@ -113,10 +124,10 @@
     <br/>
 
     <x-bladewind.modal
-        name="add-section"
-        title="Add section"
-        size="large"
-        show_action_buttons="false">
+            name="add-section"
+            title="Add section"
+            size="large"
+            show_action_buttons="false">
         <form name="create-section-form" id="create-section-form" method="POST"
               action="{{route('admin.sections.create')}}">
             @csrf
@@ -140,6 +151,7 @@
             />
             <br/>
 
+            <label for="editor"></label>
             <textarea
                 rows={5}
                 name="description"
@@ -147,7 +159,6 @@
                 id="editor"
             ></textarea>
 
-            <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
             <script>
                 ClassicEditor
                     .create(document.querySelector('#editor'))
