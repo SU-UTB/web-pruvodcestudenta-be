@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LandingSearchResponse;
 use App\Models\SectionResponse;
-use App\Models\Tag;
 use App\Models\Topic;
 use App\Models\Section;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use OpenApi\Annotations as OA;
 
 class SectionController extends Controller
 {
