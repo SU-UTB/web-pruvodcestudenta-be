@@ -153,22 +153,33 @@
         "schemas": {
             "LandingSearchResponse": {
                 "properties": {
-                    "sections": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Section"
-                        }
-                    },
                     "topics": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/Topic"
+                            "$ref": "#/components/schemas/SearchTopic"
                         }
                     }
                 },
                 "type": "object"
             },
             "Location": {},
+            "SearchTopic": {
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "sectionSlug": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "Section": {
                 "title": "Section",
                 "description": "Section schema",
