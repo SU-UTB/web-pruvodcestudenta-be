@@ -83,7 +83,7 @@ class AdminTopicsController extends Controller
             [
                 'title' => $request->input('title') ?? '',
                 'description' => $request->input('description') ?? '',
-                'link' => $this->getLinkFromName($request->input('title')),
+                'link' => $this->getSlugFromTitle($request->input('title')),
                 'url' => $request->input('url') ?? '',
                 'color' => $section->color ?? '#FF9F63',
                 'image' => '',
@@ -103,7 +103,7 @@ class AdminTopicsController extends Controller
     }
 
 
-    private function getLinkFromName(string $input)
+    private function getSlugFromTitle(string $input)
     {
         $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: Lower(); :: NFC;', Transliterator::FORWARD);
         $normalized = $transliterator->transliterate($input);

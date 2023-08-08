@@ -40,7 +40,6 @@ class AdminSectionsController extends Controller
         $section->update([
             'title' => $request->input('title') ?? '',
             'description' => $request->input('description') ?? '',
-            'link' => $section->link,
             'color' => $request->input('color') ?? '',
             'image' => $section->image,
         ]);
@@ -54,13 +53,14 @@ class AdminSectionsController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'slug' => 'unique:sections,slug'
         ]);
 
         $section = Section::create(
             [
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
-                'link' => $request->input('link') ?? $this->getLinkFromName($request->input('title')),
+                'slug' => $request->input('slug') ?? $this->getSlugFromTitle($request->input('title')),
                 'color' => $request->input('color') ?? '#FF9F63',
             ]
         );
@@ -85,17 +85,6 @@ class AdminSectionsController extends Controller
     }
 
 
-    private static function array_any(array $array, callable $fn)
-    {
-        foreach ($array as $value) {
-            if ($fn($value)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
     /**
      * Remove the specified resource from storage.
      *
@@ -107,7 +96,7 @@ class AdminSectionsController extends Controller
         return Section::destroy($id);
     }
 
-    private function getLinkFromName(string $input)
+    private function getSlugFromTitle(string $input)
     {
         $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: Lower(); :: NFC;', Transliterator::FORWARD);
         $normalized = $transliterator->transliterate($input);

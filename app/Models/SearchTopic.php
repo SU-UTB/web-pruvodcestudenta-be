@@ -8,31 +8,29 @@ use Illuminate\Database\Eloquent\Model;
 use OpenApi\Annotations as OA;
 
 /**
- * @OA\Schema(schema="SectionResponse")
+ * @OA\Schema(schema="SearchTopic")
  */
-class SectionResponse
+class SearchTopic
 {
+
     /**
      * @OA\Property(type="string")
      *
      * @var string
      */
     public string $title;
-
     /**
      * @OA\Property(type="string")
      *
      * @var string
      */
-    public string $description;
-
+    public string $slug;
     /**
      * @OA\Property(type="string")
      *
      * @var string
      */
-    public string $link;
-
+    public string $sectionSlug;
     /**
      * @OA\Property(type="string")
      *
@@ -40,22 +38,12 @@ class SectionResponse
      */
     public string $color;
 
-    /**
-     * @OA\Property(type="array",
-     *@OA\Items(ref="#/components/schemas/Topic"),
-     * )
-     *
-     * @var Collection
-     */
-    public Collection $topics;
 
-
-    public function __construct(Collection $topics, Section $section)
+    public function __construct(string $title, string $slug, string $sectionSlug, string $color)
     {
-        $this->topics = $topics;
-        $this->title = $section->title;
-        $this->description = $section->description;
-        $this->slug = $section->slug;
-        $this->color = $section->color;
+        $this->title = $title;
+        $this->slug = $slug;
+        $this->sectionSlug = $sectionSlug;
+        $this->color = $color;
     }
 }

@@ -104,14 +104,14 @@
                 }
             }
         },
-        "/api/sections/{id}": {
+        "/api/pages/sections/{slug}": {
             "get": {
                 "tags": [
                     "Sections"
                 ],
                 "summary": "Get section data",
                 "description": "Get section data",
-                "operationId": "2bd99c47d320fd4b8b3ab294ec64e84b",
+                "operationId": "720e98beaa7480e8028c7380432bd770",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -126,14 +126,14 @@
                 }
             }
         },
-        "/api/topics/{id}": {
+        "/api/pages/topics/{slug}": {
             "get": {
                 "tags": [
                     "Topics"
                 ],
                 "summary": "Get topic data",
                 "description": "Get topic data",
-                "operationId": "615c928c6685afe8fd57e2961667b24f",
+                "operationId": "414c7eb8b3b8dc8f05b48b8f845bd32a",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -153,22 +153,33 @@
         "schemas": {
             "LandingSearchResponse": {
                 "properties": {
-                    "sections": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Section"
-                        }
-                    },
                     "topics": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/Topic"
+                            "$ref": "#/components/schemas/SearchTopic"
                         }
                     }
                 },
                 "type": "object"
             },
             "Location": {},
+            "SearchTopic": {
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "sectionSlug": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "Section": {
                 "title": "Section",
                 "description": "Section schema",
