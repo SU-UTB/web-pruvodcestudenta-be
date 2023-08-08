@@ -40,7 +40,6 @@ class AdminSectionsController extends Controller
         $section->update([
             'title' => $request->input('title') ?? '',
             'description' => $request->input('description') ?? '',
-            'link' => $section->link,
             'color' => $request->input('color') ?? '',
             'image' => $section->image,
         ]);
@@ -54,13 +53,14 @@ class AdminSectionsController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'slug' => 'unique:sections,slug'
         ]);
 
         $section = Section::create(
             [
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
-                'link' => $request->input('link') ?? $this->getLinkFromName($request->input('title')),
+                'slug' => $request->input('slug') ?? $this->getLinkFromName($request->input('title')),
                 'color' => $request->input('color') ?? '#FF9F63',
             ]
         );
@@ -82,17 +82,6 @@ class AdminSectionsController extends Controller
         Section::destroy($id);
 
         return $this->index();
-    }
-
-
-    private static function array_any(array $array, callable $fn)
-    {
-        foreach ($array as $value) {
-            if ($fn($value)) {
-                return true;
-            }
-        }
-        return false;
     }
 
 

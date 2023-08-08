@@ -55,7 +55,7 @@ class SectionResponse
         $this->topics = $topics;
         $this->title = $section->title;
         $this->description = $section->description;
-        $this->link = $section->link;
+        $this->slug = $section->slug;
         $this->color = $section->color;
     }
 }

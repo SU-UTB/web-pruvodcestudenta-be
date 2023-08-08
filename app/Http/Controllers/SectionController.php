@@ -24,17 +24,6 @@ class SectionController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return Response
-     */
-    public function store(Request $request): Response
-    {
-        return Section::create($request->all());
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param int $id
@@ -42,7 +31,7 @@ class SectionController extends Controller
      */
     /**
      * @OA\Get(
-     *    path="/api/sections/{id}",
+     *    path="/api/pages/sections/{slug}",
      *    tags={"Sections"},
      *    summary="Get section data",
      *    description="Get section data",
@@ -53,38 +42,14 @@ class SectionController extends Controller
      *       ),
      *  )
      */
-    public function show(int $id): Response
+    public function show(string $slug): Response
     {
+        $section = Section::firstWhere('slug', '=', $slug);
 
         return \response(json_encode(
-            new SectionResponse(Topic::where('section_id', $id)->get(), Section::find($id))
+            new SectionResponse(Topic::where('section_id', $section->id)->get(), $section)
             , JSON_UNESCAPED_UNICODE), 200);
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, int $id): Response
-    {
-
-        $section = Section::find($id);
-        $section->update($request->all());
-        return $section;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return int
-     */
-    public function destroy(int $id): int
-    {
-        return Section::destroy($id);
-    }
 }
