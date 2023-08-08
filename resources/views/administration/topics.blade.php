@@ -21,6 +21,7 @@
         </x-bladewind.button>
     </div>
     <br>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
     <x-bladewind.table>
         <x-slot name="header">
             <th>Title</th>
@@ -42,12 +43,21 @@
                             name="title"
                             value="{{ $topic['title'] }}"/>
                     </td>
-                    <td>
-                        <x-bladewind.textarea
+                    <td style="max-width: 400px">
+                        <label for="editor{{$loop->index}}"></label>
+                        <textarea
+                            rows={5}
                             name="description"
                             placeholder="Description..."
-                            selected_value="{{ $topic['description'] }}"
-                        />
+                            id="editor{{$loop->index}}"
+                        >"{{ $topic['description'] }}"</textarea>
+                        <script>
+                            ClassicEditor
+                                .create(document.querySelector('#editor{{$loop->index}}'))
+                                .catch(error => {
+                                    console.error(error);
+                                });
+                        </script>
                     </td>
                     <td>
                         <x-bladewind.dropdown

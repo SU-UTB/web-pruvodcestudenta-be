@@ -37,13 +37,20 @@
         />
         <br/>
 
-        <x-bladewind.textarea
+        <label for="editor"></label>
+        <textarea
             rows={5}
-            required
             name="description"
             placeholder="Description"
-
-        />
+            id="editor"
+        ></textarea>
+        <script>
+            ClassicEditor
+                .create(document.querySelector('#editor'))
+                .catch(error => {
+                    console.error(error);
+                });
+        </script>
         <br/>
 
         <x-bladewind.dropdown
