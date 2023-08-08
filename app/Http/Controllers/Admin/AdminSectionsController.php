@@ -60,7 +60,7 @@ class AdminSectionsController extends Controller
             [
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
-                'slug' => $request->input('slug') ?? $this->getLinkFromName($request->input('title')),
+                'slug' => $request->input('slug') ?? $this->getSlugFromTitle($request->input('title')),
                 'color' => $request->input('color') ?? '#FF9F63',
             ]
         );
@@ -96,7 +96,7 @@ class AdminSectionsController extends Controller
         return Section::destroy($id);
     }
 
-    private function getLinkFromName(string $input)
+    private function getSlugFromTitle(string $input)
     {
         $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: Lower(); :: NFC;', Transliterator::FORWARD);
         $normalized = $transliterator->transliterate($input);
