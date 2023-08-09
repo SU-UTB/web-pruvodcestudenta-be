@@ -27,8 +27,8 @@
         <x-slot name="header">
             <th>Title</th>
             <th>Description</th>
-            <th>Link</th>
             <th>Color</th>
+            <th>Slug</th>
             <th>Updated At</th>
             <th>Actions</th>
         </x-slot>
@@ -59,20 +59,20 @@
                                 });
                         </script>
                     </td>
-                    <td>{{ $section['link'] }}</td>
                     <td>
                         <div id="cp{{ $loop->index }}" class="input-group colorpicker-component">
 
                             <label>
                                 <x-bladewind.input
-                                        name="bg_color"
-                                        type="text" value="{{$section['bg_color']}}" class="form-control"/>
+                                        name="color"
+                                        type="text" value="{{$section['color']}}" class="form-control"/>
                             </label>
 
                             <span class="input-group-addon"><i></i></span>
                         </div>
                     </td>
 
+                    <td>{{ $section['slug'] }}</td>
 
                     <script type="text/javascript">
                         $('#cp{{ $loop->index }}').colorpicker();
