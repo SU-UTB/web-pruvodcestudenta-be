@@ -74,6 +74,8 @@
     // additional css for suffix
     'suffix_icon_css' => '',
     'suffixIconCss' => '',
+    'on_change' => null,
+    'onchange' => null,
 ])
 @php
     // reset variables for Laravel 8 support
@@ -118,6 +120,7 @@
     if ($suffixIconType !== $suffix_icon_type) $suffix_icon_type = $suffixIconType;
     if ($prefixIconCss !== $prefix_icon_css) $prefix_icon_css = $prefixIconCss;
     if ($suffixIconCss !== $suffix_icon_css) $suffix_icon_css = $suffixIconCss;
+    if ($onchange !== $on_change) $on_change = $onchange;
     //--------------------------------------------------------------------
 
     $name = preg_replace('/[\s-]/', '_', $name);
@@ -136,40 +139,57 @@
 
 <div class="relative w-full dv-{{$name}} @if($add_clearing) mb-3 @endif">
     <input
-        {{ $attributes->merge(['class' => "bw-input peer $is_required $name $placeholder_color"]) }}
-        type="{{ $type }}"
-        id="{{ $name }}"
-        name="{{ $name }}"
-        value="{{ $selected_value }}"
-        autocomplete="off"
-        placeholder="{{ $placeholder_label }}{{$required_symbol}}"
-        @if($numeric) onkeypress="return isNumberKey(event, {{$with_dots}})" @endif
-        @if($error_message != '')
-            data-error-message="{{$error_message}}"
+            {{ $attributes->merge(['class' => "bw-input peer $is_required $name $placeholder_color"]) }}
+            type="{{ $type }}"
+            id="{{ $name }}"
+            name="{{ $name }}"
+            value="{{ $selected_value }}"
+            autocomplete="off"
+            placeholder="{{ $placeholder_label }}{{$required_symbol}}"
+            @if($numeric) onkeypress="return isNumberKey(event, {{$with_dots}})" @endif
+            @if($error_message != '')
+                data-error-message="{{$error_message}}"
             data-error-inline="{{$show_error_inline}}"
             data-error-heading="{{$error_heading}}"
-        @endif
+            @endif
+            onchange="{{$onchange ?? $on_change}}"
     />
-    @if(!empty($error_message))<div class="text-red-500 text-xs p-1 {{ $name }}-inline-error hidden">{{$error_message}}</div>@endif
+    @if(!empty($error_message))
+        <div class="text-red-500 text-xs p-1 {{ $name }}-inline-error hidden">{{$error_message}}</div>
+    @endif
     @if(!empty($label))
         <label for="{{ $name }}" class="form-label" onclick="dom_el('.{{$name}}').focus()">{!! $label !!}
             @if($required)
-            <span class="text-red-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2 inline-block mt-[-2px]" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                <span class="text-red-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2 inline-block mt-[-2px]" viewBox="0 0 20 20"
+                     fill="currentColor">
+                    <path
+                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                 </svg>
             </span>
             @endif
         </label>
     @endif
     @if (!empty($prefix))
-        <div class="{{$name}}-prefix prefix text-sm select-none pl-3.5 pr-2 z-20 text-blue-900/50 dark:text-slate-400 absolute left-0 inset-y-0 inline-flex items-center @if(!$transparent_prefix) bg-slate-100 border-2 border-slate-200 dark:border-slate-700 dark:bg-slate-900/50 dark:border-r-0 border-r-0 rounded-tl-md rounded-bl-md @endif" data-transparency="{{$transparent_prefix}}">
-        @if($prefix_is_icon) <x-bladewind.icon name='{!! $prefix !!}' type="{{ $prefix_icon_type }}" class="{{$prefix_icon_css}}" /> @else {!! $prefix !!} @endif</div>
+        <div
+                class="{{$name}}-prefix prefix text-sm select-none pl-3.5 pr-2 z-20 text-blue-900/50 dark:text-slate-400 absolute left-0 inset-y-0 inline-flex items-center @if(!$transparent_prefix) bg-slate-100 border-2 border-slate-200 dark:border-slate-700 dark:bg-slate-900/50 dark:border-r-0 border-r-0 rounded-tl-md rounded-bl-md @endif"
+                data-transparency="{{$transparent_prefix}}">
+            @if($prefix_is_icon)
+                <x-bladewind.icon name='{!! $prefix !!}' type="{{ $prefix_icon_type }}" class="{{$prefix_icon_css}}"/>
+            @else
+                {!! $prefix !!}
+            @endif</div>
         <script>positionPrefix('{{$name}}', 'blur', '{{$transparent_prefix}}');</script>
     @endif
     @if (!empty($suffix))
-        <div class="{{$name}}-suffix suffix text-sm select-none pl-3.5 pr-2 z-20 text-blue-900/50 dark:text-slate-400 absolute right-0 inset-y-0 inline-flex items-center @if(!$transparent_suffix) bg-slate-100 border-2 border-slate-200 border-l-0 dark:border-slate-700 dark:bg-slate-900/50 dark:border-l-0 rounded-tr-md rounded-br-md @endif" data-transparency="{{$transparent_prefix}}">
-        @if($suffix_is_icon) <x-bladewind.icon name='{!! $suffix !!}' type="{{ $suffix_icon_type }}" class="{{$suffix_icon_css}}" /> @else {!! $suffix !!} @endif</div>
+        <div
+                class="{{$name}}-suffix suffix text-sm select-none pl-3.5 pr-2 z-20 text-blue-900/50 dark:text-slate-400 absolute right-0 inset-y-0 inline-flex items-center @if(!$transparent_suffix) bg-slate-100 border-2 border-slate-200 border-l-0 dark:border-slate-700 dark:bg-slate-900/50 dark:border-l-0 rounded-tr-md rounded-br-md @endif"
+                data-transparency="{{$transparent_prefix}}">
+            @if($suffix_is_icon)
+                <x-bladewind.icon name='{!! $suffix !!}' type="{{ $suffix_icon_type }}" class="{{$suffix_icon_css}}"/>
+            @else
+                {!! $suffix !!}
+            @endif</div>
         <script>positionSuffix('{{$name}}');</script>
     @endif
 </div>
