@@ -40,16 +40,16 @@
 
                     <td>
                         <x-bladewind.input
-                            name="title"
-                            value="{{ $section['title'] }}"/>
+                                name="title"
+                                value="{{ $section['title'] }}"/>
                     </td>
                     <td style="max-width: 400px">
                         <label for="editor{{$loop->index}}"></label>
                         <textarea
-                            rows={5}
-                            name="description"
-                            placeholder="Description..."
-                            id="editor{{$loop->index}}"
+                                rows={5}
+                                name="description"
+                                placeholder="Description..."
+                                id="editor{{$loop->index}}"
                         >"{{ $section['description'] }}"</textarea>
                         <script>
                             ClassicEditor
@@ -64,8 +64,8 @@
 
                             <label>
                                 <x-bladewind.input
-                                    name="color"
-                                    type="text" value="{{$section['color']}}" class="form-control"/>
+                                        name="color"
+                                        type="text" value="{{$section['color']}}" class="form-control"/>
                             </label>
 
                             <span class="input-group-addon"><i></i></span>
@@ -124,10 +124,10 @@
     <br/>
 
     <x-bladewind.modal
-        name="add-section"
-        title="Add section"
-        size="large"
-        show_action_buttons="false">
+            name="add-section"
+            title="Add section"
+            size="large"
+            show_action_buttons="false">
         <form name="create-section-form" id="create-section-form" method="POST"
               action="{{route('admin.sections.create')}}">
             @csrf

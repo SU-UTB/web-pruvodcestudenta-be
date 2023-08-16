@@ -72,7 +72,8 @@ class AdminTopicsController extends Controller
             'title' => 'required',
             'description' => 'required',
             'section_id' => 'required',
-            'location_id' => 'required'
+            'location_id' => 'required',
+            'slug' => 'required|unique:topics,slug'
         ]);
 
         $sectionId = $request->section_id;
