@@ -9,6 +9,20 @@
          return 'blue';
     }
 @endphp
+
+<script>
+    var activeLog = null;
+
+    function showLog(log) {
+        activeLog = log;
+        document.getElementById("modal-message").innerText = activeLog.message;
+        document.getElementById("modal-context").innerText = activeLog.context.exception;
+        console.log(activeLog.context);
+        showModal('show-log');
+        activeLog = null;
+    }
+
+</script>
 <x-app-layout>
     <br>
 
@@ -54,7 +68,7 @@
                     </div>
                 </td>
                 <td>
-                    <div style="height:40px; overflow:hidden">
+                    <div style="height:40px; width: 250px; overflow:hidden">
                         {{ json_encode($log['context']->toArray()) }}
                     </div>
                 </td>
@@ -65,8 +79,10 @@
                 </td>
                 <td>
                     <x-bladewind.button class="mb-3"
-                                        onclick="showModal('show-log')">
+                                        onclick="showLog({{ json_encode($log, JSON_HEX_TAG) }})">
+                        Show more
                     </x-bladewind.button>
+
                 </td>
 
             </tr>
@@ -95,5 +111,20 @@
             @endfor
         </ul>
     </nav>
+
+
+    <x-bladewind.modal
+        id="myModal"
+        name="show-log"
+        title="Log"
+        size="omg"
+        show_action_buttons="false">
+        <p id="modal-message" style="overflow-y: scroll;">
+        </p>
+        <br/>
+        <p id="modal-context" style="max-height: 500px; overflow-y: scroll;">
+        </p>
+    </x-bladewind.modal>
+
 
 </x-app-layout>
