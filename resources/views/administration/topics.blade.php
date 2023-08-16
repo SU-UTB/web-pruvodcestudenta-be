@@ -21,6 +21,7 @@
         </x-bladewind.button>
     </div>
     <br>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
     <x-bladewind.table>
         <x-slot name="header">
             <th>Title</th>
@@ -28,6 +29,7 @@
             <th>Section</th>
             <th>Location</th>
             <th>Url</th>
+            <th>Slug</th>
             <th>Updated At</th>
             <th>Actions</th>
         </x-slot>
@@ -39,42 +41,53 @@
 
                     <td>
                         <x-bladewind.input
-                            name="title"
-                            value="{{ $topic['title'] }}"/>
+                                name="title"
+                                value="{{ $topic['title'] }}"/>
+                    </td>
+                    <td style="max-width: 400px">
+                        <label for="editor{{$loop->index}}"></label>
+                        <textarea
+                                rows={5}
+                                name="description"
+                                placeholder="Description..."
+                                id="editor{{$loop->index}}"
+                        >"{{ $topic['description'] }}"</textarea>
+                        <script>
+                            ClassicEditor
+                                .create(document.querySelector('#editor{{$loop->index}}'))
+                                .catch(error => {
+                                    console.error(error);
+                                });
+                        </script>
                     </td>
                     <td>
-                        <x-bladewind.textarea
-                            name="description"
-                            placeholder="Description..."
-                            selected_value="{{ $topic['description'] }}"
+                        <x-bladewind.dropdown
+                                id="section_{{$loop->index}}"
+                                name="section_id_{{$loop->index}}"
+                                label_key="title"
+                                value_key="id"
+                                selectedValue="{{$topic['section_id']}}"
+                                data="{{ json_encode( $sections) }}"
                         />
                     </td>
                     <td>
                         <x-bladewind.dropdown
-                            id="section_{{$loop->index}}"
-                            name="section_id_{{$loop->index}}"
-                            label_key="title"
-                            value_key="id"
-                            selectedValue="{{$topic['section_id']}}"
-                            data="{{ json_encode( $sections) }}"
-                        />
-                    </td>
-                    <td>
-                        <x-bladewind.dropdown
-                            id="location_{{$loop->index}}"
-                            name="location_id_{{$loop->index}}"
-                            labelKey="name"
-                            valueKey="id"
-                            selectedValue="{{$topic['location_id']}}"
-                            data="{{ json_encode($locations) }}"
+                                id="location_{{$loop->index}}"
+                                name="location_id_{{$loop->index}}"
+                                labelKey="name"
+                                valueKey="id"
+                                selectedValue="{{$topic['location_id']}}"
+                                data="{{ json_encode($locations) }}"
 
                         />
                     </td>
                     <td>
                         <x-bladewind.input
-                            name="url"
-                            value="{{ $topic['url'] }}"/>
+                                name="url"
+                                value="{{ $topic['url'] }}"/>
                     </td>
+                    <td style="max-width: 200px; overflow: hidden">{{ $topic['slug'] }}</td>
+
                     <td>
                         {{Carbon::create($topic['updated_at'] )->format('d.m.')}}
                         <br/>
@@ -122,8 +135,8 @@
     <br/>
 
     <x-add-topic-modal
-        sections="{!! json_encode(collect($sections)) !!}"
-        locations="{!! json_encode(collect($locations)) !!}"
+            sections="{!! json_encode(collect($sections)) !!}"
+            locations="{!! json_encode(collect($locations)) !!}"
     />
 
 </x-app-layout>

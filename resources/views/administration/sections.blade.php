@@ -21,12 +21,14 @@
         </x-bladewind.button>
     </div>
     <br>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+
     <x-bladewind.table>
         <x-slot name="header">
             <th>Title</th>
             <th>Description</th>
-            <th>Link</th>
             <th>Color</th>
+            <th>Slug</th>
             <th>Updated At</th>
             <th>Actions</th>
         </x-slot>
@@ -38,30 +40,39 @@
 
                     <td>
                         <x-bladewind.input
-                            name="title"
-                            value="{{ $section['title'] }}"/>
+                                name="title"
+                                value="{{ $section['title'] }}"/>
                     </td>
-                    <td>
-                        <x-bladewind.textarea
-                            name="description"
-                            placeholder="Description..."
-                            selected_value="{{ $section['description'] }}"
-                        />
+                    <td style="max-width: 400px">
+                        <label for="editor{{$loop->index}}"></label>
+                        <textarea
+                                rows={5}
+                                name="description"
+                                placeholder="Description..."
+                                id="editor{{$loop->index}}"
+                        >"{{ $section['description'] }}"</textarea>
+                        <script>
+                            ClassicEditor
+                                .create(document.querySelector('#editor{{$loop->index}}'))
+                                .catch(error => {
+                                    console.error(error);
+                                });
+                        </script>
                     </td>
-                    <td>{{ $section['link'] }}</td>
                     <td>
                         <div id="cp{{ $loop->index }}" class="input-group colorpicker-component">
 
                             <label>
                                 <x-bladewind.input
-                                    name="bg_color"
-                                    type="text" value="{{$section['bg_color']}}" class="form-control"/>
+                                        name="color"
+                                        type="text" value="{{$section['color']}}" class="form-control"/>
                             </label>
 
                             <span class="input-group-addon"><i></i></span>
                         </div>
                     </td>
 
+                    <td>{{ $section['slug'] }}</td>
 
                     <script type="text/javascript">
                         $('#cp{{ $loop->index }}').colorpicker();
@@ -113,10 +124,10 @@
     <br/>
 
     <x-bladewind.modal
-        name="add-section"
-        title="Add section"
-        size="large"
-        show_action_buttons="false">
+            name="add-section"
+            title="Add section"
+            size="large"
+            show_action_buttons="false">
         <form name="create-section-form" id="create-section-form" method="POST"
               action="{{route('admin.sections.create')}}">
             @csrf
@@ -136,17 +147,47 @@
                 name="title"
                 required
                 placeholder="Title"
+                onchange="getSlug(this)"
 
             />
+            <script type="text/javascript">
+                function getSlug(input1) {
+
+                    var input2 = document.getElementById('slug');
+                    var str = input1.value;
+                    str = str.replace(/^\s+|\s+$/g, ''); // trim
+                    str = str.toLowerCase();
+
+                    // remove accents, swap ñ for n, etc
+                    var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;";
+                    var to = "aaaaaeeeeeiiiiooooouuuunc------";
+                    for (var i = 0, l = from.length; i < l; i++) {
+                        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+                    }
+
+                    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+                        .replace(/\s+/g, '-') // collapse whitespace and replace by -
+                        .replace(/-+/g, '-'); // collapse dashes
+
+                    input2.value = str;
+                }
+            </script>
             <br/>
 
-            <x-bladewind.textarea
+            <textarea
                 rows={5}
-                required
                 name="description"
                 placeholder="Description"
+                id="editor"
+            ></textarea>
 
-            />
+            <script>
+                ClassicEditor
+                    .create(document.querySelector('#editor'))
+                    .catch(error => {
+                        console.error(error);
+                    });
+            </script>
             <br/>
 
             <div id="cp-modal" class="input-group colorpicker-component">
@@ -163,6 +204,25 @@
                     $('#cp-modal').colorpicker();
                 </script>
             </div>
+
+            <x-bladewind.input
+                id="slug"
+                name="slug"
+                required
+                placeholder="Slug"
+
+            />
+            <p style="color: red">
+                Pečlivě zkontroluj slug!
+                Slug je automaticky vygenerované slovo z názvu.
+                <br/>
+                Toto slovo bude použito pro identifikaci sekce v url
+                adrese.
+                <br/>
+                Např. "www.pruvodcestudenta.utb.cz/sekce/_slug_".
+                <br/>
+                Slug musí být unikátní, slug nelze později změnit.
+            </p>
             <br/>
             <x-bladewind.button size="tiny"
                                 canSubmit="true">

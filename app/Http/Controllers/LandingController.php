@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 
 use App\Models\LandingSearchResponse;
+use App\Models\SearchTopic;
 use App\Models\Section;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use OpenApi\Annotations as OA;
 
 /**
  * @OA\Info(
@@ -115,9 +117,17 @@ class LandingController extends Controller
             ->where('title', 'LIKE', '%' . $request->input('query') . '%')
             ->orWhere('description', 'LIKE', '%' . $request->input('query') . '%')
             ->get();
+
+        $searchTopics = $topics->map(function ($topic) use ($sections) {
+            return new SearchTopic($topic->title,
+                $topic->slug ?? '',
+                $sections->firstWhere('id', '==', $topic->section_id)->slug ?? '',
+                $topic->color ?? ''
+            );
+        });
         return response(
             json_encode(
-                new LandingSearchResponse($topics, $sections)
+                new LandingSearchResponse($searchTopics)
                 , JSON_UNESCAPED_UNICODE)
         );
     }

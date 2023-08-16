@@ -2,26 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(schema="LandingSearchResponse")
  */
 class LandingSearchResponse
 {
+
     /**
      * @OA\Property(type="array",
-     *@OA\Items(ref="#/components/schemas/Section"),
-     * )
-     *
-     * @var Collection
-     */
-    public Collection $sections;
-    /**
-     * @OA\Property(type="array",
-     *@OA\Items(ref="#/components/schemas/Topic"),
+     *@OA\Items(ref="#/components/schemas/SearchTopic"),
      * )
      *
      * @var Collection
@@ -29,9 +22,8 @@ class LandingSearchResponse
     public Collection $topics;
 
 
-    public function __construct(Collection $topics, Collection $sections)
+    public function __construct(Collection $topics)
     {
         $this->topics = $topics;
-        $this->sections = $sections;
     }
 }

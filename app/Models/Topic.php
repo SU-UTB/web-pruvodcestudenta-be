@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OpenApi\Annotations as OA;
 
 /**
  * Class Topic
@@ -49,7 +50,7 @@ class Topic extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'description', 'image', 'color', 'link', 'url', 'section_id', 'location_id'
+        'title', 'description', 'image', 'color', 'slug', 'url', 'section_id', 'location_id'
     ];
 
     protected $attributes = [
@@ -57,7 +58,7 @@ class Topic extends Model
         'description' => '',
         'image' => '',
         'color' => '',
-        'link' => '',
+        'slug' => '',
         'url' => ''
 
     ];
