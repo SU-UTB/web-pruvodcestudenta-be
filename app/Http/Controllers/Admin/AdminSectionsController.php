@@ -53,7 +53,7 @@ class AdminSectionsController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'slug' => 'unique:sections,slug'
+            'slug' => 'required|unique:sections,slug'
         ]);
 
         $section = Section::create(
