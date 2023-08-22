@@ -1,6 +1,6 @@
 @php
     use Carbon\Carbon;
-    $logs = $paginationLogs->items();
+    $logs = collect($paginationLogs->items());
 
 
     function tagColor($level) {
@@ -17,7 +17,15 @@
         activeLog = log;
         document.getElementById("modal-message").innerText = activeLog.message;
         document.getElementById("modal-context").innerText = activeLog.context.exception;
-        console.log(activeLog.context);
+        showModal('show-log');
+        activeLog = null;
+    }
+
+    function showUserLog(log) {
+        activeLog = log;
+        console.log(activeLog.context.context);
+        document.getElementById("modal-message").innerText = activeLog.message + ", User: " + activeLog.context.user.email;
+        document.getElementById("modal-context").innerText = JSON.stringify(activeLog.context.context);
         showModal('show-log');
         activeLog = null;
     }
@@ -26,69 +34,154 @@
 <x-app-layout>
     <br>
 
-    <x-bladewind.table>
-        <x-slot name="header">
-            <th>Id</th>
-            <th>Level name</th>
-            <th>Level</th>
-            <th>Message</th>
-            <th>Logged at</th>
-            <th>Context</th>
-            <th>Extra</th>
-            <th>Actions</th>
-        </x-slot>
-        @foreach ($logs as $log)
+    <div>
+        <x-bladewind.tab-group name="logs">
 
-            <tr>
+            <x-slot name="headings">
+                <x-bladewind.tab-heading
+                    name="user-logs" label="User logs" active="{{true}}"/>
 
-                <td>
-                    <div>
-                        {{ $log['id'] }}
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <x-bladewind.tag label="{{ $log['level_name'] }}"
-                                         color="{{tagColor($log['level_name'])}}"/>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        {{ $log['level'] }}
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        {{ $log['message'] }}
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        {{ $log['logged_at'] }}
-                    </div>
-                </td>
-                <td>
-                    <div style="height:40px; width: 250px; overflow:hidden">
-                        {{ json_encode($log['context']->toArray()) }}
-                    </div>
-                </td>
-                <td>
-                    <div style="height:40px; overflow:hidden">
-                        {{ json_encode($log['extra']->toArray()) }}
-                    </div>
-                </td>
-                <td>
-                    <x-bladewind.button class="mb-3"
-                                        onclick="showLog({{ json_encode($log, JSON_HEX_TAG) }})">
-                        Show more
-                    </x-bladewind.button>
+                <x-bladewind.tab-heading
+                    name="all-logs" label="All logs"/>
 
-                </td>
 
-            </tr>
+            </x-slot>
 
-        @endforeach
-    </x-bladewind.table>
+            <x-bladewind.tab-body>
+
+                <x-bladewind.tab-content name="user-logs" active="{{true}}">
+
+                    <x-bladewind.table>
+                        <x-slot name="header">
+                            <th>Id</th>
+                            <th>Action</th>
+                            <th>Logged at</th>
+                            <th>User</th>
+                            <th>Context</th>
+                            <th>Actions</th>
+                        </x-slot>
+                        @foreach ($logs->where('level_name', '=', 'NOTICE') as $log)
+
+                            <tr>
+
+                                <td>
+                                    <div>
+                                        {{ $log['id'] }}
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div>
+                                        {{ $log['message'] }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {{ $log['logged_at'] }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {{ json_encode($log['context']->toArray()['user']['name']) }}
+                                        <br/>
+                                        {{ json_encode($log['context']->toArray()['user']['email']) }}
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <div style="height:60px; overflow:hidden">
+                                        {{ json_encode($log['context']->toArray()['context']) }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <x-bladewind.button class="mb-3"
+                                                        onclick="showUserLog({{ json_encode($log, JSON_HEX_TAG) }})">
+                                        Show more
+                                    </x-bladewind.button>
+
+                                </td>
+
+                            </tr>
+
+                        @endforeach
+                    </x-bladewind.table>
+
+
+                </x-bladewind.tab-content>
+
+                <x-bladewind.tab-content name="all-logs">
+                    <x-bladewind.table>
+                        <x-slot name="header">
+                            <th>Id</th>
+                            <th>Level name</th>
+                            <th>Level</th>
+                            <th>Message</th>
+                            <th>Logged at</th>
+                            <th>Context</th>
+                            <th>Extra</th>
+                            <th>Actions</th>
+                        </x-slot>
+                        @foreach ($logs->where('level_name', '!=', 'NOTICE') as $log)
+
+                            <tr>
+
+                                <td>
+                                    <div>
+                                        {{ $log['id'] }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <x-bladewind.tag label="{{ $log['level_name'] }}"
+                                                         color="{{tagColor($log['level_name'])}}"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {{ $log['level'] }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {{ $log['message'] }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {{ $log['logged_at'] }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="height:40px; width: 250px; overflow:hidden">
+                                        {{ json_encode($log['context']->toArray()) }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="height:40px; overflow:hidden">
+                                        {{ json_encode($log['extra']->toArray()) }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <x-bladewind.button class="mb-3"
+                                                        onclick="showLog({{ json_encode($log, JSON_HEX_TAG) }})">
+                                        Show more
+                                    </x-bladewind.button>
+
+                                </td>
+
+                            </tr>
+
+                        @endforeach
+                    </x-bladewind.table>
+
+                </x-bladewind.tab-content>
+
+
+            </x-bladewind.tab-body>
+
+        </x-bladewind.tab-group>
+    </div>
+
 
     <br/>
     <nav aria-label="Logs pagination" class="d-flex justify-content-center">

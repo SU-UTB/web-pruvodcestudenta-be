@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Section;
 use App\Models\Topic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use Transliterator;
@@ -64,6 +65,11 @@ class AdminSectionsController extends Controller
                 'color' => $request->input('color') ?? '#FF9F63',
             ]
         );
+
+        Log::notice('Section created', [
+            'context' => $section,
+            'user' => $request->user()
+        ]);
 
         return $this->index();
     }
