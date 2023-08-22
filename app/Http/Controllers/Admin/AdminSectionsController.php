@@ -16,7 +16,7 @@ class AdminSectionsController extends Controller
 {
     public static function index()
     {
-        return view('administration/sections',
+        return Inertia::render('Admin/Sections',
             ['paginationSections' => Section::paginate(10), "search" => ""]);
     }
 
