@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Location;
 use App\Models\Topic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LocationsController extends Controller
 {
@@ -35,7 +36,10 @@ class LocationsController extends Controller
         $location->update([
             'name' => $request->input('name') ?? ''
         ]);
-
+        Log::notice('Location updated', [
+            'context' => $location,
+            'user' => $request->user()
+        ]);
         return $this->index();
     }
 
@@ -51,7 +55,10 @@ class LocationsController extends Controller
                 'name' => $request->input('name')
             ]
         );
-
+        Log::notice('Location created', [
+            'context' => $location,
+            'user' => $request->user()
+        ]);
         return $this->index();
     }
 
@@ -67,6 +74,11 @@ class LocationsController extends Controller
         }
 
         Location::destroy($id);
+
+        Log::notice('Location deleted', [
+            'context' => $location,
+            'user' => $request->user()
+        ]);
 
         return $this->index();
     }

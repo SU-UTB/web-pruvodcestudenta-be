@@ -45,6 +45,11 @@ class AdminSectionsController extends Controller
             'image' => $section->image,
         ]);
 
+        Log::notice('Section updated', [
+            'context' => $section,
+            'user' => $request->user()
+        ]);
+
         return $this->index();
     }
 
@@ -87,6 +92,11 @@ class AdminSectionsController extends Controller
 
         Section::destroy($id);
 
+
+        Log::notice('Section deleted', [
+            'context' => $section,
+            'user' => $request->user()
+        ]);
         return $this->index();
     }
 

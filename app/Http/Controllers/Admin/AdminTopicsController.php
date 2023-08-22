@@ -7,6 +7,7 @@ use App\Models\Location;
 use App\Models\Section;
 use App\Models\Topic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use Transliterator;
@@ -62,6 +63,11 @@ class AdminTopicsController extends Controller
             'url' => $request->input('url') ?? ''
         ]);
 
+        Log::notice('Topic updated', [
+            'context' => $topic,
+            'user' => $request->user()
+        ]);
+
         return $this->index();
     }
 
@@ -93,13 +99,24 @@ class AdminTopicsController extends Controller
             ]
         );
 
+        Log::notice('Topic created', [
+            'context' => $topic,
+            'user' => $request->user()
+        ]);
+
         return $this->index();
     }
 
 
     public function delete(Request $request, $id)
     {
+        $topic = Topic::find($id);
         Topic::destroy($id);
+
+        Log::notice('Topic deleted', [
+            'context' => $topic,
+            'user' => $request->user()
+        ]);
         return $this->index();
     }
 
