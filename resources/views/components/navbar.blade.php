@@ -16,6 +16,10 @@
             <a class="nav-item nav-link {{request()->routeIs('topics')}}" href="/admin/topics">Topics</a>
             <a class="nav-item nav-link {{request()->routeIs('locations')}}" href="/admin/locations">Locations</a>
         </div>
+        <div class="navbar-nav ml-auto">
+            <a class="nav-item nav-link {{request()->routeIs('logs')}}" href="/admin/logs">Logs</a>
+
+        </div>
     </div>
 </nav>
 

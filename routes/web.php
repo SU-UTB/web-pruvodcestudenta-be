@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminLandingController;
 use App\Http\Controllers\Admin\AdminSectionsController;
 use App\Http\Controllers\Admin\AdminTopicsController;
 use App\Http\Controllers\Admin\LocationsController;
+use App\Http\Controllers\Admin\LogsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +52,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/topics/search/', [AdminTopicsController::class, 'topicsSearch'])->name('search-topics');
     Route::put('/admin/topics/{id}/', [AdminTopicsController::class, 'update'])->name('saveTopic');
     Route::get('/admin/topics/{id}/', [AdminTopicsController::class, 'delete'])->name('deleteTopic');
+
+    Route::get('/admin/logs/', [LogsController::class, 'index'])->name('logs');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
