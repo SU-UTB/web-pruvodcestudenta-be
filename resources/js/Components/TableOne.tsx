@@ -10,32 +10,32 @@ const TableOne = (sections: any) => {
             <div className="flex flex-col">
                 <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-6">
                     <div className="p-2.5 xl:p-5">
-                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                        <h5 className="text-sm font-bold uppercase xsm:text-base">
                             Title
                         </h5>
                     </div>
                     <div className="p-2.5 text-center xl:p-5">
-                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                        <h5 className="text-sm font-bold uppercase xsm:text-base">
                             Description
                         </h5>
                     </div>
                     <div className="p-2.5 text-center xl:p-5">
-                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                        <h5 className="text-sm font-bold uppercase xsm:text-base">
                             Color
                         </h5>
                     </div>
                     <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                        <h5 className="text-sm font-bold uppercase xsm:text-base">
                             Slug
                         </h5>
                     </div>
                     <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                        <h5 className="text-sm font-bold uppercase xsm:text-base">
                             Updated At
                         </h5>
                     </div>
                     <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                        <h5 className="text-sm font-bold uppercase xsm:text-base">
                             Actions
                         </h5>
                     </div>
