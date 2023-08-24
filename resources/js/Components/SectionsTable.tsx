@@ -1,7 +1,7 @@
 import TextInput from "@/Components/TextInput";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-const TableOne = (sections: any) => {
+const SectionsTable = (sections: any) => {
     //TODO types
     return (
         <div
@@ -89,4 +89,4 @@ const TableOne = (sections: any) => {
         ;
 };
 
-export default TableOne;
+export default SectionsTable;
