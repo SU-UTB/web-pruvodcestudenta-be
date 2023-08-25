@@ -1,6 +1,7 @@
 import PrimaryButton from "@/Components/PrimaryButton";
 import {Table, Textarea, TextInput} from 'flowbite-react';
 import {Link} from "@inertiajs/react";
+import {formatDateFromString} from "@/Tools/DateFormatter";
 
 const SectionsTable = (sections: any) => {
     //TODO types
@@ -39,7 +40,7 @@ const SectionsTable = (sections: any) => {
                         </Table.Cell>
                         <Table.Cell>
                             <Textarea
-cols={50}
+                                cols={50}
                                 rows={3}
                                 value={section.description} onChange={() => {
                             }}/>
@@ -52,7 +53,9 @@ cols={50}
                             {section.slug}
                         </Table.Cell>
                         <Table.Cell>
-                            {section.updated_at}
+                            {formatDateFromString(section.updated_at)[0]}
+                            <br/>
+                            {formatDateFromString(section.updated_at)[1]}
                         </Table.Cell>
                         <Table.Cell>
 

@@ -1,6 +1,7 @@
 import PrimaryButton from "@/Components/PrimaryButton";
-import {Dropdown, Table, Textarea, TextInput,} from 'flowbite-react';
+import {Dropdown, Select, Table, Textarea, TextInput,} from 'flowbite-react';
 import {Link} from "@inertiajs/react";
+import {formatDate, formatDateFromString} from "@/Tools/DateFormatter";
 
 const TopicsTable = ({topics, sections, locations}: any) => {
     //TODO types
@@ -51,31 +52,30 @@ const TopicsTable = ({topics, sections, locations}: any) => {
                             }}/>
                         </Table.Cell>
                         <Table.Cell>
-                            <Dropdown
+                            <Select
                                 value={topic.section_id}
                                 onChange={() => {
-                                }}
-                                label={'section_' + index}>
+                                }}>
                                 {sections.map((section: any) =>
-                                    <Dropdown.Item
+                                    <option
                                         key={section.id.toString()}
                                         value={section.id}>
                                         {section.title}
-                                    </Dropdown.Item>)
+                                    </option>)
                                 }
-                            </Dropdown>
+                            </Select>
                         </Table.Cell>
                         <Table.Cell>
-                            <Dropdown value={topic.location_id} onChange={() => {
-                            }} label={'location_' + index}>
+                            <Select value={topic.location_id} onChange={() => {
+                            }}>
                                 {locations.map((location: any) =>
-                                    <Dropdown.Item
+                                    <option
                                         key={location.id.toString()}
                                         value={location.id}>
                                         {location.name}
-                                    </Dropdown.Item>)
+                                    </option>)
                                 }
-                            </Dropdown>
+                            </Select>
                         </Table.Cell>
                         <Table.Cell>
                             <TextInput value={topic.url} onChange={() => {
@@ -85,7 +85,9 @@ const TopicsTable = ({topics, sections, locations}: any) => {
                             {topic.slug}
                         </Table.Cell>
                         <Table.Cell>
-                            {topic.updated_at}
+                            {formatDateFromString(topic.updated_at)[0]}
+                            <br/>
+                            {formatDateFromString(topic.updated_at)[1]}
                         </Table.Cell>
                         <Table.Cell>
 
