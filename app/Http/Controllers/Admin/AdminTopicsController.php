@@ -16,7 +16,7 @@ class AdminTopicsController extends Controller
 {
     public static function index()
     {
-        return view('administration/topics',
+        return Inertia::render('Admin/Topics',
             ['paginationTopics' => Topic::paginate(10),
                 'sections' => Section::all(),
                 'locations' => Location::all(), "search" => ""]);
