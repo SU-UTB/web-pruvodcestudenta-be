@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head} from '@inertiajs/react';
 import {PageProps} from '@/types';
-import SectionsTable from "@/Components/SectionsTable";
+import SectionsTable from "@/Components/Tables/SectionsTable";
 import {Button, TextInput} from "flowbite-react";
 
 export default function Sections({auth, paginationSections, search}: any) {
