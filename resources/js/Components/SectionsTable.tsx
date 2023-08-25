@@ -1,92 +1,84 @@
-import TextInput from "@/Components/TextInput";
 import PrimaryButton from "@/Components/PrimaryButton";
+import {Table, Textarea, TextInput} from 'flowbite-react';
+import {Link} from "@inertiajs/react";
 
 const SectionsTable = (sections: any) => {
     //TODO types
     return (
-        <div
-            className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-
-            <div className="flex flex-col">
-                <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-6">
-                    <div className="p-2.5 xl:p-5">
-                        <h5 className="text-sm font-bold uppercase xsm:text-base">
-                            Title
-                        </h5>
-                    </div>
-                    <div className="p-2.5 text-center xl:p-5">
-                        <h5 className="text-sm font-bold uppercase xsm:text-base">
-                            Description
-                        </h5>
-                    </div>
-                    <div className="p-2.5 text-center xl:p-5">
-                        <h5 className="text-sm font-bold uppercase xsm:text-base">
-                            Color
-                        </h5>
-                    </div>
-                    <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                        <h5 className="text-sm font-bold uppercase xsm:text-base">
-                            Slug
-                        </h5>
-                    </div>
-                    <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                        <h5 className="text-sm font-bold uppercase xsm:text-base">
-                            Updated At
-                        </h5>
-                    </div>
-                    <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                        <h5 className="text-sm font-bold uppercase xsm:text-base">
-                            Actions
-                        </h5>
-                    </div>
-                </div>
-            </div>
-            {
-                sections.sections.map((section: any, index: number) => {
-                    return <div key={index.toString()}
-                                className="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-6">
-                        <div className="flex items-center gap-3 p-2.5 xl:p-5">
+        <Table>
+            <Table.Head>
+                <Table.HeadCell>
+                    Title
+                </Table.HeadCell>
+                <Table.HeadCell>
+                    Description
+                </Table.HeadCell>
+                <Table.HeadCell>
+                    Color
+                </Table.HeadCell>
+                <Table.HeadCell>
+                    Slug
+                </Table.HeadCell>
+                <Table.HeadCell>
+                    Updated At
+                </Table.HeadCell>
+                <Table.HeadCell>
+          <span className="sr-only">
+            Actions
+          </span>
+                </Table.HeadCell>
+            </Table.Head>
+            <Table.Body className="divide-y">
+                {sections.sections.map((section: any, index: number) =>
+                    <Table.Row
+                        key={index.toString()}
+                        className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                             <TextInput value={section.title} onChange={() => {
                             }}/>
-                        </div>
-
-                        <div className="flex items-center justify-center p-2.5 xl:p-5">
-                            <TextInput value={section.description} onChange={() => {
+                        </Table.Cell>
+                        <Table.Cell>
+                            <Textarea
+cols={50}
+                                rows={3}
+                                value={section.description} onChange={() => {
                             }}/>
-                        </div>
-
-                        <div className="flex items-center justify-center p-2.5 xl:p-5">
+                        </Table.Cell>
+                        <Table.Cell>
                             <TextInput value={section.color} onChange={() => {
                             }}/>
-                        </div>
+                        </Table.Cell>
+                        <Table.Cell>
+                            {section.slug}
+                        </Table.Cell>
+                        <Table.Cell>
+                            {section.updated_at}
+                        </Table.Cell>
+                        <Table.Cell>
 
-                        <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                            <p className="text-black">{section.slug}</p>
-                        </div>
+                            <a
+                                className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+                                href="/tables"
+                            >
+                                <p>
+                                    Save
+                                </p>
+                            </a>
+                            <br/>
+                            <a
+                                className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+                                href="/tables"
+                            >
+                                <p>
+                                    Delete
+                                </p>
+                            </a>
+                        </Table.Cell>
+                    </Table.Row>)}
 
-                        <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                            <p className="text-black">{section.updated_at}</p>
-                        </div>
-
-                        <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                            <div className="d-flex flex-column gap-2">
-                                <PrimaryButton className="mb-2"
-                                >Save
-                                </PrimaryButton>
-                                <br/>
-                                <PrimaryButton>
-                                    <a href="{{ route('deleteSection', $section['id']) }}">Delete</a></PrimaryButton>
-                            </div>
-                        </div>
-                    </div>
-
-                })
-            }
-
-
-        </div>
-    )
-        ;
+            </Table.Body>
+        </Table>
+    );
 };
 
 export default SectionsTable;
