@@ -1,8 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head} from '@inertiajs/react';
+import {Head, router} from '@inertiajs/react';
 import {PageProps} from '@/types';
 import SectionsTable from "@/Components/Tables/SectionsTable";
-import {Button, TextInput} from "flowbite-react";
+import {Button, Pagination, TextInput} from "flowbite-react";
 import React from "react";
 import TopicsTable from "@/Components/Tables/TopicsTable";
 
@@ -33,7 +33,18 @@ export default function Topics({auth, paginationTopics, sections, locations, sea
             </div>
             <br/>
             <TopicsTable topics={paginationTopics.data} sections={sections} locations={locations}/>
+            <br/>
+            <div className="mx-auto flex justify-center items-center px-4">
 
+                <Pagination
+                    currentPage={paginationTopics.current_page}
+                    onPageChange={page => {
+                        router.visit(paginationTopics.path + '?page=' + page)
+                    }}
+                    totalPages={paginationTopics.last_page}
+                />
+            </div>
+            <br/>
         </AuthenticatedLayout>
     );
 }

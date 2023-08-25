@@ -1,10 +1,12 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head} from '@inertiajs/react';
+import {Head, router} from '@inertiajs/react';
 import {PageProps} from '@/types';
 import SectionsTable from "@/Components/Tables/SectionsTable";
-import {Button, TextInput} from "flowbite-react";
+import {Button, Pagination, TextInput} from "flowbite-react";
+import React from "react";
 
 export default function Sections({auth, paginationSections, search}: any) {
+    console.log(paginationSections)
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -31,7 +33,18 @@ export default function Sections({auth, paginationSections, search}: any) {
             </div>
             <br/>
             <SectionsTable sections={paginationSections.data}/>
+            <br/>
+            <div className="mx-auto flex justify-center items-center px-4">
 
+                <Pagination
+                    currentPage={paginationSections.current_page}
+                    onPageChange={page => {
+                        router.visit(paginationSections.path + '?page=' + page)
+                    }}
+                    totalPages={paginationSections.last_page}
+                />
+            </div>
+            <br/>
         </AuthenticatedLayout>
     );
 }
