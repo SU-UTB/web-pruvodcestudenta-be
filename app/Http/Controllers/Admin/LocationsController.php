@@ -7,12 +7,14 @@ use App\Models\Location;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
+use function Termwind\render;
 
 class LocationsController extends Controller
 {
     public static function index()
     {
-        return view('administration/locations',
+        return Inertia::render('Admin/Locations',
             ['paginationLocations' => Location::paginate(10), "search" => ""]);
     }
 
