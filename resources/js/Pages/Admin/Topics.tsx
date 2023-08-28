@@ -3,10 +3,13 @@ import {Head, router} from '@inertiajs/react';
 import {PageProps} from '@/types';
 import SectionsTable from "@/Components/Tables/SectionsTable";
 import {Button, Pagination, TextInput} from "flowbite-react";
-import React from "react";
+import React, {useState} from "react";
 import TopicsTable from "@/Components/Tables/TopicsTable";
+import {TopicModal} from "@/Components/Modals/TopicModal";
 
 export default function Topics({auth, paginationTopics, sections, locations, search}: any) {
+
+    const [showModal, setShowModal] = useState<boolean>(false);
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -26,8 +29,7 @@ export default function Topics({auth, paginationTopics, sections, locations, sea
                                }}/>
                 </form>
                 <Button className="ml-auto"
-                        onClick={() => {
-                        }}>
+                        onClick={() => setShowModal(true)}>
                     Add Topic
                 </Button>
             </div>
@@ -45,6 +47,7 @@ export default function Topics({auth, paginationTopics, sections, locations, sea
                 />
             </div>
             <br/>
+            <TopicModal isVisible={showModal} setOpenModal={setShowModal} topic={null}/>
         </AuthenticatedLayout>
     );
 }
