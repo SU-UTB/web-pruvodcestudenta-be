@@ -8,43 +8,40 @@ import {
     Textarea,
     TextInput,
 } from "flowbite-react";
+import { TwitterPicker } from "react-color";
 
 import { useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Utils } from "@/Tools/Utils";
 
-interface ITopic {
+interface IStory {
     title: string;
     description: string;
     slug: string;
-    url: string;
+    color: string;
     section_id: number;
     location_id: number;
 }
 
-interface ITopicModal {
+interface IStoryModal {
     setOpenModal: (value: boolean) => any;
     isVisible: boolean;
-    sections: Array<any>;
-    locations: Array<any>;
-    topic: ITopic | null;
+    story: IStory | null;
 }
 
-export const TopicModal = ({
+export const StoryModal = ({
     setOpenModal,
     isVisible,
-    sections,
-    locations,
-    topic = null,
-}: ITopicModal) => {
+    story = null,
+}: IStoryModal) => {
     const [errors, setErrors] = useState<string | null>(null);
     const [data, setData] = useState(
-        topic ?? {
+        story ?? {
             title: "",
             description: "",
             slug: "",
-            url: "",
+            color: "",
             section_id: 1,
             location_id: 1,
         }
@@ -52,7 +49,7 @@ export const TopicModal = ({
 
     return (
         <Modal show={isVisible} onClose={() => setOpenModal(false)}>
-            <Modal.Header>Add Topic</Modal.Header>
+            <Modal.Header>Add Story</Modal.Header>
             <Modal.Body>
                 {errors !== null ? (
                     <>
@@ -76,7 +73,7 @@ export const TopicModal = ({
                 <form className="flex max-w-md flex-col gap-4">
                     <div>
                         <div className="mb-2 block">
-                            <Label htmlFor="title" value="Topic title" />
+                            <Label htmlFor="title" value="Story title" />
                         </div>
                         <TextInput
                             id="title"
@@ -97,7 +94,7 @@ export const TopicModal = ({
                         <div className="mb-2 block">
                             <Label
                                 htmlFor="description"
-                                value="Topic description"
+                                value="Story description"
                             />
                         </div>
                         <CKEditor
@@ -112,70 +109,18 @@ export const TopicModal = ({
                             }}
                         />
                     </div>
+
                     <div>
                         <div className="mb-2 block">
-                            <Label htmlFor="section_id" value="Topic section" />
+                            <Label htmlFor="color" value="Story color" />
                         </div>
-                        <Select
-                            id="section_id"
-                            required
-                            onChange={(e) =>
+                        <br />
+                        <TwitterPicker
+                            color={data.color}
+                            onChange={(color) =>
                                 setData({
                                     ...data,
-                                    section_id: e.target.selectedIndex,
-                                })
-                            }
-                        >
-                            {sections.map((section: any) => (
-                                <option
-                                    key={section.id.toString()}
-                                    value={section.id}
-                                >
-                                    {section.title}
-                                </option>
-                            ))}
-                        </Select>
-                    </div>
-                    <div>
-                        <div className="mb-2 block">
-                            <Label
-                                htmlFor="location_id"
-                                value="Topic location"
-                            />
-                        </div>
-                        <Select
-                            id="location_id"
-                            required
-                            onChange={(e) =>
-                                setData({
-                                    ...data,
-                                    location_id: e.target.selectedIndex,
-                                })
-                            }
-                        >
-                            {locations.map((location: any) => (
-                                <option
-                                    key={location.id.toString()}
-                                    value={location.id}
-                                >
-                                    {location.name}
-                                </option>
-                            ))}
-                        </Select>
-                    </div>
-                    <div>
-                        <div className="mb-2 block">
-                            <Label htmlFor="url" value="Topic url" />
-                        </div>
-                        <TextInput
-                            id="url"
-                            placeholder="www.topic.xxx"
-                            required
-                            type="text"
-                            onChange={(val) =>
-                                setData({
-                                    ...data,
-                                    url: val.target.value,
+                                    color: color.hex,
                                 })
                             }
                         />
