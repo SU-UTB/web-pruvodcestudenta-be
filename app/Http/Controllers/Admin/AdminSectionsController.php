@@ -31,7 +31,7 @@ class AdminSectionsController extends Controller
             $data = Section::where('title', 'LIKE', '%' . trim(strtolower($search)) . '%')->orWhere('description', 'LIKE', '%' . trim(strtolower($search)) . '%')
                 ->paginate(10);
 
-            return view('administration/sections', ["paginationSections" => $data, "search" => $search]);
+            return Inertia::render('Admin/Sections', ["paginationSections" => $data, "search" => $search]);
         }
     }
 

@@ -3,12 +3,20 @@ import { Head, router } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import SectionsTable from "@/Components/Tables/SectionsTable";
 import { Button, Pagination, TextInput } from "flowbite-react";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { TopicModal } from "@/Components/Modals/TopicModal";
 import { StoryModal } from "@/Components/Modals/StoryModal";
 
 export default function Sections({ auth, paginationSections, search }: any) {
     const [showModal, setShowModal] = useState<boolean>(false);
+
+    const [searchInput, setSearchInput] = useState<string>(search);
+
+    function submitSearch(e: FormEvent) {
+        e.preventDefault();
+        router.post("/admin/sections/search", { search: searchInput });
+    }
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -26,17 +34,17 @@ export default function Sections({ auth, paginationSections, search }: any) {
                     name="search-reservation-form"
                     id="search-reservation-form"
                     method="POST"
-                    action="{{route('search-sections')}}"
+                    onSubmit={submitSearch}
                 >
                     <TextInput
                         type="text"
-                        className="form-control"
                         id="search"
                         name="search"
                         placeholder="Search..."
-                        value={search}
-                        onChange={() => {}}
+                        value={searchInput}
+                        onChange={(val) => setSearchInput(val.target.value)}
                     />
+                    <Button type="submit">Search</Button>
                 </form>
                 <Button className="ml-auto" onClick={() => setShowModal(true)}>
                     Add Section
