@@ -7,11 +7,7 @@ export function formatDateFromString(dateString: string) {
 
     let hoursMin = date.toLocaleTimeString("cs-CZ", {
         hour: "2-digit",
-
         minute: "2-digit",
     });
-    return [
-        date.getDay() + "." + (date.getMonth() + 1) + " " + date.getFullYear(),
-        hoursMin,
-    ];
+    return [date.toLocaleDateString("cs-CZ"), hoursMin];
 }
