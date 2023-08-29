@@ -27,9 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/sections/', [AdminSectionsController::class, 'index'])->name('sections');
     Route::post('/admin/sections/search/', [AdminSectionsController::class, 'sectionsSearch'])->name('search-sections');
     Route::put('/admin/sections/{id}/', [AdminSectionsController::class, 'update'])->name('saveSection');
-    Route::get('/admin/sections/{id}/', [AdminSectionsController::class, 'delete'])->name('deleteSection');
     Route::post('/admin/sections', [AdminSectionsController::class, 'store'])->name('admin.sections.create');
-    Route::delete('/admin/sections/{id}', [AdminSectionsController::class, 'destroy'])->name('admin.sections.destroy');
+    Route::delete('/admin/sections/{id}', [AdminSectionsController::class, 'delete'])->name('admin.sections.delete');
 
     Route::get('/admin/locations/', [LocationsController::class, 'index'])->name('locations');
     Route::post('/admin/locations/search/', [LocationsController::class, 'locationsSearch'])->name('search-locations');

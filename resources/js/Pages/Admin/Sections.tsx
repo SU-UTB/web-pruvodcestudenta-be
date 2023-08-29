@@ -5,16 +5,50 @@ import SectionsTable from "@/Components/Tables/SectionsTable";
 import { Button, Pagination, TextInput } from "flowbite-react";
 import React, { FormEvent, useState } from "react";
 import { TopicModal } from "@/Components/Modals/TopicModal";
-import { StoryModal } from "@/Components/Modals/StoryModal";
+import { ISection, SectionModal } from "@/Components/Modals/SectionModal";
 
 export default function Sections({ auth, paginationSections, search }: any) {
-    const [showModal, setShowModal] = useState<boolean>(false);
+    const [modalData, setModalData] = useState<{
+        isVisible: boolean;
+        section: ISection | null;
+    }>({
+        isVisible: false,
+        section: null,
+    });
 
     const [searchInput, setSearchInput] = useState<string>(search);
 
     function submitSearch(e: FormEvent) {
         e.preventDefault();
         router.post("/admin/sections/search", { search: searchInput });
+    }
+
+    function onDeleteSection(id: number) {
+        router.delete(`/admin/sections/${id}`);
+    }
+
+    function onEditSection(section: ISection) {
+        console.log(section);
+        setModalData({
+            isVisible: true,
+            section: section,
+        });
+    }
+
+    function onModalSubmit(data: ISection, createNew: boolean) {
+        setModalData({
+            isVisible: false,
+            section: null,
+        });
+        if (createNew) {
+            router.post("/admin/sections", {
+                ...data,
+            });
+        } else {
+            router.put(`/admin/sections/${data.id}`, {
+                ...data,
+            });
+        }
     }
 
     return (
@@ -46,12 +80,24 @@ export default function Sections({ auth, paginationSections, search }: any) {
                     />
                     <Button type="submit">Search</Button>
                 </form>
-                <Button className="ml-auto" onClick={() => setShowModal(true)}>
+                <Button
+                    className="ml-auto"
+                    onClick={() =>
+                        setModalData({
+                            ...modalData,
+                            isVisible: true,
+                        })
+                    }
+                >
                     Add Section
                 </Button>
             </div>
             <br />
-            <SectionsTable sections={paginationSections.data} />
+            <SectionsTable
+                sections={paginationSections.data}
+                onDeleteSection={onDeleteSection}
+                onEditSection={onEditSection}
+            />
             <br />
             <div className="mx-auto flex justify-center items-center px-4">
                 <Pagination
@@ -63,10 +109,17 @@ export default function Sections({ auth, paginationSections, search }: any) {
                 />
             </div>
             <br />
-            <StoryModal
-                isVisible={showModal}
-                setOpenModal={setShowModal}
-                story={null}
+            <SectionModal
+                key={modalData.section?.toString()}
+                isVisible={modalData.isVisible}
+                onClose={() =>
+                    setModalData({
+                        isVisible: false,
+                        section: null,
+                    })
+                }
+                section={modalData.section}
+                onSubmit={onModalSubmit}
             />
         </AuthenticatedLayout>
     );

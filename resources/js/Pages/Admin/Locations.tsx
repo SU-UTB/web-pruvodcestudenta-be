@@ -5,7 +5,7 @@ import SectionsTable from "@/Components/Tables/SectionsTable";
 import { Button, Pagination, TextInput } from "flowbite-react";
 import React, { useState } from "react";
 import { TopicModal } from "@/Components/Modals/TopicModal";
-import { StoryModal } from "@/Components/Modals/StoryModal";
+import { SectionModal } from "@/Components/Modals/SectionModal";
 import LocationsTable from "@/Components/Tables/LocationsTable";
 import { LocationModal } from "@/Components/Modals/LocationModal";
 

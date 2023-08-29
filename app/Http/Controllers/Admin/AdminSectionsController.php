@@ -101,16 +101,6 @@ class AdminSectionsController extends Controller
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return int
-     */
-    public function destroy($id)
-    {
-        return Section::destroy($id);
-    }
 
     private function getSlugFromTitle(string $input)
     {

@@ -15,41 +15,42 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Utils } from "@/Tools/Utils";
 
-interface IStory {
+export interface ISection {
+    id: number;
     title: string;
     description: string;
     slug: string;
     color: string;
-    section_id: number;
-    location_id: number;
 }
 
 interface IStoryModal {
-    setOpenModal: (value: boolean) => any;
+    onClose: () => any;
+    onSubmit: (data: ISection, createNew: boolean) => any;
     isVisible: boolean;
-    story: IStory | null;
+    section: ISection | null;
 }
 
-export const StoryModal = ({
-    setOpenModal,
+export const SectionModal = ({
+    onClose,
+    onSubmit,
     isVisible,
-    story = null,
+    section = null,
 }: IStoryModal) => {
     const [errors, setErrors] = useState<string | null>(null);
-    const [data, setData] = useState(
-        story ?? {
+    const [data, setData] = useState<ISection>(
+        section ?? {
+            id: 0,
             title: "",
             description: "",
             slug: "",
             color: "",
-            section_id: 1,
-            location_id: 1,
         }
     );
-
     return (
-        <Modal show={isVisible} onClose={() => setOpenModal(false)}>
-            <Modal.Header>Add Story</Modal.Header>
+        <Modal show={isVisible} onClose={onClose}>
+            <Modal.Header>
+                {section !== null ? "Edit story" : "Add Story"}
+            </Modal.Header>
             <Modal.Body>
                 {errors !== null ? (
                     <>
@@ -70,7 +71,10 @@ export const StoryModal = ({
                     <div />
                 )}
 
-                <form className="flex max-w-md flex-col gap-4">
+                <form
+                    className="flex max-w-md flex-col gap-4"
+                    onSubmit={() => onSubmit(data, section === null)}
+                >
                     <div>
                         <div className="mb-2 block">
                             <Label htmlFor="title" value="Story title" />
@@ -134,6 +138,7 @@ export const StoryModal = ({
                             placeholder=""
                             value={data.slug}
                             required
+                            disabled={section !== null}
                             type="text"
                             onChange={(val) =>
                                 setData({
@@ -143,25 +148,31 @@ export const StoryModal = ({
                             }
                         />
                     </div>
-                    <Alert color="warning" withBorderAccent>
-                        <span>
-                            <p>
-                                Pečlivě zkontroluj slug! Slug je automaticky
-                                vygenerované slovo z názvu.
-                                <br />
-                                Toto slovo bude použito pro identifikaci sekce v
-                                url adrese.
-                                <br />
-                                Např.
-                                "www.pruvodcestudenta.utb.cz/sekce/nazevSekce/_slug_".
-                                <br />
-                                Slug musí být unikátní, slug nelze později
-                                změnit.
-                            </p>
-                        </span>
-                    </Alert>
+                    {section === null ? (
+                        <Alert color="warning" withBorderAccent>
+                            <span>
+                                <p>
+                                    Pečlivě zkontroluj slug! Slug je automaticky
+                                    vygenerované slovo z názvu.
+                                    <br />
+                                    Toto slovo bude použito pro identifikaci
+                                    sekce v url adrese.
+                                    <br />
+                                    Např.
+                                    "www.pruvodcestudenta.utb.cz/sekce/nazevSekce/_slug_".
+                                    <br />
+                                    Slug musí být unikátní, slug nelze později
+                                    změnit.
+                                </p>
+                            </span>
+                        </Alert>
+                    ) : (
+                        <></>
+                    )}
 
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit">
+                        {section === null ? "Create" : "Save"}
+                    </Button>
                 </form>
             </Modal.Body>
         </Modal>
