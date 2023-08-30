@@ -3,9 +3,10 @@ import { Head, router } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import SectionsTable from "@/Components/Tables/SectionsTable";
 import { Button, Pagination, TextInput } from "flowbite-react";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import TopicsTable from "@/Components/Tables/TopicsTable";
-import { TopicModal } from "@/Components/Modals/TopicModal";
+import { ITopic, TopicModal } from "@/Components/Modals/TopicModal";
+import { ISection } from "@/Components/Modals/SectionModal";
 
 export default function Topics({
     auth,
@@ -14,7 +15,36 @@ export default function Topics({
     locations,
     search,
 }: any) {
-    const [showModal, setShowModal] = useState<boolean>(false);
+    const [modalData, setModalData] = useState<{
+        isVisible: boolean;
+        topic: ITopic | null;
+    }>({
+        isVisible: false,
+        topic: null,
+    });
+    const [searchInput, setSearchInput] = useState<string>(search);
+
+    function submitSearch(e: FormEvent) {
+        e.preventDefault();
+        router.post("/admin/topics/search", { search: searchInput });
+    }
+
+    function onModalSubmit(data: ITopic, createNew: boolean) {
+        setModalData({
+            isVisible: false,
+            topic: null,
+        });
+        if (createNew) {
+            router.post("/admin/topics", {
+                ...data,
+            });
+        } else {
+            router.put(`/admin/topics/${data.id}`, {
+                ...data,
+            });
+        }
+    }
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -44,7 +74,15 @@ export default function Topics({
                         onChange={() => {}}
                     />
                 </form>
-                <Button className="ml-auto" onClick={() => setShowModal(true)}>
+                <Button
+                    className="ml-auto"
+                    onClick={() =>
+                        setModalData({
+                            ...modalData,
+                            isVisible: true,
+                        })
+                    }
+                >
                     Add Topic
                 </Button>
             </div>
@@ -66,9 +104,16 @@ export default function Topics({
             </div>
             <br />
             <TopicModal
-                isVisible={showModal}
-                setOpenModal={setShowModal}
-                topic={null}
+                key={modalData.topic?.toString()}
+                isVisible={modalData.isVisible}
+                onClose={() =>
+                    setModalData({
+                        isVisible: false,
+                        topic: null,
+                    })
+                }
+                topic={modalData.topic}
+                onSubmit={onModalSubmit}
                 locations={locations}
                 sections={sections}
             />

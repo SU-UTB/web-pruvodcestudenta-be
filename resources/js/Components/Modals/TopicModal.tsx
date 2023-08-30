@@ -13,8 +13,10 @@ import { useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Utils } from "@/Tools/Utils";
+import { ISection } from "@/Components/Modals/SectionModal";
 
-interface ITopic {
+export interface ITopic {
+    id: number;
     title: string;
     description: string;
     slug: string;
@@ -24,23 +26,26 @@ interface ITopic {
 }
 
 interface ITopicModal {
-    setOpenModal: (value: boolean) => any;
+    onClose: () => any;
+    onSubmit: (data: ITopic, createNew: boolean) => any;
     isVisible: boolean;
-    sections: Array<any>;
-    locations: Array<any>;
     topic: ITopic | null;
+    sections: any;
+    locations: any;
 }
 
 export const TopicModal = ({
-    setOpenModal,
+    onClose,
+    onSubmit,
     isVisible,
+    topic = null,
     sections,
     locations,
-    topic = null,
 }: ITopicModal) => {
     const [errors, setErrors] = useState<string | null>(null);
     const [data, setData] = useState(
         topic ?? {
+            id: 0,
             title: "",
             description: "",
             slug: "",
@@ -51,7 +56,7 @@ export const TopicModal = ({
     );
 
     return (
-        <Modal show={isVisible} onClose={() => setOpenModal(false)}>
+        <Modal show={isVisible} onClose={onClose}>
             <Modal.Header>Add Topic</Modal.Header>
             <Modal.Body>
                 {errors !== null ? (
@@ -73,7 +78,10 @@ export const TopicModal = ({
                     <div />
                 )}
 
-                <form className="flex max-w-md flex-col gap-4">
+                <form
+                    className="flex max-w-md flex-col gap-4"
+                    onSubmit={() => onSubmit(data, topic === null)}
+                >
                     <div>
                         <div className="mb-2 block">
                             <Label htmlFor="title" value="Topic title" />
@@ -216,7 +224,9 @@ export const TopicModal = ({
                         </span>
                     </Alert>
 
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit">
+                        {topic === null ? "Create" : "Save"}
+                    </Button>
                 </form>
             </Modal.Body>
         </Modal>
