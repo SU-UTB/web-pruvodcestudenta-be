@@ -68,7 +68,7 @@ class AdminTopicsController extends Controller
             'user' => $request->user()
         ]);
 
-        return $this->index();
+        return redirect()->back();
     }
 
     public function store(Request $request)
@@ -104,7 +104,7 @@ class AdminTopicsController extends Controller
             'user' => $request->user()
         ]);
 
-        return $this->index();
+        return redirect()->back();
     }
 
 
@@ -117,7 +117,7 @@ class AdminTopicsController extends Controller
             'context' => $topic,
             'user' => $request->user()
         ]);
-        return $this->index();
+        return redirect()->back();
     }
 
 

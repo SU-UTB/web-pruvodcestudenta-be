@@ -50,7 +50,7 @@ class AdminSectionsController extends Controller
             'user' => $request->user()
         ]);
 
-        return $this->index();
+        return redirect()->back();
     }
 
 
@@ -76,7 +76,7 @@ class AdminSectionsController extends Controller
             'user' => $request->user()
         ]);
 
-        return $this->index();
+        return redirect()->back();
     }
 
 
@@ -97,7 +97,7 @@ class AdminSectionsController extends Controller
             'context' => $section,
             'user' => $request->user()
         ]);
-        return $this->index();
+        return redirect()->back();
     }
 
 
