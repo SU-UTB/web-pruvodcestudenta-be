@@ -16,7 +16,7 @@ class AdminSectionsController extends Controller
 {
     public static function index()
     {
-        return view('administration/sections',
+        return Inertia::render('Admin/Sections',
             ['paginationSections' => Section::paginate(10), "search" => ""]);
     }
 
@@ -31,7 +31,7 @@ class AdminSectionsController extends Controller
             $data = Section::where('title', 'LIKE', '%' . trim(strtolower($search)) . '%')->orWhere('description', 'LIKE', '%' . trim(strtolower($search)) . '%')
                 ->paginate(10);
 
-            return view('administration/sections', ["paginationSections" => $data, "search" => $search]);
+            return Inertia::render('Admin/Sections', ["paginationSections" => $data, "search" => $search]);
         }
     }
 
@@ -50,7 +50,7 @@ class AdminSectionsController extends Controller
             'user' => $request->user()
         ]);
 
-        return $this->index();
+        return redirect()->back();
     }
 
 
@@ -76,7 +76,7 @@ class AdminSectionsController extends Controller
             'user' => $request->user()
         ]);
 
-        return $this->index();
+        return redirect()->back();
     }
 
 
@@ -97,20 +97,10 @@ class AdminSectionsController extends Controller
             'context' => $section,
             'user' => $request->user()
         ]);
-        return $this->index();
+        return redirect()->back();
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return int
-     */
-    public function destroy($id)
-    {
-        return Section::destroy($id);
-    }
 
     private function getSlugFromTitle(string $input)
     {
