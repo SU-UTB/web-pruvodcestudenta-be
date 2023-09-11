@@ -126,11 +126,13 @@ export const TopicModal = ({
                         </div>
                         <Select
                             id="section_id"
+                            value={data.section_id}
                             required
                             onChange={(e) =>
                                 setData({
                                     ...data,
-                                    section_id: e.target.selectedIndex,
+                                    section_id:
+                                        sections[e.target.selectedIndex].id,
                                 })
                             }
                         >
@@ -153,11 +155,13 @@ export const TopicModal = ({
                         </div>
                         <Select
                             id="location_id"
+                            value={data.location_id}
                             required
                             onChange={(e) =>
                                 setData({
                                     ...data,
-                                    location_id: e.target.selectedIndex,
+                                    location_id:
+                                        locations[e.target.selectedIndex].id,
                                 })
                             }
                         >
@@ -178,7 +182,6 @@ export const TopicModal = ({
                         <TextInput
                             id="url"
                             placeholder="www.topic.xxx"
-                            required
                             type="text"
                             onChange={(val) =>
                                 setData({
@@ -197,6 +200,7 @@ export const TopicModal = ({
                             placeholder=""
                             value={data.slug}
                             required
+                            disabled={topic !== null}
                             type="text"
                             onChange={(val) =>
                                 setData({

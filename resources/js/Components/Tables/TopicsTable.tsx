@@ -1,9 +1,22 @@
 import PrimaryButton from "@/Components/PrimaryButton";
-import { Dropdown, Select, Table, Textarea, TextInput } from "flowbite-react";
+import {
+    Button,
+    Dropdown,
+    Select,
+    Table,
+    Textarea,
+    TextInput,
+} from "flowbite-react";
 import { Link } from "@inertiajs/react";
 import { formatDateFromString } from "@/Tools/DateFormatter";
 
-const TopicsTable = ({ topics, sections, locations }: any) => {
+const TopicsTable = ({
+    topics,
+    sections,
+    locations,
+    onDeleteTopic,
+    onEditTopic,
+}: any) => {
     //TODO types
     return (
         <Table>
@@ -26,52 +39,30 @@ const TopicsTable = ({ topics, sections, locations }: any) => {
                         className="bg-white dark:border-gray-700 dark:bg-gray-800"
                     >
                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                            <TextInput
-                                value={topic.title}
-                                onChange={() => {}}
+                            {topic.title}
+                        </Table.Cell>
+                        <Table.Cell>
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: topic.description,
+                                }}
                             />
                         </Table.Cell>
                         <Table.Cell>
-                            <Textarea
-                                cols={50}
-                                rows={3}
-                                value={topic.description}
-                                onChange={() => {}}
-                            />
+                            {
+                                sections.find(
+                                    (s: any) => s.id === topic.section_id
+                                ).title
+                            }
                         </Table.Cell>
                         <Table.Cell>
-                            <Select
-                                value={topic.section_id}
-                                onChange={() => {}}
-                            >
-                                {sections.map((section: any) => (
-                                    <option
-                                        key={section.id.toString()}
-                                        value={section.id}
-                                    >
-                                        {section.title}
-                                    </option>
-                                ))}
-                            </Select>
+                            {
+                                locations.find(
+                                    (l: any) => l.id === topic.location_id
+                                ).name
+                            }
                         </Table.Cell>
-                        <Table.Cell>
-                            <Select
-                                value={topic.location_id}
-                                onChange={() => {}}
-                            >
-                                {locations.map((location: any) => (
-                                    <option
-                                        key={location.id.toString()}
-                                        value={location.id}
-                                    >
-                                        {location.name}
-                                    </option>
-                                ))}
-                            </Select>
-                        </Table.Cell>
-                        <Table.Cell>
-                            <TextInput value={topic.url} onChange={() => {}} />
-                        </Table.Cell>
+                        <Table.Cell>{topic.url}</Table.Cell>
                         <Table.Cell className="w-{200px} overflow-hidden">
                             {topic.slug}
                         </Table.Cell>
@@ -81,19 +72,20 @@ const TopicsTable = ({ topics, sections, locations }: any) => {
                             {formatDateFromString(topic.updated_at)[1]}
                         </Table.Cell>
                         <Table.Cell>
-                            <a
-                                className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                                href="/tables"
+                            <Button
+                                size={"xs"}
+                                onClick={() => onEditTopic(topic)}
                             >
-                                <p>Save</p>
-                            </a>
+                                <p>Edit</p>
+                            </Button>
                             <br />
-                            <a
-                                className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                                href="/tables"
+                            <Button
+                                size={"xs"}
+                                color="failure"
+                                onClick={() => onDeleteTopic(topic.id)}
                             >
                                 <p>Delete</p>
-                            </a>
+                            </Button>
                         </Table.Cell>
                     </Table.Row>
                 ))}

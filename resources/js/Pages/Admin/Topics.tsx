@@ -29,6 +29,18 @@ export default function Topics({
         router.post("/admin/topics/search", { search: searchInput });
     }
 
+    function onDeleteTopic(id: number) {
+        router.delete(`/admin/topics/${id}`);
+    }
+
+    function onEditTopic(topic: ITopic) {
+        console.log(topic);
+        setModalData({
+            isVisible: true,
+            topic: topic,
+        });
+    }
+
     function onModalSubmit(data: ITopic, createNew: boolean) {
         setModalData({
             isVisible: false,
@@ -62,17 +74,17 @@ export default function Topics({
                     name="search-topics-form"
                     id="search-topics-form"
                     method="POST"
-                    action="{{route('search-topics')}}"
+                    onSubmit={submitSearch}
                 >
                     <TextInput
                         type="text"
-                        className="form-control"
                         id="search"
                         name="search"
                         placeholder="Search..."
-                        value={search}
-                        onChange={() => {}}
+                        value={searchInput}
+                        onChange={(val) => setSearchInput(val.target.value)}
                     />
+                    <Button type="submit">Search</Button>
                 </form>
                 <Button
                     className="ml-auto"
@@ -91,6 +103,8 @@ export default function Topics({
                 topics={paginationTopics.data}
                 sections={sections}
                 locations={locations}
+                onDeleteTopic={onDeleteTopic}
+                onEditTopic={onEditTopic}
             />
             <br />
             <div className="mx-auto flex justify-center items-center px-4">

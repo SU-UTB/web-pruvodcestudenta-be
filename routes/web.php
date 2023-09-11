@@ -40,18 +40,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/topics/', [AdminTopicsController::class, 'index'])->name('topics');
     Route::post('/admin/topics/search/', [AdminTopicsController::class, 'topicsSearch'])->name('search-topics');
     Route::put('/admin/topics/{id}/', [AdminTopicsController::class, 'update'])->name('saveTopic');
-    Route::get('/admin/topics/{id}/', [AdminTopicsController::class, 'delete'])->name('deleteTopic');
+    Route::post('/admin/topics', [AdminTopicsController::class, 'store'])->name('admin.topics.create');
+    Route::delete('/admin/topics/{id}', [AdminTopicsController::class, 'delete'])->name('admin.topics.delete');
 
     Route::get('/admin/logs/', [LogsController::class, 'index'])->name('logs');
 
-
-    //Route::get('/admin', [AdminLandingController::class, 'index'])->name('dashboard');
-    Route::post('/admin/topics', [AdminTopicsController::class, 'store'])->name('admin.topics.create');
-    Route::delete('/admin/topics/{id}', [AdminTopicsController::class, 'destroy'])->name('admin.topics.destroy');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
