@@ -14,31 +14,32 @@ import { useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Utils } from "@/Tools/Utils";
+import { ITopic } from "@/Components/Modals/TopicModal";
 
-interface ILocation {
+export interface ILocation {
+    id: number;
     name: string;
 }
 
 interface ILocationModal {
-    setOpenModal: (value: boolean) => any;
+    onClose: () => any;
+    onSubmit: (data: ILocation, createNew: boolean) => any;
     isVisible: boolean;
-    location: ILocation | null;
 }
 
 export const LocationModal = ({
-    setOpenModal,
+    onClose,
+    onSubmit,
     isVisible,
-    location = null,
 }: ILocationModal) => {
     const [errors, setErrors] = useState<string | null>(null);
-    const [data, setData] = useState(
-        location ?? {
-            name: "",
-        }
-    );
+    const [data, setData] = useState<ILocation>({
+        id: 0,
+        name: "",
+    });
 
     return (
-        <Modal show={isVisible} onClose={() => setOpenModal(false)}>
+        <Modal show={isVisible} onClose={onClose}>
             <Modal.Header>Add Location</Modal.Header>
             <Modal.Body>
                 {errors !== null ? (
@@ -60,7 +61,10 @@ export const LocationModal = ({
                     <div />
                 )}
 
-                <form className="flex max-w-md flex-col gap-4">
+                <form
+                    className="flex max-w-md flex-col gap-4"
+                    onSubmit={() => onSubmit(data, true)}
+                >
                     <div>
                         <div className="mb-2 block">
                             <Label htmlFor="name" value="Location name" />

@@ -28,7 +28,7 @@ class LocationsController extends Controller
 
             $data = Location::where('name', 'LIKE', '%' . trim(strtolower($search)) . '%')->paginate(10);
 
-            return view('administration/locations', ["paginationLocations" => $data, "search" => $search]);
+            return Inertia::render('Admin/Locations', ["paginationLocations" => $data, "search" => $search]);
         }
     }
 
@@ -42,7 +42,7 @@ class LocationsController extends Controller
             'context' => $location,
             'user' => $request->user()
         ]);
-        return $this->index();
+        return redirect()->back();
     }
 
 
@@ -61,7 +61,7 @@ class LocationsController extends Controller
             'context' => $location,
             'user' => $request->user()
         ]);
-        return $this->index();
+        return redirect()->back();
     }
 
 
@@ -82,19 +82,9 @@ class LocationsController extends Controller
             'user' => $request->user()
         ]);
 
-        return $this->index();
+        return redirect()->back();
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return int
-     */
-    public function destroy($id)
-    {
-        return Location::destroy($id);
-    }
 
 }

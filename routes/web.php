@@ -33,9 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/locations/', [LocationsController::class, 'index'])->name('locations');
     Route::post('/admin/locations/search/', [LocationsController::class, 'locationsSearch'])->name('search-locations');
     Route::put('/admin/locations/{id}/', [LocationsController::class, 'update'])->name('saveLocation');
-    Route::get('/admin/locations/{id}/', [LocationsController::class, 'delete'])->name('deleteLocation');
     Route::post('/admin/locations', [LocationsController::class, 'store'])->name('admin.locations.create');
-    Route::delete('/admin/locations/{id}', [LocationsController::class, 'destroy'])->name('admin.locations.destroy');
+    Route::delete('/admin/locations/{id}', [LocationsController::class, 'delete'])->name('admin.locations.delete');
 
     Route::get('/admin/topics/', [AdminTopicsController::class, 'index'])->name('topics');
     Route::post('/admin/topics/search/', [AdminTopicsController::class, 'topicsSearch'])->name('search-topics');
@@ -44,7 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/admin/topics/{id}', [AdminTopicsController::class, 'delete'])->name('admin.topics.delete');
 
     Route::get('/admin/logs/', [LogsController::class, 'index'])->name('logs');
-
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

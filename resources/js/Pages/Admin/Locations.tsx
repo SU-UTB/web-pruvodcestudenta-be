@@ -3,14 +3,50 @@ import { Head, router } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import SectionsTable from "@/Components/Tables/SectionsTable";
 import { Button, Pagination, TextInput } from "flowbite-react";
-import React, { useState } from "react";
-import { TopicModal } from "@/Components/Modals/TopicModal";
+import React, { FormEvent, useState } from "react";
+import { ITopic, TopicModal } from "@/Components/Modals/TopicModal";
 import { SectionModal } from "@/Components/Modals/SectionModal";
 import LocationsTable from "@/Components/Tables/LocationsTable";
-import { LocationModal } from "@/Components/Modals/LocationModal";
+import { ILocation, LocationModal } from "@/Components/Modals/LocationModal";
 
 export default function Locations({ auth, paginationLocations, search }: any) {
-    const [showModal, setShowModal] = useState<boolean>(false);
+    const [modalData, setModalData] = useState<{
+        isVisible: boolean;
+        location: ILocation | null;
+    }>({
+        isVisible: false,
+        location: null,
+    });
+    const [searchInput, setSearchInput] = useState<string>(search);
+
+    function submitSearch(e: FormEvent) {
+        e.preventDefault();
+        router.post("/admin/locations/search", { search: searchInput });
+    }
+
+    function onModalSubmit(data: ILocation, createNew: boolean) {
+        setModalData({
+            isVisible: false,
+            location: null,
+        });
+        console.log(data);
+        if (createNew) {
+            router.post("/admin/locations", {
+                ...data,
+            });
+        }
+    }
+
+    function onDeleteLocation(id: number) {
+        router.delete(`/admin/locations/${id}`);
+    }
+
+    function onSaveLocation(location: ILocation) {
+        router.put(`/admin/locations/${location.id}`, {
+            ...location,
+        });
+    }
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -28,24 +64,37 @@ export default function Locations({ auth, paginationLocations, search }: any) {
                     name="search-locations-form"
                     id="search-locations-form"
                     method="POST"
-                    action="{{route('search-locations')}}"
+                    onSubmit={submitSearch}
                 >
                     <TextInput
                         type="text"
-                        className="form-control"
                         id="search"
                         name="search"
                         placeholder="Search..."
-                        value={search}
-                        onChange={() => {}}
+                        value={searchInput}
+                        onChange={(val) => setSearchInput(val.target.value)}
                     />
+                    <Button type="submit">Search</Button>
                 </form>
-                <Button className="ml-auto" onClick={() => setShowModal(true)}>
+                <Button
+                    className="ml-auto"
+                    onClick={() =>
+                        setModalData({
+                            ...modalData,
+                            isVisible: true,
+                        })
+                    }
+                >
                     Add Location
                 </Button>
             </div>
             <br />
-            <LocationsTable locations={paginationLocations.data} />
+            <LocationsTable
+                key={paginationLocations.data.length.toString()}
+                locations={paginationLocations.data}
+                onDeleteLocation={onDeleteLocation}
+                onSaveLocation={onSaveLocation}
+            />
             <br />
             {/*TODO generic pagination*/}
             <div className="mx-auto flex justify-center items-center px-4">
@@ -61,9 +110,14 @@ export default function Locations({ auth, paginationLocations, search }: any) {
             </div>
             <br />
             <LocationModal
-                isVisible={showModal}
-                setOpenModal={setShowModal}
-                location={null}
+                isVisible={modalData.isVisible}
+                onClose={() =>
+                    setModalData({
+                        isVisible: false,
+                        location: null,
+                    })
+                }
+                onSubmit={onModalSubmit}
             />
         </AuthenticatedLayout>
     );
