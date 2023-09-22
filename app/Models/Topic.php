@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use OpenApi\Annotations as OA;
 
 /**
@@ -62,4 +63,9 @@ class Topic extends Model
         'url' => ''
 
     ];
+
+    public function image(): HasOne
+    {
+        return $this->hasOne(TopicImage::class);
+    }
 }
