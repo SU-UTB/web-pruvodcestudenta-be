@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Section;
+use App\Models\SectionImage;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -42,7 +43,6 @@ class AdminSectionsController extends Controller
             'title' => $request->input('title') ?? '',
             'description' => $request->input('description') ?? '',
             'color' => $request->input('color') ?? '',
-            'image' => $section->image,
         ]);
 
         Log::notice('Section updated', [
@@ -71,6 +71,21 @@ class AdminSectionsController extends Controller
             ]
         );
 
+        if (isset($request->image)) {
+            $normalizedFileName = $section->slug . '.jpg';
+
+            $path = $request->image->move(public_path('images/sections'), $normalizedFileName);
+
+            $photo = SectionImage::create(
+                [
+                    'name' => $normalizedFileName,
+                    'path' => $path->getRealPath(),
+                    'section_id' => $section->id,
+                ]
+            );
+        }
+
+
         Log::notice('Section created', [
             'context' => $section,
             'user' => $request->user()
@@ -90,8 +105,7 @@ class AdminSectionsController extends Controller
             return response("Section has topics, please remove them first, then delete section!", 400);
         }
 
-        Section::destroy($id);
-
+        $section->delete();
 
         Log::notice('Section deleted', [
             'context' => $section,
@@ -99,7 +113,6 @@ class AdminSectionsController extends Controller
         ]);
         return redirect()->back();
     }
-
 
 
     private function getSlugFromTitle(string $input)

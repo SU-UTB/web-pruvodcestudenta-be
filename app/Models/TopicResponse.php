@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use OpenApi\Annotations as OA;
 
 /**
- * @OA\Schema(schema="SectionResponse")
+ * @OA\Schema(schema="TopicResponse")
  */
-class SectionResponse
+class TopicResponse
 {
     /**
      * @OA\Property(type="string")
@@ -31,14 +31,14 @@ class SectionResponse
      *
      * @var string
      */
-    public string $slug;
+    public string $url;
 
     /**
      * @OA\Property(type="string")
      *
      * @var string
      */
-    public string $link;
+    public string $slug;
 
     /**
      * @OA\Property(type="string")
@@ -54,24 +54,16 @@ class SectionResponse
      */
     public string $color;
 
-    /**
-     * @OA\Property(type="array",
-     *@OA\Items(ref="#/components/schemas/Topic"),
-     * )
-     *
-     * @var Collection
-     */
-    public Collection $topics;
 
-
-    public function __construct(Collection $topics, Section $section)
+    public function __construct(Topic $topic)
     {
-        $image =$section->image()->get()->first();
-        $this->topics = $topics;
-        $this->title = $section->title;
-        $this->description = $section->description;
-        $this->slug = $section->slug;
-        $this->color = $section->color;
+        $image =$topic->image()->get()->first();
+
+        $this->title = $topic->title;
+        $this->description = $topic->description;
+        $this->slug = $topic->slug;
+        $this->color = $topic->color;
+        $this->url = $topic->url;
         $this->image = isset($image) ? $image->path : '';
     }
 }

@@ -34,27 +34,10 @@ export default function Topics({
     }
 
     function onEditTopic(topic: ITopic) {
-        console.log(topic);
         setModalData({
             isVisible: true,
             topic: topic,
         });
-    }
-
-    function onModalSubmit(data: ITopic, createNew: boolean) {
-        setModalData({
-            isVisible: false,
-            topic: null,
-        });
-        if (createNew) {
-            router.post("/admin/topics", {
-                ...data,
-            });
-        } else {
-            router.put(`/admin/topics/${data.id}`, {
-                ...data,
-            });
-        }
     }
 
     return (
@@ -127,7 +110,6 @@ export default function Topics({
                     })
                 }
                 topic={modalData.topic}
-                onSubmit={onModalSubmit}
                 locations={locations}
                 sections={sections}
             />
