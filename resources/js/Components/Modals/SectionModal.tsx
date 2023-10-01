@@ -9,6 +9,8 @@ import {
     Textarea,
     TextInput,
 } from "flowbite-react";
+import { AiOutlineClose } from "react-icons/ai";
+
 import { TwitterPicker } from "react-color";
 
 import { FormEvent, useState } from "react";
@@ -26,24 +28,26 @@ export interface ISection {
     color: string;
 }
 
-interface IStoryModal {
+interface ISectionModal {
     onClose: () => any;
     isVisible: boolean;
     section: ISection | null;
+    image: string | null;
 }
 
 export const SectionModal = ({
     onClose,
     isVisible,
     section = null,
-}: IStoryModal) => {
+    image = null,
+}: ISectionModal) => {
     const { data, setData, post, put, progress, errors, clearErrors } = useForm(
         section ?? {
             id: 0,
             title: "",
             description: "",
             slug: "",
-            image: null,
+            image: image ? new File([], image) : null,
             color: "",
         },
     );
@@ -62,6 +66,7 @@ export const SectionModal = ({
         }
     }
 
+    console.log(data.image);
     return (
         <Modal show={isVisible} onClose={onClose}>
             <Modal.Header>
@@ -146,19 +151,41 @@ export const SectionModal = ({
                         <div className="mb-2 block">
                             <Label htmlFor="image" value="Upload image" />
                         </div>
-                        <FileInput
-                            id="image"
-                            name="image"
-                            onChange={(val) =>
-                                setData({
-                                    ...data,
-                                    image:
-                                        val.target.files !== null
-                                            ? val.target.files[0]
-                                            : null,
-                                })
-                            }
-                        />
+                        {image && data.image === undefined ? (
+                            <>
+                                <img
+                                    width={250}
+                                    src={"../images/sections/" + image}
+                                    alt={image ?? ""}
+                                />
+                                <br />
+                                <Button
+                                    size={"xs"}
+                                    onClick={() =>
+                                        setData({
+                                            ...data,
+                                            image: null,
+                                        })
+                                    }
+                                >
+                                    <p>Remove image</p>
+                                </Button>
+                            </>
+                        ) : (
+                            <FileInput
+                                id="image"
+                                name="image"
+                                onChange={(val) =>
+                                    setData({
+                                        ...data,
+                                        image:
+                                            val.target.files !== null
+                                                ? val.target.files[0]
+                                                : null,
+                                    })
+                                }
+                            />
+                        )}
                     </div>
                     <div>
                         <div className="mb-2 block">

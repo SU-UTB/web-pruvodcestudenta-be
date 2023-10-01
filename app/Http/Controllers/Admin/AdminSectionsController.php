@@ -18,7 +18,7 @@ class AdminSectionsController extends Controller
     public static function index()
     {
         return Inertia::render('Admin/Sections',
-            ['paginationSections' => Section::paginate(10), "search" => ""]);
+            ['paginationSections' => Section::paginate(10), "search" => "", 'sectionImages' => SectionImage::all()]);
     }
 
     public function sectionsSearch(Request $request)
@@ -44,6 +44,11 @@ class AdminSectionsController extends Controller
             'description' => $request->input('description') ?? '',
             'color' => $request->input('color') ?? '',
         ]);
+
+        $image = SectionImage::where('section_id', '===',$id)->get();
+        if(isset($image)){
+            dd($image);
+        }
 
         Log::notice('Section updated', [
             'context' => $section,
