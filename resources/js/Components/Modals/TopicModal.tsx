@@ -2,18 +2,18 @@ import {
     Alert,
     Button,
     Checkbox,
+    FileInput,
     Label,
     Modal,
     Select,
-    Textarea,
     TextInput,
 } from "flowbite-react";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Utils } from "@/Tools/Utils";
-import { ISection } from "@/Components/Modals/SectionModal";
+import { useForm } from "@inertiajs/react";
 
 export interface ITopic {
     id: number;
@@ -23,11 +23,11 @@ export interface ITopic {
     url: string;
     section_id: number;
     location_id: number;
+    image: File | null;
 }
 
 interface ITopicModal {
     onClose: () => any;
-    onSubmit: (data: ITopic, createNew: boolean) => any;
     isVisible: boolean;
     topic: ITopic | null;
     sections: any;
@@ -36,14 +36,12 @@ interface ITopicModal {
 
 export const TopicModal = ({
     onClose,
-    onSubmit,
     isVisible,
     topic = null,
     sections,
     locations,
 }: ITopicModal) => {
-    const [errors, setErrors] = useState<string | null>(null);
-    const [data, setData] = useState(
+    const { data, setData, post, put, progress, errors, clearErrors } = useForm(
         topic ?? {
             id: 0,
             title: "",
@@ -52,35 +50,31 @@ export const TopicModal = ({
             url: "",
             section_id: 1,
             location_id: 1,
-        }
+            image: null,
+        },
     );
+
+    function submit(e: FormEvent) {
+        e.preventDefault();
+
+        if (topic === null) {
+            post("/admin/topics", {
+                onSuccess: onClose,
+            });
+        } else {
+            put(`/admin/topics/${data.id}`, {
+                onSuccess: onClose,
+            });
+        }
+    }
 
     return (
         <Modal show={isVisible} onClose={onClose}>
             <Modal.Header>Add Topic</Modal.Header>
             <Modal.Body>
-                {errors !== null ? (
-                    <>
-                        <Alert color="failure">
-                            <span>
-                                <p>
-                                    <span className="font-medium">
-                                        Info alert!
-                                    </span>
-                                    Change a few things up and try submitting
-                                    again.
-                                </p>
-                            </span>
-                        </Alert>
-                        <br />
-                    </>
-                ) : (
-                    <div />
-                )}
-
                 <form
                     className="flex max-w-md flex-col gap-4"
-                    onSubmit={() => onSubmit(data, topic === null)}
+                    onSubmit={submit}
                 >
                     <div>
                         <div className="mb-2 block">
@@ -99,6 +93,10 @@ export const TopicModal = ({
                             }
                             required
                             type="text"
+                            color={errors.title ? "failure" : ""}
+                            helperText={
+                                errors.title ? <>{errors.title}</> : null
+                            }
                         />
                     </div>
                     <div>
@@ -119,6 +117,18 @@ export const TopicModal = ({
                                 });
                             }}
                         />
+                        <div>
+                            {errors.description ? (
+                                <>
+                                    <br />
+                                    <Alert color="failure">
+                                        <span>
+                                            <p>{errors.description}</p>
+                                        </span>
+                                    </Alert>
+                                </>
+                            ) : null}
+                        </div>
                     </div>
                     <div>
                         <div className="mb-2 block">
@@ -193,6 +203,24 @@ export const TopicModal = ({
                     </div>
                     <div>
                         <div className="mb-2 block">
+                            <Label htmlFor="image" value="Upload image" />
+                        </div>
+                        <FileInput
+                            id="image"
+                            name="image"
+                            onChange={(val) =>
+                                setData({
+                                    ...data,
+                                    image:
+                                        val.target.files !== null
+                                            ? val.target.files[0]
+                                            : null,
+                                })
+                            }
+                        />
+                    </div>
+                    <div>
+                        <div className="mb-2 block">
                             <Label htmlFor="slug" value="Slug" />
                         </div>
                         <TextInput
@@ -208,6 +236,8 @@ export const TopicModal = ({
                                     slug: val.target.value,
                                 })
                             }
+                            color={errors.slug ? "failure" : ""}
+                            helperText={errors.slug ? <>{errors.slug}</> : null}
                         />
                     </div>
                     <Alert color="warning" withBorderAccent>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Location;
 use App\Models\Section;
 use App\Models\Topic;
+use App\Models\TopicImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
@@ -99,6 +100,20 @@ class AdminTopicsController extends Controller
             ]
         );
 
+        if (isset($request->image)) {
+            $normalizedFileName = $topic->slug . '.jpg';
+
+            $path = $request->image->move(public_path('images/topics'), $normalizedFileName);
+
+            $photo = TopicImage::create(
+                [
+                    'name' => $normalizedFileName,
+                    'path' => $path->getRealPath(),
+                    'topic_id' => $topic->id,
+                ]
+            );
+        }
+
         Log::notice('Topic created', [
             'context' => $topic,
             'user' => $request->user()
@@ -111,7 +126,7 @@ class AdminTopicsController extends Controller
     public function delete(Request $request, $id)
     {
         $topic = Topic::find($id);
-        Topic::destroy($id);
+        $topic->delete();
 
         Log::notice('Topic deleted', [
             'context' => $topic,
