@@ -35,22 +35,6 @@ export default function Sections({ auth, paginationSections, search }: any) {
         });
     }
 
-    function onModalSubmit(data: ISection, createNew: boolean) {
-        setModalData({
-            isVisible: false,
-            section: null,
-        });
-        if (createNew) {
-            router.post("/admin/sections", {
-                ...data,
-            });
-        } else {
-            router.put(`/admin/sections/${data.id}`, {
-                ...data,
-            });
-        }
-    }
-
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -119,7 +103,6 @@ export default function Sections({ auth, paginationSections, search }: any) {
                     })
                 }
                 section={modalData.section}
-                onSubmit={onModalSubmit}
             />
         </AuthenticatedLayout>
     );

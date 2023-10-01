@@ -13,7 +13,7 @@ class SectionImage extends Model
 
     protected $table = 'section_images';
 
-    protected $fillable = ['path'];
+    protected $fillable = ['path', 'name','section_id'];
 
     public function section(): BelongsTo
     {

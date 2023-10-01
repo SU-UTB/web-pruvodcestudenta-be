@@ -12,7 +12,7 @@ class TopicImage extends Model
 
     protected $table = 'topic_images';
 
-    protected $fillable =['path'];
+    protected $fillable = ['path', 'name', 'topic_id'];
 
 
     public function topic(): BelongsTo

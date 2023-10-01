@@ -2,6 +2,7 @@ import {
     Alert,
     Button,
     Checkbox,
+    FileInput,
     Label,
     Modal,
     Select,
@@ -10,70 +11,66 @@ import {
 } from "flowbite-react";
 import { TwitterPicker } from "react-color";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Utils } from "@/Tools/Utils";
+import { router, useForm } from "@inertiajs/react";
 
 export interface ISection {
     id: number;
     title: string;
     description: string;
     slug: string;
+    image: File | null;
     color: string;
 }
 
 interface IStoryModal {
     onClose: () => any;
-    onSubmit: (data: ISection, createNew: boolean) => any;
     isVisible: boolean;
     section: ISection | null;
 }
 
 export const SectionModal = ({
     onClose,
-    onSubmit,
     isVisible,
     section = null,
 }: IStoryModal) => {
-    const [errors, setErrors] = useState<string | null>(null);
-    const [data, setData] = useState<ISection>(
+    const { data, setData, post, put, progress, errors, clearErrors } = useForm(
         section ?? {
             id: 0,
             title: "",
             description: "",
             slug: "",
+            image: null,
             color: "",
-        }
+        },
     );
+
+    function submit(e: FormEvent) {
+        e.preventDefault();
+
+        if (section === null) {
+            post("/admin/sections", {
+                onSuccess: onClose,
+            });
+        } else {
+            put(`/admin/sections/${data.id}`, {
+                onSuccess: onClose,
+            });
+        }
+    }
+
     return (
         <Modal show={isVisible} onClose={onClose}>
             <Modal.Header>
                 {section !== null ? "Edit story" : "Add Story"}
             </Modal.Header>
             <Modal.Body>
-                {errors !== null ? (
-                    <>
-                        <Alert color="failure">
-                            <span>
-                                <p>
-                                    <span className="font-medium">
-                                        Info alert!
-                                    </span>
-                                    Change a few things up and try submitting
-                                    again.
-                                </p>
-                            </span>
-                        </Alert>
-                        <br />
-                    </>
-                ) : (
-                    <div />
-                )}
-
                 <form
                     className="flex max-w-md flex-col gap-4"
-                    onSubmit={() => onSubmit(data, section === null)}
+                    onSubmit={submit}
                 >
                     <div>
                         <div className="mb-2 block">
@@ -92,6 +89,10 @@ export const SectionModal = ({
                             }
                             required
                             type="text"
+                            color={errors.title ? "failure" : ""}
+                            helperText={
+                                errors.title ? <>{errors.title}</> : null
+                            }
                         />
                     </div>
                     <div>
@@ -112,6 +113,18 @@ export const SectionModal = ({
                                 });
                             }}
                         />
+                        <div>
+                            {errors.description ? (
+                                <>
+                                    <br />
+                                    <Alert color="failure">
+                                        <span>
+                                            <p>{errors.description}</p>
+                                        </span>
+                                    </Alert>
+                                </>
+                            ) : null}
+                        </div>
                     </div>
 
                     <div>
@@ -125,6 +138,24 @@ export const SectionModal = ({
                                 setData({
                                     ...data,
                                     color: color.hex,
+                                })
+                            }
+                        />
+                    </div>
+                    <div>
+                        <div className="mb-2 block">
+                            <Label htmlFor="image" value="Upload image" />
+                        </div>
+                        <FileInput
+                            id="image"
+                            name="image"
+                            onChange={(val) =>
+                                setData({
+                                    ...data,
+                                    image:
+                                        val.target.files !== null
+                                            ? val.target.files[0]
+                                            : null,
                                 })
                             }
                         />
@@ -146,6 +177,8 @@ export const SectionModal = ({
                                     slug: val.target.value,
                                 })
                             }
+                            color={errors.slug ? "failure" : ""}
+                            helperText={errors.slug ? <>{errors.slug}</> : null}
                         />
                     </div>
                     {section === null ? (
