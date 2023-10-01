@@ -29,7 +29,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::get('/migrate', function () {
-    return response(Artisan::call('migrate'));
+    return response(Artisan::call('migrate',[
+        '--force' => true
+    ]));
 });
 Route::get('/doc', function () {
     return  response()->file(storage_path('api-docs/api-docs.json'));
