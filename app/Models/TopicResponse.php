@@ -54,16 +54,24 @@ class TopicResponse
      */
     public string $color;
 
+    /**
+     * @OA\Property(type="string")
+     *
+     * @var string
+     */
+    public string $location;
+
 
     public function __construct(Topic $topic)
     {
-        $image =$topic->image()->get()->first();
+        $image = $topic->image()->get()->first();
 
         $this->title = $topic->title;
         $this->description = $topic->description;
         $this->slug = $topic->slug;
         $this->color = $topic->color;
         $this->url = $topic->url;
+        $this->location = $topic->location;
         $this->image = isset($image) ? $image->path : '';
     }
 }
