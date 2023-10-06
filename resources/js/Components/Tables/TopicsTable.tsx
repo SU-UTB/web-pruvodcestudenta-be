@@ -25,6 +25,7 @@ const TopicsTable = ({
                 <Table.HeadCell>Description</Table.HeadCell>
                 <Table.HeadCell>Section</Table.HeadCell>
                 <Table.HeadCell>Location</Table.HeadCell>
+                <Table.HeadCell>Location URL</Table.HeadCell>
                 <Table.HeadCell>Url</Table.HeadCell>
                 <Table.HeadCell>Slug</Table.HeadCell>
                 <Table.HeadCell>Updated At</Table.HeadCell>
@@ -51,17 +52,18 @@ const TopicsTable = ({
                         <Table.Cell>
                             {
                                 sections.find(
-                                    (s: any) => s.id === topic.section_id
+                                    (s: any) => s.id === topic.section_id,
                                 ).title
                             }
                         </Table.Cell>
                         <Table.Cell>
                             {
                                 locations.find(
-                                    (l: any) => l.id === topic.location_id
+                                    (l: any) => l.id === topic.location_id,
                                 ).name
                             }
                         </Table.Cell>
+                        <Table.Cell>{topic.location}</Table.Cell>
                         <Table.Cell>{topic.url}</Table.Cell>
                         <Table.Cell className="w-{200px} overflow-hidden">
                             {topic.slug}

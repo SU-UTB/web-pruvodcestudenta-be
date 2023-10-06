@@ -19,6 +19,7 @@ export interface ITopic {
     id: number;
     title: string;
     description: string;
+    location: string;
     slug: string;
     url: string;
     section_id: number;
@@ -46,6 +47,7 @@ export const TopicModal = ({
             id: 0,
             title: "",
             description: "",
+            location: "",
             slug: "",
             url: "",
             section_id: 1,
@@ -130,6 +132,7 @@ export const TopicModal = ({
                             ) : null}
                         </div>
                     </div>
+
                     <div>
                         <div className="mb-2 block">
                             <Label htmlFor="section_id" value="Topic section" />
@@ -184,6 +187,27 @@ export const TopicModal = ({
                                 </option>
                             ))}
                         </Select>
+                    </div>
+                    <div>
+                        <div className="mb-2 block">
+                            <Label htmlFor="location" value="Topic location" />
+                        </div>
+                        <TextInput
+                            id="location"
+                            placeholder="Location"
+                            value={data.location}
+                            onChange={(val) =>
+                                setData({
+                                    ...data,
+                                    location: val.target.value,
+                                })
+                            }
+                            type="text"
+                            color={errors.location ? "failure" : ""}
+                            helperText={
+                                errors.location ? <>{errors.location}</> : null
+                            }
+                        />
                     </div>
                     <div>
                         <div className="mb-2 block">

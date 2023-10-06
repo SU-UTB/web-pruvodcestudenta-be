@@ -57,6 +57,7 @@ class AdminTopicsController extends Controller
         $topic->update([
             'title' => $request->input('title') ?? '',
             'description' => $request->input('description') ?? '',
+            'location' => $request->input('location') ?? '',
             'color' => $request->input('color') ?? isset($topic->color) ? $topic->color : '#FF9F63',
             'image' => $request->input('image') ?? '',
             'section_id' => $sectionId ?? 1,
@@ -96,7 +97,8 @@ class AdminTopicsController extends Controller
                 'image' => '',
                 'section_id' => $sectionId,
                 'slug' => $request->input('slug') ?? $this->getSlugFromTitle($request->input('title')),
-                'location_id' => $request->input('location_id')
+                'location_id' => $request->input('location_id'),
+                'location' => $request->input('location')
             ]
         );
 
