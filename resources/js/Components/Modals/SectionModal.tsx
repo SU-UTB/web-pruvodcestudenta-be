@@ -9,7 +9,6 @@ import {
     Textarea,
     TextInput,
 } from "flowbite-react";
-import { AiOutlineClose } from "react-icons/ai";
 
 import { TwitterPicker } from "react-color";
 
