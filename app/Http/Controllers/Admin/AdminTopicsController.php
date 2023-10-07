@@ -37,7 +37,8 @@ class AdminTopicsController extends Controller
 
             return Inertia::render('Admin/Topics', ["paginationTopics" => $data, "search" => $search,
                 'sections' => Section::all(),
-                'locations' => Location::all()]);
+                'locations' => Location::all(),
+                'topicImages' => TopicImage::all()]);
         }
     }
 
