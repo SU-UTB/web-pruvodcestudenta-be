@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Section;
 use App\Models\SectionImage;
 use App\Models\Topic;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
@@ -38,6 +39,8 @@ class AdminSectionsController extends Controller
 
     public function update(Request $request, $id)
     {
+
+
         $section = Section::find($id);
         $section->update([
             'title' => $request->input('title') ?? '',
@@ -45,9 +48,36 @@ class AdminSectionsController extends Controller
             'color' => $request->input('color') ?? '',
         ]);
 
-        $image = SectionImage::where('section_id', '===',$id)->get();
-        if(isset($image)){
-            dd($image);
+
+        $image = $request->image;
+        if (isset($image) && !is_string($image)) {
+
+            $sectionImage = SectionImage::where('section_id', $id)->get()->first();
+            if (isset($sectionImage)) {
+                $normalizedFileName = $section->slug . '.jpg';
+
+                $path = $image->move(public_path('images/sections'), $normalizedFileName);
+
+                $sectionImage->update(
+                    [
+                        'name' => $normalizedFileName,
+                        'path' => $path->getRealPath(),
+                        'section_id' => $section->id,
+                    ]
+                );
+            } else {
+                $normalizedFileName = $section->slug . '.jpg';
+
+                $path = $image->move(public_path('images/sections'), $normalizedFileName);
+
+                SectionImage::create(
+                    [
+                        'name' => $normalizedFileName,
+                        'path' => $path->getRealPath(),
+                        'section_id' => $section->id,
+                    ]
+                );
+            }
         }
 
         Log::notice('Section updated', [

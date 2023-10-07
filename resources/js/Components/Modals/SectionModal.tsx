@@ -24,7 +24,7 @@ export interface ISection {
     title: string;
     description: string;
     slug: string;
-    image: File | null;
+    image: File | string | null;
     color: string;
 }
 
@@ -41,16 +41,22 @@ export const SectionModal = ({
     section = null,
     image = null,
 }: ISectionModal) => {
-    const { data, setData, post, put, progress, errors, clearErrors } = useForm(
-        section ?? {
-            id: 0,
-            title: "",
-            description: "",
-            slug: "",
-            image: image ? new File([], image) : null,
-            color: "",
-        },
-    );
+    const { data, setData, post, put, progress, errors, clearErrors } =
+        useForm<ISection>(
+            section !== null
+                ? {
+                      ...section,
+                      image: image,
+                  }
+                : {
+                      id: 0,
+                      title: "",
+                      description: "",
+                      slug: "",
+                      image: null,
+                      color: "",
+                  },
+        );
 
     function submit(e: FormEvent) {
         e.preventDefault();
@@ -60,17 +66,17 @@ export const SectionModal = ({
                 onSuccess: onClose,
             });
         } else {
-            put(`/admin/sections/${data.id}`, {
+            console.log(data.image);
+            post(`/admin/sections/${data.id}`, {
                 onSuccess: onClose,
             });
         }
     }
 
-    console.log(data.image);
     return (
         <Modal show={isVisible} onClose={onClose}>
             <Modal.Header>
-                {section !== null ? "Edit story" : "Add Story"}
+                {section !== null ? "Edit Section" : "Add Section"}
             </Modal.Header>
             <Modal.Body>
                 <form
@@ -151,7 +157,7 @@ export const SectionModal = ({
                         <div className="mb-2 block">
                             <Label htmlFor="image" value="Upload image" />
                         </div>
-                        {image && data.image === undefined ? (
+                        {typeof data.image === "string" ? (
                             <>
                                 <img
                                     width={250}

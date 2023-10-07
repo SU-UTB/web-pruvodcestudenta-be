@@ -8,7 +8,6 @@ const SectionsTable = ({
     onEditSection,
 }: any) => {
     //TODO types
-    console.log(sectionImages);
     return (
         <Table>
             <Table.Head>

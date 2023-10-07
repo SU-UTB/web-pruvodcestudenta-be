@@ -35,7 +35,6 @@ export default function Sections({
     }
 
     function onEditSection(section: ISection) {
-        console.log(section);
         setModalData({
             isVisible: true,
             section: section,
