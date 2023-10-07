@@ -1,13 +1,19 @@
 import { Button, Table, Textarea, TextInput } from "flowbite-react";
 import { formatDateFromString } from "@/Tools/DateFormatter";
 
-const SectionsTable = ({ sections, onDeleteSection, onEditSection }: any) => {
+const SectionsTable = ({
+    sections,
+    sectionImages,
+    onDeleteSection,
+    onEditSection,
+}: any) => {
     //TODO types
     return (
         <Table>
             <Table.Head>
                 <Table.HeadCell>Title</Table.HeadCell>
                 <Table.HeadCell>Description</Table.HeadCell>
+                <Table.HeadCell>Image</Table.HeadCell>
                 <Table.HeadCell>Color</Table.HeadCell>
                 <Table.HeadCell>Slug</Table.HeadCell>
                 <Table.HeadCell>Updated At</Table.HeadCell>
@@ -30,6 +36,30 @@ const SectionsTable = ({ sections, onDeleteSection, onEditSection }: any) => {
                                     __html: section.description,
                                 }}
                             />
+                        </Table.Cell>
+                        <Table.Cell>
+                            {sectionImages.filter(
+                                (i: any) => i.section_id === section.id,
+                            )[0] !== undefined ? (
+                                <img
+                                    width={250}
+                                    src={
+                                        "../images/sections/" +
+                                            sectionImages.filter(
+                                                (i: any) =>
+                                                    i.section_id === section.id,
+                                            )[0]?.name ?? ""
+                                    }
+                                    alt={
+                                        sectionImages.filter(
+                                            (i: any) =>
+                                                i.section_id === section.id,
+                                        )[0]?.name ?? ""
+                                    }
+                                />
+                            ) : (
+                                <div />
+                            )}
                         </Table.Cell>
                         <Table.Cell>{section.color}</Table.Cell>
                         <Table.Cell>{section.slug}</Table.Cell>

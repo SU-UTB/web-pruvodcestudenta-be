@@ -9,6 +9,8 @@ import {
     Textarea,
     TextInput,
 } from "flowbite-react";
+import { AiOutlineClose } from "react-icons/ai";
+
 import { TwitterPicker } from "react-color";
 
 import { FormEvent, useState } from "react";
@@ -22,31 +24,39 @@ export interface ISection {
     title: string;
     description: string;
     slug: string;
-    image: File | null;
+    image: File | string | null;
     color: string;
 }
 
-interface IStoryModal {
+interface ISectionModal {
     onClose: () => any;
     isVisible: boolean;
     section: ISection | null;
+    image: string | null;
 }
 
 export const SectionModal = ({
     onClose,
     isVisible,
     section = null,
-}: IStoryModal) => {
-    const { data, setData, post, put, progress, errors, clearErrors } = useForm(
-        section ?? {
-            id: 0,
-            title: "",
-            description: "",
-            slug: "",
-            image: null,
-            color: "",
-        },
-    );
+    image = null,
+}: ISectionModal) => {
+    const { data, setData, post, put, progress, errors, clearErrors } =
+        useForm<ISection>(
+            section !== null
+                ? {
+                      ...section,
+                      image: image,
+                  }
+                : {
+                      id: 0,
+                      title: "",
+                      description: "",
+                      slug: "",
+                      image: null,
+                      color: "",
+                  },
+        );
 
     function submit(e: FormEvent) {
         e.preventDefault();
@@ -56,16 +66,16 @@ export const SectionModal = ({
                 onSuccess: onClose,
             });
         } else {
-            put(`/admin/sections/${data.id}`, {
+            post(`/admin/sections/${data.id}`, {
                 onSuccess: onClose,
             });
         }
     }
 
     return (
-        <Modal show={isVisible} onClose={onClose}>
+        <Modal show={isVisible} onClose={onClose} size="2xl">
             <Modal.Header>
-                {section !== null ? "Edit story" : "Add Story"}
+                {section !== null ? "Edit Section" : "Add Section"}
             </Modal.Header>
             <Modal.Body>
                 <form
@@ -146,19 +156,41 @@ export const SectionModal = ({
                         <div className="mb-2 block">
                             <Label htmlFor="image" value="Upload image" />
                         </div>
-                        <FileInput
-                            id="image"
-                            name="image"
-                            onChange={(val) =>
-                                setData({
-                                    ...data,
-                                    image:
-                                        val.target.files !== null
-                                            ? val.target.files[0]
-                                            : null,
-                                })
-                            }
-                        />
+                        {typeof data.image === "string" ? (
+                            <>
+                                <img
+                                    width={250}
+                                    src={"../images/sections/" + image}
+                                    alt={image ?? ""}
+                                />
+                                <br />
+                                <Button
+                                    size={"xs"}
+                                    onClick={() =>
+                                        setData({
+                                            ...data,
+                                            image: null,
+                                        })
+                                    }
+                                >
+                                    <p>Remove image</p>
+                                </Button>
+                            </>
+                        ) : (
+                            <FileInput
+                                id="image"
+                                name="image"
+                                onChange={(val) =>
+                                    setData({
+                                        ...data,
+                                        image:
+                                            val.target.files !== null
+                                                ? val.target.files[0]
+                                                : null,
+                                    })
+                                }
+                            />
+                        )}
                     </div>
                     <div>
                         <div className="mb-2 block">

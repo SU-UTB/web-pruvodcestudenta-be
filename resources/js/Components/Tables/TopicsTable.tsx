@@ -12,6 +12,7 @@ import { formatDateFromString } from "@/Tools/DateFormatter";
 
 const TopicsTable = ({
     topics,
+    topicImages,
     sections,
     locations,
     onDeleteTopic,
@@ -23,6 +24,7 @@ const TopicsTable = ({
             <Table.Head>
                 <Table.HeadCell>Title</Table.HeadCell>
                 <Table.HeadCell>Description</Table.HeadCell>
+                <Table.HeadCell>Image</Table.HeadCell>
                 <Table.HeadCell>Section</Table.HeadCell>
                 <Table.HeadCell>Location</Table.HeadCell>
                 <Table.HeadCell>Location URL</Table.HeadCell>
@@ -48,6 +50,29 @@ const TopicsTable = ({
                                     __html: topic.description,
                                 }}
                             />
+                        </Table.Cell>
+                        <Table.Cell>
+                            {topicImages.filter(
+                                (i: any) => i.topic_id === topic.id,
+                            )[0] !== undefined ? (
+                                <img
+                                    width={250}
+                                    src={
+                                        "../images/topics/" +
+                                            topicImages.filter(
+                                                (i: any) =>
+                                                    i.topic_id === topic.id,
+                                            )[0]?.name ?? ""
+                                    }
+                                    alt={
+                                        topicImages.filter(
+                                            (i: any) => i.topic_id === topic.id,
+                                        )[0]?.name ?? ""
+                                    }
+                                />
+                            ) : (
+                                <div />
+                            )}
                         </Table.Cell>
                         <Table.Cell>
                             {

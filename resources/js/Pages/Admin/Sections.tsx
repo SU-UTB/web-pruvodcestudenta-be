@@ -7,13 +7,20 @@ import React, { FormEvent, useState } from "react";
 import { TopicModal } from "@/Components/Modals/TopicModal";
 import { ISection, SectionModal } from "@/Components/Modals/SectionModal";
 
-export default function Sections({ auth, paginationSections, search }: any) {
+export default function Sections({
+    auth,
+    paginationSections,
+    sectionImages,
+    search,
+}: any) {
     const [modalData, setModalData] = useState<{
         isVisible: boolean;
         section: ISection | null;
+        image: string | null;
     }>({
         isVisible: false,
         section: null,
+        image: null,
     });
 
     const [searchInput, setSearchInput] = useState<string>(search);
@@ -28,10 +35,11 @@ export default function Sections({ auth, paginationSections, search }: any) {
     }
 
     function onEditSection(section: ISection) {
-        console.log(section);
         setModalData({
             isVisible: true,
             section: section,
+            image: sectionImages.find((i: any) => i.section_id === section.id)
+                ?.name,
         });
     }
 
@@ -81,6 +89,7 @@ export default function Sections({ auth, paginationSections, search }: any) {
                 sections={paginationSections.data}
                 onDeleteSection={onDeleteSection}
                 onEditSection={onEditSection}
+                sectionImages={sectionImages}
             />
             <br />
             <div className="mx-auto flex justify-center items-center px-4">
@@ -100,9 +109,11 @@ export default function Sections({ auth, paginationSections, search }: any) {
                     setModalData({
                         isVisible: false,
                         section: null,
+                        image: null,
                     })
                 }
                 section={modalData.section}
+                image={modalData.image}
             />
         </AuthenticatedLayout>
     );

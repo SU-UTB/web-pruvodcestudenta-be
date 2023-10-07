@@ -20,7 +20,8 @@ class AdminTopicsController extends Controller
         return Inertia::render('Admin/Topics',
             ['paginationTopics' => Topic::paginate(10),
                 'sections' => Section::all(),
-                'locations' => Location::all(), "search" => ""]);
+                'locations' => Location::all(), "search" => "",
+                'topicImages' => TopicImage::all()]);
     }
 
     public function topicsSearch(Request $request)
@@ -59,11 +60,42 @@ class AdminTopicsController extends Controller
             'description' => $request->input('description') ?? '',
             'location' => $request->input('location') ?? '',
             'color' => $request->input('color') ?? isset($topic->color) ? $topic->color : '#FF9F63',
-            'image' => $request->input('image') ?? '',
             'section_id' => $sectionId ?? 1,
             'location_id' => $locationId ?? 3,
             'url' => $request->input('url') ?? ''
         ]);
+
+        $image = $request->image;
+        if (isset($image) && !is_string($image)) {
+
+            $topicImage = TopicImage::where('topic_id', $id)->get()->first();
+            if (isset($topicImage)) {
+                $normalizedFileName = $topic->slug . '.jpg';
+
+                $path = $image->move(public_path('images/topics'), $normalizedFileName);
+
+                $topicImage->update(
+                    [
+                        'name' => $normalizedFileName,
+                        'path' => $path->getRealPath(),
+                        'topic_id' => $topic->id,
+                    ]
+                );
+            } else {
+                $normalizedFileName = $topic->slug . '.jpg';
+
+                $path = $image->move(public_path('images/topics'), $normalizedFileName);
+
+                TopicImage::create(
+                    [
+                        'name' => $normalizedFileName,
+                        'path' => $path->getRealPath(),
+                        'topic_id' => $topic->id,
+                    ]
+                );
+            }
+        }
+
 
         Log::notice('Topic updated', [
             'context' => $topic,
@@ -128,6 +160,14 @@ class AdminTopicsController extends Controller
     public function delete(Request $request, $id)
     {
         $topic = Topic::find($id);
+
+        $topicImage = TopicImage::where('topic_id', $id)->get()->first();
+
+        if (isset($topicImage)) {
+            //TODO delete also file
+            $topicImage->delete();
+        }
+
         $topic->delete();
 
         Log::notice('Topic deleted', [

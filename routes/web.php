@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/sections/', [AdminSectionsController::class, 'index'])->name('sections');
     Route::post('/admin/sections/search/', [AdminSectionsController::class, 'sectionsSearch'])->name('search-sections');
     Route::get('/admin/sections/search/', [AdminSectionsController::class, 'index'])->name('get-search-sections');
-    Route::put('/admin/sections/{id}/', [AdminSectionsController::class, 'update'])->name('saveSection');
+    Route::post('/admin/sections/{id}/', [AdminSectionsController::class, 'update'])->name('saveSection');
     Route::post('/admin/sections', [AdminSectionsController::class, 'store'])->name('admin.sections.create');
     Route::delete('/admin/sections/{id}', [AdminSectionsController::class, 'delete'])->name('admin.sections.delete');
 
@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/topics/', [AdminTopicsController::class, 'index'])->name('topics');
     Route::post('/admin/topics/search/', [AdminTopicsController::class, 'topicsSearch'])->name('search-topics');
     Route::get('/admin/topics/search/', [AdminTopicsController::class, 'index'])->name('get-search-topics');
-    Route::put('/admin/topics/{id}/', [AdminTopicsController::class, 'update'])->name('saveTopic');
+    Route::post('/admin/topics/{id}/', [AdminTopicsController::class, 'update'])->name('saveTopic');
     Route::post('/admin/topics', [AdminTopicsController::class, 'store'])->name('admin.topics.create');
     Route::delete('/admin/topics/{id}', [AdminTopicsController::class, 'delete'])->name('admin.topics.delete');
 

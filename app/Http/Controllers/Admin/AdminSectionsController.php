@@ -6,19 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Section;
 use App\Models\SectionImage;
 use App\Models\Topic;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use Transliterator;
-use function GuzzleHttp\Promise\all;
 
 class AdminSectionsController extends Controller
 {
     public static function index()
     {
         return Inertia::render('Admin/Sections',
-            ['paginationSections' => Section::paginate(10), "search" => ""]);
+            ['paginationSections' => Section::paginate(10), "search" => "", 'sectionImages' => SectionImage::all()]);
     }
 
     public function sectionsSearch(Request $request)
@@ -38,12 +38,46 @@ class AdminSectionsController extends Controller
 
     public function update(Request $request, $id)
     {
+
+
         $section = Section::find($id);
         $section->update([
             'title' => $request->input('title') ?? '',
             'description' => $request->input('description') ?? '',
             'color' => $request->input('color') ?? '',
         ]);
+
+
+        $image = $request->image;
+        if (isset($image) && !is_string($image)) {
+
+            $sectionImage = SectionImage::where('section_id', $id)->get()->first();
+            if (isset($sectionImage)) {
+                $normalizedFileName = $section->slug . '.jpg';
+
+                $path = $image->move(public_path('images/sections'), $normalizedFileName);
+
+                $sectionImage->update(
+                    [
+                        'name' => $normalizedFileName,
+                        'path' => $path->getRealPath(),
+                        'section_id' => $section->id,
+                    ]
+                );
+            } else {
+                $normalizedFileName = $section->slug . '.jpg';
+
+                $path = $image->move(public_path('images/sections'), $normalizedFileName);
+
+                SectionImage::create(
+                    [
+                        'name' => $normalizedFileName,
+                        'path' => $path->getRealPath(),
+                        'section_id' => $section->id,
+                    ]
+                );
+            }
+        }
 
         Log::notice('Section updated', [
             'context' => $section,
@@ -103,6 +137,13 @@ class AdminSectionsController extends Controller
 
         if (count($topics) !== 0) {
             return response("Section has topics, please remove them first, then delete section!", 400);
+        }
+
+        $sectionImage = SectionImage::where('section_id', $id)->get()->first();
+
+        if (isset($sectionImage)) {
+            //TODO delete also file
+            $sectionImage->delete();
         }
 
         $section->delete();
