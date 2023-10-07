@@ -160,6 +160,14 @@ class AdminTopicsController extends Controller
     public function delete(Request $request, $id)
     {
         $topic = Topic::find($id);
+
+        $topicImage = TopicImage::where('topic_id', $id)->get()->first();
+
+        if (isset($topicImage)) {
+            //TODO delete also file
+            $topicImage->delete();
+        }
+
         $topic->delete();
 
         Log::notice('Topic deleted', [

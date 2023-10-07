@@ -139,6 +139,13 @@ class AdminSectionsController extends Controller
             return response("Section has topics, please remove them first, then delete section!", 400);
         }
 
+        $sectionImage = SectionImage::where('section_id', $id)->get()->first();
+
+        if (isset($sectionImage)) {
+            //TODO delete also file
+            $sectionImage->delete();
+        }
+
         $section->delete();
 
         Log::notice('Section deleted', [
