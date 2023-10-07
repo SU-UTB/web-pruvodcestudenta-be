@@ -27,6 +27,7 @@ jobs:
             **/.git*/**
             **/.idea*
             **/.idea*/**
+            **/node_modules*/**
             .env
             .env.example
             .index.php
