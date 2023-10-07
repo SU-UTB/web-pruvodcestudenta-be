@@ -27,6 +27,7 @@ const TopicsTable = ({
                 <Table.HeadCell>Image</Table.HeadCell>
                 <Table.HeadCell>Section</Table.HeadCell>
                 <Table.HeadCell>Location</Table.HeadCell>
+                <Table.HeadCell>Location URL</Table.HeadCell>
                 <Table.HeadCell>Url</Table.HeadCell>
                 <Table.HeadCell>Slug</Table.HeadCell>
                 <Table.HeadCell>Updated At</Table.HeadCell>
@@ -87,6 +88,7 @@ const TopicsTable = ({
                                 ).name
                             }
                         </Table.Cell>
+                        <Table.Cell>{topic.location}</Table.Cell>
                         <Table.Cell>{topic.url}</Table.Cell>
                         <Table.Cell className="w-{200px} overflow-hidden">
                             {topic.slug}
