@@ -73,7 +73,7 @@ export const SectionModal = ({
     }
 
     return (
-        <Modal show={isVisible} onClose={onClose} size={"2xl"}>
+        <Modal show={isVisible} onClose={onClose} size="2xl">
             <Modal.Header>
                 {section !== null ? "Edit Section" : "Add Section"}
             </Modal.Header>

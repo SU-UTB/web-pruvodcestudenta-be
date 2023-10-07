@@ -55,7 +55,8 @@ export const TopicModal = ({
                       id: 0,
                       title: "",
                       description: "",
-                      location: "",slug: "",
+                      location: "",
+                      slug: "",
                       url: "",
                       section_id: 1,
                       location_id: 1,
@@ -78,7 +79,7 @@ export const TopicModal = ({
     }
 
     return (
-        <Modal show={isVisible} onClose={onClose} size={"2xl"}>
+        <Modal show={isVisible} onClose={onClose} size="2xl">
             <Modal.Header>Add Topic</Modal.Header>
             <Modal.Body>
                 <form

@@ -38,9 +38,8 @@ export default function Sections({
         setModalData({
             isVisible: true,
             section: section,
-            image: sectionImages.filter(
-                (i: any) => i.section_id === section.id,
-            )[0]?.name,
+            image: sectionImages.find((i: any) => i.section_id === section.id)
+                ?.name,
         });
     }
 

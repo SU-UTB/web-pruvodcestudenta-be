@@ -40,8 +40,7 @@ export default function Topics({
         setModalData({
             isVisible: true,
             topic: topic,
-            image: topicImages.filter((i: any) => i.topic_id === topic.id)[0]
-                ?.name,
+            image: topicImages.find((i: any) => i.topic_id === topic.id)?.name,
         });
     }
 
