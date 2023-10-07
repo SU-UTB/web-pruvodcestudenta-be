@@ -23,7 +23,7 @@ export interface ITopic {
     url: string;
     section_id: number;
     location_id: number;
-    image: File | null;
+    image: File | string | null;
 }
 
 interface ITopicModal {
@@ -32,6 +32,7 @@ interface ITopicModal {
     topic: ITopic | null;
     sections: any;
     locations: any;
+    image: string | null;
 }
 
 export const TopicModal = ({
@@ -40,19 +41,26 @@ export const TopicModal = ({
     topic = null,
     sections,
     locations,
+    image = null,
 }: ITopicModal) => {
-    const { data, setData, post, put, progress, errors, clearErrors } = useForm(
-        topic ?? {
-            id: 0,
-            title: "",
-            description: "",
-            slug: "",
-            url: "",
-            section_id: 1,
-            location_id: 1,
-            image: null,
-        },
-    );
+    const { data, setData, post, put, progress, errors, clearErrors } =
+        useForm<ITopic>(
+            topic !== null
+                ? {
+                      ...topic,
+                      image: image,
+                  }
+                : {
+                      id: 0,
+                      title: "",
+                      description: "",
+                      slug: "",
+                      url: "",
+                      section_id: 1,
+                      location_id: 1,
+                      image: null,
+                  },
+        );
 
     function submit(e: FormEvent) {
         e.preventDefault();
@@ -62,18 +70,18 @@ export const TopicModal = ({
                 onSuccess: onClose,
             });
         } else {
-            put(`/admin/topics/${data.id}`, {
+            post(`/admin/topics/${data.id}`, {
                 onSuccess: onClose,
             });
         }
     }
 
     return (
-        <Modal show={isVisible} onClose={onClose}>
+        <Modal show={isVisible} onClose={onClose} size={"2xl"}>
             <Modal.Header>Add Topic</Modal.Header>
             <Modal.Body>
                 <form
-                    className="flex max-w-md flex-col gap-4"
+                    className="flex max-w-md flex-col gap-4 justify-center align-items-center"
                     onSubmit={submit}
                 >
                     <div>
@@ -205,19 +213,41 @@ export const TopicModal = ({
                         <div className="mb-2 block">
                             <Label htmlFor="image" value="Upload image" />
                         </div>
-                        <FileInput
-                            id="image"
-                            name="image"
-                            onChange={(val) =>
-                                setData({
-                                    ...data,
-                                    image:
-                                        val.target.files !== null
-                                            ? val.target.files[0]
-                                            : null,
-                                })
-                            }
-                        />
+                        {typeof data.image === "string" ? (
+                            <>
+                                <img
+                                    width={250}
+                                    src={"../images/topics/" + image}
+                                    alt={image ?? ""}
+                                />
+                                <br />
+                                <Button
+                                    size={"xs"}
+                                    onClick={() =>
+                                        setData({
+                                            ...data,
+                                            image: null,
+                                        })
+                                    }
+                                >
+                                    <p>Remove image</p>
+                                </Button>
+                            </>
+                        ) : (
+                            <FileInput
+                                id="image"
+                                name="image"
+                                onChange={(val) =>
+                                    setData({
+                                        ...data,
+                                        image:
+                                            val.target.files !== null
+                                                ? val.target.files[0]
+                                                : null,
+                                    })
+                                }
+                            />
+                        )}
                     </div>
                     <div>
                         <div className="mb-2 block">

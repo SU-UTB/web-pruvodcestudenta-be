@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use Transliterator;
-use function GuzzleHttp\Promise\all;
 
 class AdminSectionsController extends Controller
 {

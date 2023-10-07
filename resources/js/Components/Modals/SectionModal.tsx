@@ -66,7 +66,6 @@ export const SectionModal = ({
                 onSuccess: onClose,
             });
         } else {
-            console.log(data.image);
             post(`/admin/sections/${data.id}`, {
                 onSuccess: onClose,
             });
@@ -74,7 +73,7 @@ export const SectionModal = ({
     }
 
     return (
-        <Modal show={isVisible} onClose={onClose}>
+        <Modal show={isVisible} onClose={onClose} size={"2xl"}>
             <Modal.Header>
                 {section !== null ? "Edit Section" : "Add Section"}
             </Modal.Header>

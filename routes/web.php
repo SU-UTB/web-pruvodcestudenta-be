@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/topics/', [AdminTopicsController::class, 'index'])->name('topics');
     Route::post('/admin/topics/search/', [AdminTopicsController::class, 'topicsSearch'])->name('search-topics');
     Route::get('/admin/topics/search/', [AdminTopicsController::class, 'index'])->name('get-search-topics');
-    Route::put('/admin/topics/{id}/', [AdminTopicsController::class, 'update'])->name('saveTopic');
+    Route::post('/admin/topics/{id}/', [AdminTopicsController::class, 'update'])->name('saveTopic');
     Route::post('/admin/topics', [AdminTopicsController::class, 'store'])->name('admin.topics.create');
     Route::delete('/admin/topics/{id}', [AdminTopicsController::class, 'delete'])->name('admin.topics.delete');
 

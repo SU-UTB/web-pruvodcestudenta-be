@@ -11,6 +11,7 @@ import { ISection } from "@/Components/Modals/SectionModal";
 export default function Topics({
     auth,
     paginationTopics,
+    topicImages,
     sections,
     locations,
     search,
@@ -18,9 +19,11 @@ export default function Topics({
     const [modalData, setModalData] = useState<{
         isVisible: boolean;
         topic: ITopic | null;
+        image: string | null;
     }>({
         isVisible: false,
         topic: null,
+        image: null,
     });
     const [searchInput, setSearchInput] = useState<string>(search);
 
@@ -37,6 +40,8 @@ export default function Topics({
         setModalData({
             isVisible: true,
             topic: topic,
+            image: topicImages.filter((i: any) => i.topic_id === topic.id)[0]
+                ?.name,
         });
     }
 
@@ -88,6 +93,7 @@ export default function Topics({
                 locations={locations}
                 onDeleteTopic={onDeleteTopic}
                 onEditTopic={onEditTopic}
+                topicImages={topicImages}
             />
             <br />
             <div className="mx-auto flex justify-center items-center px-4">
@@ -107,11 +113,13 @@ export default function Topics({
                     setModalData({
                         isVisible: false,
                         topic: null,
+                        image: null,
                     })
                 }
                 topic={modalData.topic}
                 locations={locations}
                 sections={sections}
+                image={modalData.image}
             />
         </AuthenticatedLayout>
     );
