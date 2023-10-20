@@ -7,6 +7,7 @@ import {
     Modal,
     Select,
     TextInput,
+    ToggleSwitch,
 } from "flowbite-react";
 
 import { FormEvent, useState } from "react";
@@ -21,6 +22,7 @@ export interface ITopic {
     description: string;
     location: string;
     slug: string;
+    visible: boolean;
     url: string;
     section_id: number;
     location_id: number;
@@ -58,6 +60,7 @@ export const TopicModal = ({
                       location: "",
                       slug: "",
                       url: "",
+                      visible: true,
                       section_id: 1,
                       location_id: 1,
                       image: null,
@@ -273,6 +276,22 @@ export const TopicModal = ({
                             />
                         )}
                     </div>
+                    <div>
+                        <br />
+                        <br />
+                        <ToggleSwitch
+                            checked={data.visible}
+                            label="Display on website"
+                            onChange={(val) =>
+                                setData({
+                                    ...data,
+                                    visible: val,
+                                })
+                            }
+                        />
+                        <br />
+                    </div>
+
                     <div>
                         <div className="mb-2 block">
                             <Label htmlFor="slug" value="Slug" />
