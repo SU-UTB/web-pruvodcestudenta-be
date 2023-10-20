@@ -13,7 +13,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Transliterator;
 
-class AdminSectionsController extends Controller
+class SectionsController extends Controller
 {
     public static function index()
     {
@@ -26,7 +26,7 @@ class AdminSectionsController extends Controller
         $search = $request->input('search');
 
         if ($search == '') {
-            return AdminSectionsController::index();
+            return SectionsController::index();
         } else {
 
             $data = Section::where('title', 'LIKE', '%' . trim(strtolower($search)) . '%')->orWhere('description', 'LIKE', '%' . trim(strtolower($search)) . '%')
@@ -39,12 +39,12 @@ class AdminSectionsController extends Controller
     public function update(Request $request, $id)
     {
 
-
         $section = Section::find($id);
         $section->update([
             'title' => $request->input('title') ?? '',
             'description' => $request->input('description') ?? '',
             'color' => $request->input('color') ?? '',
+            'visible' => (int)$request->input('visible') ?? 1,
         ]);
 
 
@@ -93,7 +93,8 @@ class AdminSectionsController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'slug' => 'required|unique:sections,slug'
+            'slug' => 'required|unique:sections,slug',
+            'visible' => 'required'
         ]);
 
         $section = Section::create(
@@ -102,6 +103,7 @@ class AdminSectionsController extends Controller
                 'description' => $request->input('description'),
                 'slug' => $request->input('slug') ?? $this->getSlugFromTitle($request->input('title')),
                 'color' => $request->input('color') ?? '#FF9F63',
+                'visible' => (int)$request->input('visible') ?? 1,
             ]
         );
 

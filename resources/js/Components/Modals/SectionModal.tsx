@@ -8,6 +8,7 @@ import {
     Select,
     Textarea,
     TextInput,
+    ToggleSwitch,
 } from "flowbite-react";
 
 import { TwitterPicker } from "react-color";
@@ -23,6 +24,7 @@ export interface ISection {
     title: string;
     description: string;
     slug: string;
+    visible: boolean;
     image: File | string | null;
     color: string;
 }
@@ -53,6 +55,7 @@ export const SectionModal = ({
                       description: "",
                       slug: "",
                       image: null,
+                      visible: true,
                       color: "",
                   },
         );
@@ -190,6 +193,21 @@ export const SectionModal = ({
                                 }
                             />
                         )}
+                    </div>
+                    <div>
+                        <br />
+                        <br />
+                        <ToggleSwitch
+                            checked={data.visible}
+                            label="Display on website"
+                            onChange={(val) =>
+                                setData({
+                                    ...data,
+                                    visible: val,
+                                })
+                            }
+                        />
+                        <br />
                     </div>
                     <div>
                         <div className="mb-2 block">

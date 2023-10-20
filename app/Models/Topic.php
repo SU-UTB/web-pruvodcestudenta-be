@@ -51,7 +51,7 @@ class Topic extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'description', 'color', 'slug', 'url', 'section_id', 'location_id', 'location'
+        'title', 'description', 'color', 'slug', 'url', 'section_id', 'location_id', 'location', 'visible'
     ];
 
     protected $attributes = [
@@ -60,7 +60,8 @@ class Topic extends Model
         'color' => '',
         'slug' => '',
         'url' => '',
-        'location' => ''
+        'location' => '',
+        'visible' => 1
     ];
 
     public function image(): HasOne

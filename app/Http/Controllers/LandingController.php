@@ -102,8 +102,8 @@ class LandingController extends Controller
             'query' => 'required'
         ]);
 
-        $topicsQuery = Topic::query();
-        $sectionsQuery = Section::query();
+        $topicsQuery = Topic::query()->where('visible','=',1);
+        $sectionsQuery = Section::query()->where('visible','=',1);
 
         if (isset($request->sections) && $request->sections) {
             $topicsQuery = $topicsQuery->whereIn('section_id', $request->sections);

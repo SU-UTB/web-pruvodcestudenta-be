@@ -13,7 +13,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Transliterator;
 
-class AdminTopicsController extends Controller
+class TopicsController extends Controller
 {
     public static function index()
     {
@@ -29,7 +29,7 @@ class AdminTopicsController extends Controller
         $search = $request->input('search');
 
         if ($search == '') {
-            return AdminTopicsController::index();
+            return TopicsController::index();
         } else {
 
             $data = Topic::where('title', 'LIKE', '%' . trim(strtolower($search)) . '%')->orWhere('description', 'LIKE', '%' . trim(strtolower($search)) . '%')
@@ -63,6 +63,7 @@ class AdminTopicsController extends Controller
             'color' => $request->input('color') ?? isset($topic->color) ? $topic->color : '#FF9F63',
             'section_id' => $sectionId ?? 1,
             'location_id' => $locationId ?? 3,
+            'visible' => (int)$request->input('visible') ?? 1,
             'url' => $request->input('url') ?? ''
         ]);
 
@@ -114,6 +115,7 @@ class AdminTopicsController extends Controller
             'description' => 'required',
             'section_id' => 'required',
             'location_id' => 'required',
+            'visible' => 'required',
             'slug' => 'required|unique:topics,slug'
         ]);
 
@@ -131,7 +133,8 @@ class AdminTopicsController extends Controller
                 'section_id' => $sectionId,
                 'slug' => $request->input('slug') ?? $this->getSlugFromTitle($request->input('title')),
                 'location_id' => $request->input('location_id'),
-                'location' => $request->input('location')
+                'location' => $request->input('location'),
+                'visible' => (int)$request->input('visible') ?? 1,
             ]
         );
 
