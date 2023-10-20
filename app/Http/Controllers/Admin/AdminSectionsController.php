@@ -39,12 +39,12 @@ class AdminSectionsController extends Controller
     public function update(Request $request, $id)
     {
 
-
         $section = Section::find($id);
         $section->update([
             'title' => $request->input('title') ?? '',
             'description' => $request->input('description') ?? '',
             'color' => $request->input('color') ?? '',
+            'visible' => (int)$request->input('visible') ?? 1,
         ]);
 
 
@@ -93,7 +93,8 @@ class AdminSectionsController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'slug' => 'required|unique:sections,slug'
+            'slug' => 'required|unique:sections,slug',
+            'visible' => 'required'
         ]);
 
         $section = Section::create(
@@ -102,6 +103,7 @@ class AdminSectionsController extends Controller
                 'description' => $request->input('description'),
                 'slug' => $request->input('slug') ?? $this->getSlugFromTitle($request->input('title')),
                 'color' => $request->input('color') ?? '#FF9F63',
+                'visible' => (int)$request->input('visible') ?? 1,
             ]
         );
 
