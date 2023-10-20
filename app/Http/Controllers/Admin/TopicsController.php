@@ -13,7 +13,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Transliterator;
 
-class AdminTopicsController extends Controller
+class TopicsController extends Controller
 {
     public static function index()
     {
@@ -29,7 +29,7 @@ class AdminTopicsController extends Controller
         $search = $request->input('search');
 
         if ($search == '') {
-            return AdminTopicsController::index();
+            return TopicsController::index();
         } else {
 
             $data = Topic::where('title', 'LIKE', '%' . trim(strtolower($search)) . '%')->orWhere('description', 'LIKE', '%' . trim(strtolower($search)) . '%')
