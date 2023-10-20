@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use OpenApi\Annotations as OA;
 
 /**
@@ -54,4 +55,9 @@ class Section extends Model
         'slug' => '',
         'color' => '',
     ];
+
+    public function image(): HasOne
+    {
+        return $this->hasOne(SectionImage::class);
+    }
 }

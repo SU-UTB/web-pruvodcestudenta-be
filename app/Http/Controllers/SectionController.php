@@ -46,8 +46,10 @@ class SectionController extends Controller
     {
         $section = Section::firstWhere('slug', '=', $slug);
 
+        $topics =Topic::where('section_id', $section->id);
+
         return \response(json_encode(
-            new SectionResponse(Topic::where('section_id', $section->id)->get(), $section)
+            new SectionResponse(isset($topics) ? $topics->get(): collect(), $section)
             , JSON_UNESCAPED_UNICODE), 200);
     }
 

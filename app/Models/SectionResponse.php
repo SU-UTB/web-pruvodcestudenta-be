@@ -31,7 +31,21 @@ class SectionResponse
      *
      * @var string
      */
+    public string $slug;
+
+    /**
+     * @OA\Property(type="string")
+     *
+     * @var string
+     */
     public string $link;
+
+    /**
+     * @OA\Property(type="string")
+     *
+     * @var string
+     */
+    public string $image;
 
     /**
      * @OA\Property(type="string")
@@ -52,10 +66,12 @@ class SectionResponse
 
     public function __construct(Collection $topics, Section $section)
     {
+        $image =$section->image()->get()->first();
         $this->topics = $topics;
         $this->title = $section->title;
         $this->description = $section->description;
         $this->slug = $section->slug;
         $this->color = $section->color;
+        $this->image = isset($image) ? $image->path : '';
     }
 }

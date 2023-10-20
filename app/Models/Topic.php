@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use OpenApi\Annotations as OA;
 
 /**
@@ -50,16 +51,20 @@ class Topic extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'description', 'image', 'color', 'slug', 'url', 'section_id', 'location_id'
+        'title', 'description', 'color', 'slug', 'url', 'section_id', 'location_id', 'location'
     ];
 
     protected $attributes = [
         'title' => '',
         'description' => '',
-        'image' => '',
         'color' => '',
         'slug' => '',
-        'url' => ''
-
+        'url' => '',
+        'location' => ''
     ];
+
+    public function image(): HasOne
+    {
+        return $this->hasOne(TopicImage::class);
+    }
 }
