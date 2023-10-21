@@ -87,6 +87,9 @@ export default function Authenticated({
                                         >
                                             Profile
                                         </Dropdown.Link>
+                                        <Dropdown.Link href={route("logs")}>
+                                            Logs
+                                        </Dropdown.Link>
                                         <Dropdown.Link
                                             href={route("logout")}
                                             method="post"
@@ -103,7 +106,7 @@ export default function Authenticated({
                             <button
                                 onClick={() =>
                                     setShowingNavigationDropdown(
-                                        (previousState) => !previousState
+                                        (previousState) => !previousState,
                                     )
                                 }
                                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
@@ -188,6 +191,9 @@ export default function Authenticated({
                         <div className="mt-3 space-y-1">
                             <ResponsiveNavLink href={route("profile.edit")}>
                                 Profile
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink href={route("logs")}>
+                                Logs
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 method="post"
