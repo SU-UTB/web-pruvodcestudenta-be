@@ -22,7 +22,7 @@ export interface ILog {
 }
 
 interface ILogModal {
-    onClose: () => any;
+    onClose: () => void;
     isVisible: boolean;
     log: ILog | null;
 }
@@ -37,7 +37,7 @@ export const LogsModal = ({ onClose, isVisible, log }: ILogModal) => {
     );
 
     return (
-        <Modal show={isVisible} onClose={onClose} size={"l"}>
+        <Modal show={isVisible} onClose={onClose} size="l">
             <Modal.Header>Log details</Modal.Header>
             <Modal.Body>
                 <p>{data.message}</p>

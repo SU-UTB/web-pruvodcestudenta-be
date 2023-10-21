@@ -17,8 +17,6 @@ export default function Logs({ auth, paginationLogs, search }: any) {
 
     function onLogDetail(log: any) {
         if (log.level_name === "NOTICE") {
-            console.log(log);
-
             setModalData({
                 isVisible: true,
                 log: {
