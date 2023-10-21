@@ -16,20 +16,11 @@ jobs:
         run: npm ci && npm run build
 
       - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: wangyucode/sftp-upload-action@v2.0.2
         with:
-          server: ${{ secrets.FTP }}
+          host: ${{ secrets.FTP }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.idea*
-            **/.idea*/**
-            **/node_modules*/**
-            .env
-            .env.example
-            .index.php
-            .htaccess
-            /public/images
+          localDir: '.'
+          remoteDir: './www/backend/'
+          exclude: '.git*,**/.git*,**/.git*/**,**/.idea*,**/.idea*/**.DS_Store,.env,.env.example,.htaccess, **/public/images*'

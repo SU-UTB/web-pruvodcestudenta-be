@@ -1,12 +1,8 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminTopicsController;
-use App\Http\Controllers\Admin\AdminLandingController;
-use App\Http\Controllers\Admin\AdminSectionsController;
-use App\Http\Controllers\ProfileController;
+
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\LandingController;
-use App\Http\Controllers\LocationController;
 use App\Http\Controllers\SectionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;

@@ -46,7 +46,7 @@ class Section extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'description', 'slug', 'color',
+        'title', 'description', 'slug', 'color', 'visible'
     ];
 
     protected $attributes = [
@@ -54,6 +54,7 @@ class Section extends Model
         'description' => '',
         'slug' => '',
         'color' => '',
+        'visible' => 1
     ];
 
     public function image(): HasOne

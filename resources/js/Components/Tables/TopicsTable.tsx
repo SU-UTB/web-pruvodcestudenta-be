@@ -9,6 +9,8 @@ import {
 } from "flowbite-react";
 import { Link } from "@inertiajs/react";
 import { formatDateFromString } from "@/Tools/DateFormatter";
+import { IconContext } from "react-icons";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 const TopicsTable = ({
     topics,
@@ -31,6 +33,7 @@ const TopicsTable = ({
                 <Table.HeadCell>Url</Table.HeadCell>
                 <Table.HeadCell>Slug</Table.HeadCell>
                 <Table.HeadCell>Updated At</Table.HeadCell>
+                <Table.HeadCell>Visible</Table.HeadCell>
                 <Table.HeadCell>
                     <span className="sr-only">Actions</span>
                 </Table.HeadCell>
@@ -97,6 +100,21 @@ const TopicsTable = ({
                             {formatDateFromString(topic.updated_at)[0]}
                             <br />
                             {formatDateFromString(topic.updated_at)[1]}
+                        </Table.Cell>
+                        <Table.Cell>
+                            {topic.visible ? (
+                                <IconContext.Provider
+                                    value={{ color: "green", size: "2em" }}
+                                >
+                                    <FaEye />
+                                </IconContext.Provider>
+                            ) : (
+                                <IconContext.Provider
+                                    value={{ color: "red", size: "2em" }}
+                                >
+                                    <FaEyeSlash />
+                                </IconContext.Provider>
+                            )}
                         </Table.Cell>
                         <Table.Cell>
                             <Button

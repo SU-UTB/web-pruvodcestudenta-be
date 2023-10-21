@@ -19,7 +19,7 @@ class SectionController extends Controller
      */
     public static function index(): Collection
     {
-        return Section::all();
+        return Section::query()->where('visible','=',1)->get();
     }
 
 
@@ -46,10 +46,10 @@ class SectionController extends Controller
     {
         $section = Section::firstWhere('slug', '=', $slug);
 
-        $topics =Topic::where('section_id', $section->id);
+        $topics = Topic::query()->where('visible', '=', 1)->where('section_id', $section->id);
 
         return \response(json_encode(
-            new SectionResponse(isset($topics) ? $topics->get(): collect(), $section)
+            new SectionResponse(isset($topics) ? $topics->get() : collect(), $section)
             , JSON_UNESCAPED_UNICODE), 200);
     }
 
