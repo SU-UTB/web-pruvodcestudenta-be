@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 name: Deploy website on main push
 jobs:
   web-deploy:
@@ -11,19 +12,15 @@ jobs:
       - name: Get latest code
         uses: actions/checkout@v3
 
+      - name: Build backoffice
+        run: npm ci && npm run build
+
       - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: wangyucode/sftp-upload-action@v2.0.2
         with:
-          server: ${{ secrets.FTP }}
+          host: ${{ secrets.FTP }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.idea*
-            **/.idea*/**
-            .env
-            .env.example
-            .index.php
-            .htaccess
+          localDir: '.'
+          remoteDir: './www/backend/'
+          exclude: '.git*,**/.git*,**/.git*/**,**/.idea*,**/.idea*/**.DS_Store,.env,.env.example,.htaccess, **/public/images*'

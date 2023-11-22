@@ -6,30 +6,12 @@ use App\Models\Topic;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use OpenApi\Annotations as OA;
+use App\Models\TopicResponse;
 
 class TopicController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Collection
-     */
-    public function index()
-    {
-        return Topic::all();
-    }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request): Response
-    {
-        return Topic::create($request->all());
-    }
 
     /**
      * Display the specified resource.
@@ -39,7 +21,7 @@ class TopicController extends Controller
      */
     /**
      * @OA\Get(
-     *    path="/api/topics/{id}",
+     *    path="/api/pages/topics/{slug}",
      *    tags={"Topics"},
      *    summary="Get topic data",
      *    description="Get topic data",
@@ -50,34 +32,14 @@ class TopicController extends Controller
      *       ),
      *  )
      */
-    public function show(int $id)
+    public function show(string $slug)
     {
-        return Topic::find($id);
+        $topic =  Topic::firstWhere('slug', '=', $slug);
+
+        return \response(json_encode(
+            new TopicResponse($topic)
+            , JSON_UNESCAPED_UNICODE), 200);
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, int $id): Response
-    {
-        $content = Topic::find($id);
-        $content->update($request->all());
-        return $content;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return int
-     */
-    public function destroy(int $id): int
-    {
-        return Topic::destroy($id);
-    }
 }

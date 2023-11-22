@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\LandingSearchResponse;
+use App\Models\SearchTopic;
+use App\Models\Section;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use OpenApi\Annotations as OA;
 
 /**
  * @OA\Info(
@@ -93,6 +98,37 @@ class LandingController extends Controller
      */
     public function search(Request $request): Response
     {
-        return response();
+        $request->validate([
+            'query' => 'required'
+        ]);
+
+        $topicsQuery = Topic::query()->where('visible','=',1);
+        $sectionsQuery = Section::query()->where('visible','=',1);
+
+        if (isset($request->sections) && $request->sections) {
+            $topicsQuery = $topicsQuery->whereIn('section_id', $request->sections);
+            $sectionsQuery = $sectionsQuery->whereIn('id', $request->sections);
+        }
+        if (isset($request->locations) && $request->locations) {
+            $topicsQuery = $topicsQuery->whereIn('location_id', $request->locations);
+        }
+        $sections = $sectionsQuery->get();
+        $topics = $topicsQuery
+            ->where('title', 'LIKE', '%' . $request->input('query') . '%')
+            ->orWhere('description', 'LIKE', '%' . $request->input('query') . '%')
+            ->get();
+
+        $searchTopics = $topics->map(function ($topic) use ($sections) {
+            return new SearchTopic($topic->title,
+                $topic->slug ?? '',
+                $sections->firstWhere('id', '==', $topic->section_id)->slug ?? '',
+                $topic->color ?? ''
+            );
+        });
+        return response(
+            json_encode(
+                new LandingSearchResponse($searchTopics)
+                , JSON_UNESCAPED_UNICODE)
+        );
     }
 }

@@ -1,12 +1,8 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminTopicsController;
-use App\Http\Controllers\Admin\AdminLandingController;
-use App\Http\Controllers\Admin\AdminSectionsController;
-use App\Http\Controllers\ProfileController;
+
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\LandingController;
-use App\Http\Controllers\LocationController;
 use App\Http\Controllers\SectionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -29,7 +25,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::get('/migrate', function () {
-    return response(Artisan::call('migrate'));
+    return response(Artisan::call('migrate', [
+        '--force' => true
+    ]));
+});
+
+Route::get('/schedule-work', function () {
+    return response(Artisan::call('schedule:work', [
+        '--force' => true
+    ]));
+});
+
+Route::get('/schedule-run', function () {
+    return response(Artisan::call('schedule:run', [
+        '--force' => true
+    ]));
+});
+Route::get('/doc', function () {
+    return response()->file(storage_path('api-docs/api-docs.json'));
 });
 
 Route::get('pages/landing', [LandingController::class, 'index']);

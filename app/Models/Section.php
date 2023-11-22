@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use OpenApi\Annotations as OA;
 
 /**
  * Class Section
@@ -44,13 +46,19 @@ class Section extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'description', 'link', 'color',
+        'title', 'description', 'slug', 'color', 'visible'
     ];
 
     protected $attributes = [
         'title' => '',
         'description' => '',
-        'link' => '',
+        'slug' => '',
         'color' => '',
+        'visible' => 1
     ];
+
+    public function image(): HasOne
+    {
+        return $this->hasOne(SectionImage::class);
+    }
 }

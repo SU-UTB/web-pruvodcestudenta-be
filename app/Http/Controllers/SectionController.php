@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
+use App\Models\SectionResponse;
 use App\Models\Topic;
 use App\Models\Section;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use OpenApi\Annotations as OA;
 
 class SectionController extends Controller
 {
@@ -18,20 +19,9 @@ class SectionController extends Controller
      */
     public static function index(): Collection
     {
-        return Section::all();
+        return Section::query()->where('visible','=',1)->get();
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return Response
-     */
-    public function store(Request $request): Response
-    {
-        return Section::create($request->all());
-    }
 
     /**
      * Display the specified resource.
@@ -41,49 +31,27 @@ class SectionController extends Controller
      */
     /**
      * @OA\Get(
-     *    path="/api/sections/{id}",
+     *    path="/api/pages/sections/{slug}",
      *    tags={"Sections"},
      *    summary="Get section data",
      *    description="Get section data",
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *         @OA\JsonContent(ref="#/components/schemas/Section"),
+     *         @OA\JsonContent(ref="#/components/schemas/SectionResponse"),
      *       ),
      *  )
      */
-    public function show(int $id): Response
+    public function show(string $slug): Response
     {
-        return \response([
-            'section' => Section::find($id),
-            'topics' => Topic::where('section_id', $id)->get()
-        ], 200);
+        $section = Section::firstWhere('slug', '=', $slug);
+
+        $topics = Topic::query()->where('visible', '=', 1)->where('section_id', $section->id);
+
+        return \response(json_encode(
+            new SectionResponse(isset($topics) ? $topics->get() : collect(), $section)
+            , JSON_UNESCAPED_UNICODE), 200);
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, int $id): Response
-    {
-
-        $section = Section::find($id);
-        $section->update($request->all());
-        return $section;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return int
-     */
-    public function destroy(int $id): int
-    {
-        return Section::destroy($id);
-    }
 }
