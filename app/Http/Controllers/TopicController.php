@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use OpenApi\Annotations as OA;
+use App\Models\TopicResponse;
 
 class TopicController extends Controller
 {
@@ -33,7 +34,11 @@ class TopicController extends Controller
      */
     public function show(string $slug)
     {
-        return Topic::firstWhere('slug', '=', $slug);
+        $topic =  Topic::firstWhere('slug', '=', $slug);
+
+        return \response(json_encode(
+            new TopicResponse($topic)
+            , JSON_UNESCAPED_UNICODE), 200);
     }
 
 
