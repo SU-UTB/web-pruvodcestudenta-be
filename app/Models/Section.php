@@ -33,6 +33,11 @@ use OpenApi\Annotations as OA;
  *      type="string",
  *      format="string",
  *      description="section link used in URL"
+ *    ) ,    @OA\Property(
+ *      property="icon",
+ *      type="string",
+ *      format="string",
+ *      description="Icon of section"
  *    ) ,  @OA\Property(
  *      property="color",
  *      type="string",
@@ -46,7 +51,7 @@ class Section extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'description', 'slug', 'color', 'visible'
+        'title', 'description', 'slug', 'color', 'visible', 'icon'
     ];
 
     protected $attributes = [
@@ -54,7 +59,8 @@ class Section extends Model
         'description' => '',
         'slug' => '',
         'color' => '',
-        'visible' => 1
+        'visible' => 1,
+        'icon' => ''
     ];
 
     public function image(): HasOne
