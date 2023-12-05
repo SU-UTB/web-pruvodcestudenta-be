@@ -6,9 +6,8 @@ use App\Models\SectionResponse;
 use App\Models\Topic;
 use App\Models\Section;
 use App\Models\TopicResponse;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use OpenApi\Annotations as OA;
 
 class SectionController extends Controller
@@ -20,7 +19,10 @@ class SectionController extends Controller
      */
     public static function index(): Collection
     {
-        return Section::query()->where('visible', '=', 1)->get();
+        return Section::query()->where('visible', '=', 1)->get()->map(function ($section) {
+            $topics = collect();
+            return new SectionResponse($topics, $section);
+        });
     }
 
 
