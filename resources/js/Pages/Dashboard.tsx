@@ -1,7 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head} from '@inertiajs/react';
 import {PageProps} from '@/types';
-import {Button} from "primereact/button";
 
 export default function Dashboard({auth, countOfSections, countOfTopics, countOfLocations}: any) {
     return (
@@ -10,7 +9,7 @@ export default function Dashboard({auth, countOfSections, countOfTopics, countOf
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
         >
             <Head title="Dashboard"/>
-<Button>fsafsas</Button>
+
 
             <div className="py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
