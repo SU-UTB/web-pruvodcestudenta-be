@@ -10,6 +10,11 @@ import {Flowbite} from "flowbite-react";
 const appName = import.meta.env.VITE_APP_NAME || "PruvodceStudenta UTB | Admin";
 
 const customTheme = {
+    button: {
+        color: {
+            primary: "bg-[#E37222] hover:bg-[#E65014] text-white",
+        },
+    },
     sidebar: {
         item: {
             base: "flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-orange-100 dark:text-white dark:hover:bg-gray-700",

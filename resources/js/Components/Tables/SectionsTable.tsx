@@ -1,27 +1,27 @@
-import { Button, Table, Textarea, TextInput } from "flowbite-react";
-import { formatDateFromString } from "@/Tools/DateFormatter";
-import { IconContext } from "react-icons";
-import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import {Button, Table, Textarea, TextInput} from "flowbite-react";
+import {formatDateFromString} from "@/Tools/DateFormatter";
+import {IconContext} from "react-icons";
+import {FaEye, FaEyeSlash} from "react-icons/fa6";
 
 const SectionsTable = ({
-    sections,
-    sectionImages,
-    onDeleteSection,
-    onEditSection,
-}: any) => {
+                           sections,
+                           sectionImages,
+                           onDeleteSection,
+                           onEditSection,
+                       }: any) => {
     //TODO types
     return (
-        <Table>
+        <Table striped={true}>
             <Table.Head>
-                <Table.HeadCell>Title</Table.HeadCell>
-                <Table.HeadCell>Description</Table.HeadCell>
-                <Table.HeadCell>Image</Table.HeadCell>
-                <Table.HeadCell>Color</Table.HeadCell>
+                <Table.HeadCell>Název</Table.HeadCell>
+                <Table.HeadCell>Popis</Table.HeadCell>
+                <Table.HeadCell>Obrázek</Table.HeadCell>
+                <Table.HeadCell>Barva</Table.HeadCell>
                 <Table.HeadCell>Slug</Table.HeadCell>
-                <Table.HeadCell>Updated At</Table.HeadCell>
-                <Table.HeadCell>Visible</Table.HeadCell>
+                <Table.HeadCell>Viditelné</Table.HeadCell>
+                <Table.HeadCell>Upraveno</Table.HeadCell>
                 <Table.HeadCell>
-                    <span className="sr-only">Actions</span>
+                    <span className="sr-only">Akce</span>
                 </Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
@@ -48,10 +48,10 @@ const SectionsTable = ({
                                     width={250}
                                     src={
                                         "../images/sections/" +
-                                            sectionImages.filter(
-                                                (i: any) =>
-                                                    i.section_id === section.id,
-                                            )[0]?.name ?? ""
+                                        sectionImages.filter(
+                                            (i: any) =>
+                                                i.section_id === section.id,
+                                        )[0]?.name ?? ""
                                     }
                                     alt={
                                         sectionImages.filter(
@@ -61,45 +61,52 @@ const SectionsTable = ({
                                     }
                                 />
                             ) : (
-                                <div />
+                                <div/>
                             )}
                         </Table.Cell>
-                        <Table.Cell>{section.color}</Table.Cell>
-                        <Table.Cell>{section.slug}</Table.Cell>
                         <Table.Cell>
-                            {formatDateFromString(section.updated_at)[0]}
-                            <br />
-                            {formatDateFromString(section.updated_at)[1]}
+                            <div className='flex justify-content-center items-center gap-2'>
+                                <div className={"w-6 h-6 rounded-full"} style={{backgroundColor: `${section.color}`}}/>
+                                {section.color}
+                            </div>
                         </Table.Cell>
+                        <Table.Cell>{section.slug}</Table.Cell>
                         <Table.Cell>
                             {section.visible ? (
                                 <IconContext.Provider
-                                    value={{ color: "green", size: "2em" }}
+                                    value={{color: "green", size: "2em"}}
                                 >
-                                    <FaEye />
+                                    <FaEye/>
                                 </IconContext.Provider>
                             ) : (
                                 <IconContext.Provider
-                                    value={{ color: "red", size: "2em" }}
+                                    value={{color: "red", size: "2em"}}
                                 >
-                                    <FaEyeSlash />
+                                    <FaEyeSlash/>
                                 </IconContext.Provider>
                             )}
                         </Table.Cell>
                         <Table.Cell>
+                            {formatDateFromString(section.updated_at)[0]}
+                            <br/>
+                            {formatDateFromString(section.updated_at)[1]}
+                        </Table.Cell>
+
+                        <Table.Cell>
                             <Button
+                                color={'primary'}
                                 size={"xs"}
                                 onClick={() => onEditSection(section)}
                             >
-                                <p>Edit</p>
+                                <p>Upravit</p>
                             </Button>
-                            <br />
+                            <br/>
                             <Button
                                 size={"xs"}
                                 color="failure"
                                 onClick={() => onDeleteSection(section.id)}
                             >
-                                <p>Delete</p>
+                                <p>Smazat</p>
                             </Button>
                         </Table.Cell>
                     </Table.Row>

@@ -6,6 +6,7 @@ import { Button, Pagination, TextInput } from "flowbite-react";
 import React, { FormEvent, useState } from "react";
 import { TopicModal } from "@/Components/Modals/TopicModal";
 import { ISection, SectionModal } from "@/Components/Modals/SectionModal";
+import {FaBox} from "react-icons/fa6";
 
 export default function Sections({
     auth,
@@ -22,6 +23,12 @@ export default function Sections({
         section: null,
         image: null,
     });
+
+    const breadCrumbs = [{
+        href: route("sections"),
+        icon: FaBox,
+        label: 'Sekce'
+    }]
 
     const [searchInput, setSearchInput] = useState<string>(search);
 
@@ -51,10 +58,11 @@ export default function Sections({
                     Sections
                 </h2>
             }
+            breadCrumbs={breadCrumbs}
         >
+
             <Head title="Sections" />
-            <br />
-            <div className="mx-auto flex justify-center items-center px-4">
+            <div className="mx-auto flex justify-center items-center">
                 <form
                     className="flex max-w-md flex-row gap-4"
                     name="search-reservation-form"
@@ -63,16 +71,18 @@ export default function Sections({
                     onSubmit={submitSearch}
                 >
                     <TextInput
+                        color={'gray'}
                         type="text"
                         id="search"
                         name="search"
-                        placeholder="Search..."
+                        placeholder="Výraz..."
                         value={searchInput}
                         onChange={(val) => setSearchInput(val.target.value)}
                     />
-                    <Button type="submit">Search</Button>
+                    <Button type="submit" color={'primary'}>Hledat</Button>
                 </form>
                 <Button
+                    color={'primary'}
                     className="ml-auto"
                     onClick={() =>
                         setModalData({
@@ -81,7 +91,7 @@ export default function Sections({
                         })
                     }
                 >
-                    Add Section
+                    Přidat sekci
                 </Button>
             </div>
             <br />

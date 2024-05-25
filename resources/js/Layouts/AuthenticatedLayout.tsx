@@ -35,7 +35,7 @@ export default function Authenticated({
                         <div
                             className="w-full flex justify-center py-5 bg-[#EEF2F8] rounded-t-3xl shadow-xl mt-10">
                             <main className="w-full md:w-11/12 lg:w-11/12 pt-10 no-scrollbar overflow-y-scroll">
-                                <slot className="w-full md:w-11/12 lg:w-11/12">
+                                <slot className="w-full md:w-11/12 lg:w-11/12 p-6">
                                     {children}
                                 </slot>
                             </main>
