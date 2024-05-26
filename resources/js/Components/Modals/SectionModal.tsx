@@ -1,23 +1,19 @@
 import {
     Alert,
-    Button,
-    Checkbox,
-    FileInput,
     Label,
-    Modal,
-    Select,
-    Textarea,
-    TextInput,
-    ToggleSwitch,
+
 } from "flowbite-react";
 
-import { TwitterPicker } from "react-color";
-
-import { FormEvent, useState } from "react";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { Utils } from "@/Tools/Utils";
-import { router, useForm } from "@inertiajs/react";
+import {FormEvent, useState} from "react";
+import {Utils} from "@/Tools/Utils";
+import {router, useForm} from "@inertiajs/react";
+import {Dialog} from 'primereact/dialog';
+import {Editor} from "primereact/editor";
+import {InputText} from "primereact/inputtext";
+import {FileUpload} from "primereact/fileupload";
+import {ColorPicker} from "primereact/colorpicker";
+import {Checkbox} from "primereact/checkbox";
+import {Button} from "primereact/button";
 
 export interface ISection {
     id: number;
@@ -36,28 +32,30 @@ interface ISectionModal {
     image: string | null;
 }
 
+const defaultSection = {
+    id: 0,
+    title: "",
+    description: "",
+    slug: "",
+    image: null,
+    visible: true,
+    color: "",
+};
+
 export const SectionModal = ({
-    onClose,
-    isVisible,
-    section = null,
-    image = null,
-}: ISectionModal) => {
-    const { data, setData, post, put, progress, errors, clearErrors } =
+                                 onClose,
+                                 isVisible,
+                                 section = null,
+                                 image = null,
+                             }: ISectionModal) => {
+    const {data, setData, post, put, progress, errors, clearErrors} =
         useForm<ISection>(
             section !== null
                 ? {
-                      ...section,
-                      image: image,
-                  }
-                : {
-                      id: 0,
-                      title: "",
-                      description: "",
-                      slug: "",
-                      image: null,
-                      visible: true,
-                      color: "",
-                  },
+                    ...section,
+                    image: image,
+                }
+                : defaultSection,
         );
 
     function submit(e: FormEvent) {
@@ -74,23 +72,29 @@ export const SectionModal = ({
         }
     }
 
+    console.log(data.image);
     return (
-        <Modal show={isVisible} onClose={onClose} size="2xl">
-            <Modal.Header>
-                {section !== null ? "Edit Section" : "Add Section"}
-            </Modal.Header>
-            <Modal.Body>
-                <form
-                    className="flex max-w-md flex-col gap-4"
-                    onSubmit={submit}
-                >
-                    <div>
+        <Dialog
+            header={section !== null ? "Upravit sekci" : "Přidat sekci"}
+            visible={isVisible} onHide={() => {
+            setData(defaultSection);
+            onClose();
+        }} maximizable
+            style={{width: '50vw'}}>
+
+            <form
+                className="flex flex-col gap-4 p-4"
+                onSubmit={submit}
+            >
+                <div className='columns-2 gap-4'>
+
+                    <div className='flex flex-col'>
                         <div className="mb-2 block">
-                            <Label htmlFor="title" value="Story title" />
+                            <Label htmlFor="title" value="Název sekce"/>
                         </div>
-                        <TextInput
+                        <InputText
                             id="title"
-                            placeholder="Title"
+                            placeholder="Název..."
                             value={data.title}
                             onChange={(val) =>
                                 setData({
@@ -102,118 +106,22 @@ export const SectionModal = ({
                             required
                             type="text"
                             color={errors.title ? "failure" : ""}
-                            helperText={
-                                errors.title ? <>{errors.title}</> : null
-                            }
-                        />
-                    </div>
-                    <div>
-                        <div className="mb-2 block">
-                            <Label
-                                htmlFor="description"
-                                value="Story description"
-                            />
-                        </div>
-                        <CKEditor
-                            id="description"
-                            editor={ClassicEditor}
-                            data={data.description}
-                            onChange={(event, editor) => {
-                                setData({
-                                    ...data,
-                                    description: editor.getData(),
-                                });
-                            }}
-                        />
-                        <div>
-                            {errors.description ? (
-                                <>
-                                    <br />
-                                    <Alert color="failure">
-                                        <span>
-                                            <p>{errors.description}</p>
-                                        </span>
-                                    </Alert>
-                                </>
-                            ) : null}
-                        </div>
-                    </div>
+                            invalid={errors.title !== undefined}
+                            aria-describedby="title-help"
 
-                    <div>
-                        <div className="mb-2 block">
-                            <Label htmlFor="color" value="Story color" />
-                        </div>
-                        <br />
-                        <TwitterPicker
-                            color={data.color}
-                            onChange={(color) =>
-                                setData({
-                                    ...data,
-                                    color: color.hex,
-                                })
-                            }
                         />
-                    </div>
-                    <div>
-                        <div className="mb-2 block">
-                            <Label htmlFor="image" value="Upload image" />
-                        </div>
-                        {typeof data.image === "string" ? (
-                            <>
-                                <img
-                                    width={250}
-                                    src={"../images/sections/" + image}
-                                    alt={image ?? ""}
-                                />
-                                <br />
-                                <Button
-                                    size={"xs"}
-                                    onClick={() =>
-                                        setData({
-                                            ...data,
-                                            image: null,
-                                        })
-                                    }
-                                >
-                                    <p>Remove image</p>
-                                </Button>
-                            </>
-                        ) : (
-                            <FileInput
-                                id="image"
-                                name="image"
-                                onChange={(val) =>
-                                    setData({
-                                        ...data,
-                                        image:
-                                            val.target.files !== null
-                                                ? val.target.files[0]
-                                                : null,
-                                    })
-                                }
-                            />
-                        )}
-                    </div>
-                    <div>
-                        <br />
-                        <br />
-                        <ToggleSwitch
-                            checked={data.visible}
-                            label="Display on website"
-                            onChange={(val) =>
-                                setData({
-                                    ...data,
-                                    visible: val,
-                                })
+                        <small id="title-help">
+                            {
+                                errors.title ? <>{errors.title}</> : ''
                             }
-                        />
-                        <br />
+                        </small>
                     </div>
-                    <div>
+                    <div className='flex flex-col'
+                    >
                         <div className="mb-2 block">
-                            <Label htmlFor="slug" value="Slug" />
+                            <Label htmlFor="slug" value="Slug"/>
                         </div>
-                        <TextInput
+                        <InputText
                             id="slug"
                             placeholder=""
                             value={data.slug}
@@ -227,36 +135,182 @@ export const SectionModal = ({
                                 })
                             }
                             color={errors.slug ? "failure" : ""}
-                            helperText={errors.slug ? <>{errors.slug}</> : null}
+                            invalid={errors.slug !== undefined}
+
+                            aria-describedby="slug-help"
+
                         />
+                        <small id="slug-help">
+                            {
+                                errors.slug ? <>{errors.slug}</> : ''
+                            }
+                        </small>
+
                     </div>
-                    {section === null ? (
-                        <Alert color="warning" withBorderAccent>
+
+                </div>
+                {section === null ? (
+                    <Alert color="warning" withBorderAccent>
                             <span>
                                 <p>
                                     Pečlivě zkontroluj slug! Slug je automaticky
                                     vygenerované slovo z názvu.
-                                    <br />
+                                    <br/>
                                     Toto slovo bude použito pro identifikaci
                                     sekce v url adrese.
-                                    <br />
+                                    <br/>
                                     Např.
-                                    "www.pruvodcestudenta.utb.cz/sekce/nazevSekce/_slug_".
-                                    <br />
+                                    "www.pruvodcestudenta.utb.cz/<b>sluzby</b>/menza-utb".
+                                    <br/>
+                                    "www.pruvodcestudenta.utb.cz/<b>{(data.slug == undefined || data.slug == '') ? '_slug_' : data.slug}</b>/menza-utb".
+                                    <br/>
                                     Slug musí být unikátní, slug nelze později
                                     změnit.
                                 </p>
                             </span>
-                        </Alert>
-                    ) : (
-                        <></>
-                    )}
+                    </Alert>
+                ) : (
+                    <></>
+                )}
 
-                    <Button type="submit">
-                        {section === null ? "Create" : "Save"}
-                    </Button>
-                </form>
-            </Modal.Body>
-        </Modal>
+                <div className='mt-4 mb-4'>
+                    <div className="mb-2 block">
+                        <Label
+                            htmlFor="description"
+                            value="Popis sekce"
+                        />
+                    </div>
+                    <Editor
+                        id="description"
+                        value={data.description}
+                        onTextChange={(event) => {
+                            setData({
+                                ...data,
+                                description: event.htmlValue ?? event.textValue,
+                            });
+                        }}
+                    />
+                    <div>
+                        {errors.description ? (
+                            <>
+                                <br/>
+                                <Alert color="failure">
+                                        <span>
+                                            <p>{errors.description}</p>
+                                        </span>
+                                </Alert>
+                            </>
+                        ) : null}
+                    </div>
+                </div>
+
+
+                <div className='columns-2 gap-4'>
+                    <div>
+                        <div className="mb-2 block">
+                            <Label htmlFor="color" value="Barva sekce"/>
+                        </div>
+                        <div className='flex gap-4 items-center'>
+                            <ColorPicker inputId="cp-hex" format="hex" value={data.color.split('#')[1]}
+                                         onChange={(e) => setData({
+                                             ...data,
+                                             color: '#' + e.value?.toString() ?? '',
+                                         })}/>
+
+                            <InputText
+                                id="colorInput"
+                                placeholder="#000FFF"
+                                value={data.color}
+                                type="text"
+                                onChange={(val) =>
+                                    setData({
+                                        ...data,
+                                        color: val.target.value,
+                                    })
+                                }
+
+                                invalid={!data.color.startsWith('#')}
+
+                                aria-describedby="color-help"
+
+                            />
+                        </div>
+                    </div>
+
+
+                    <div className='flex flex-col max-w-max'>
+                        <div className="mb-2 block">
+                            <Label htmlFor="image" value="Obrázek sekce"/>
+                        </div>
+                        <FileUpload mode="basic" name="image" id='image' accept="image/*"
+                                    chooseLabel={'Vybrat obrázek'}
+                                    cancelLabel={'Odebrat'}
+                                    uploadLabel={'ss'}
+                                    onUpload={(val) =>
+                                        setData({
+                                            ...data,
+                                            image:
+                                                val.files !== null
+                                                    ? val.files[0]
+                                                    : null,
+                                        })
+                                    }/>
+
+
+                    </div>
+
+                </div>
+
+
+                {data.image !== null ? (
+                    <>
+                        <img
+                            width={250}
+                            src={"../images/sections/" + image}
+                            alt={image ?? ""}
+                        />
+                        <br/>
+                        <Button
+                            onClick={() =>
+                                setData({
+                                    ...data,
+                                    image: null,
+                                })
+                            }
+                        >
+                            <p>Remove image</p>
+                        </Button>
+                    </>
+                ) : (
+                    <></>
+                )}
+
+                <div className='mt-4 mb-4 flex flex-col '>
+                    <div className="mb-2 block">
+                        <Label htmlFor="color" value="Viditelnost"/>
+                    </div>
+
+                    <div className="flex align-items-center mt-3">
+                        <Checkbox
+                            inputId='visible'
+                            checked={data.visible}
+                            onChange={(val) =>
+                                setData({
+                                    ...data,
+                                    visible: val.checked ?? false,
+                                })
+                            }
+                        />
+                        <label htmlFor="visible" className="ml-2">Viditelné na webu</label>
+                    </div>
+
+                </div>
+
+                <Button
+                    type="submit" label={section === null ? "Vytvořit" : "Uložit"}>
+
+                </Button>
+            </form>
+        </Dialog>
     );
 };
