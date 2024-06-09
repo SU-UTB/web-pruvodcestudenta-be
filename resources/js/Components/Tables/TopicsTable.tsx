@@ -7,35 +7,35 @@ import {
     Textarea,
     TextInput,
 } from "flowbite-react";
-import { Link } from "@inertiajs/react";
-import { formatDateFromString } from "@/Tools/DateFormatter";
-import { IconContext } from "react-icons";
-import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import {Link} from "@inertiajs/react";
+import {formatDateFromString} from "@/Tools/DateFormatter";
+import {IconContext} from "react-icons";
+import {FaEye, FaEyeSlash} from "react-icons/fa6";
 
 const TopicsTable = ({
-    topics,
-    topicImages,
-    sections,
-    locations,
-    onDeleteTopic,
-    onEditTopic,
-}: any) => {
+                         topics,
+                         topicImages,
+                         sections,
+                         locations,
+                         onDeleteTopic,
+                         onEditTopic,
+                     }: any) => {
     //TODO types
     return (
         <Table>
             <Table.Head>
-                <Table.HeadCell>Title</Table.HeadCell>
-                <Table.HeadCell>Description</Table.HeadCell>
-                <Table.HeadCell>Image</Table.HeadCell>
-                <Table.HeadCell>Section</Table.HeadCell>
-                <Table.HeadCell>Location</Table.HeadCell>
-                <Table.HeadCell>Location URL</Table.HeadCell>
-                <Table.HeadCell>Url</Table.HeadCell>
+                <Table.HeadCell>Název</Table.HeadCell>
+                <Table.HeadCell>Popis</Table.HeadCell>
+                <Table.HeadCell>Obrázek</Table.HeadCell>
+                <Table.HeadCell>Sekce</Table.HeadCell>
+                <Table.HeadCell>Lokace</Table.HeadCell>
+                <Table.HeadCell>URL mapy</Table.HeadCell>
+                <Table.HeadCell>URL místa</Table.HeadCell>
                 <Table.HeadCell>Slug</Table.HeadCell>
-                <Table.HeadCell>Updated At</Table.HeadCell>
-                <Table.HeadCell>Visible</Table.HeadCell>
+                <Table.HeadCell>Viditelné</Table.HeadCell>
+                <Table.HeadCell>Upraveno</Table.HeadCell>
                 <Table.HeadCell>
-                    <span className="sr-only">Actions</span>
+                    <span className="sr-only">Akce</span>
                 </Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
@@ -62,10 +62,10 @@ const TopicsTable = ({
                                     width={250}
                                     src={
                                         "../images/topics/" +
-                                            topicImages.filter(
-                                                (i: any) =>
-                                                    i.topic_id === topic.id,
-                                            )[0]?.name ?? ""
+                                        topicImages.filter(
+                                            (i: any) =>
+                                                i.topic_id === topic.id,
+                                        )[0]?.name ?? ""
                                     }
                                     alt={
                                         topicImages.filter(
@@ -74,7 +74,7 @@ const TopicsTable = ({
                                     }
                                 />
                             ) : (
-                                <div />
+                                <div/>
                             )}
                         </Table.Cell>
                         <Table.Cell>
@@ -97,25 +97,26 @@ const TopicsTable = ({
                             {topic.slug}
                         </Table.Cell>
                         <Table.Cell>
-                            {formatDateFromString(topic.updated_at)[0]}
-                            <br />
-                            {formatDateFromString(topic.updated_at)[1]}
-                        </Table.Cell>
-                        <Table.Cell>
                             {topic.visible ? (
                                 <IconContext.Provider
-                                    value={{ color: "green", size: "2em" }}
+                                    value={{color: "green", size: "2em"}}
                                 >
-                                    <FaEye />
+                                    <FaEye/>
                                 </IconContext.Provider>
                             ) : (
                                 <IconContext.Provider
-                                    value={{ color: "red", size: "2em" }}
+                                    value={{color: "red", size: "2em"}}
                                 >
-                                    <FaEyeSlash />
+                                    <FaEyeSlash/>
                                 </IconContext.Provider>
                             )}
                         </Table.Cell>
+                        <Table.Cell>
+                            {formatDateFromString(topic.updated_at)[0]}
+                            <br/>
+                            {formatDateFromString(topic.updated_at)[1]}
+                        </Table.Cell>
+
                         <Table.Cell>
                             <Button
                                 size={"xs"}
@@ -123,7 +124,7 @@ const TopicsTable = ({
                             >
                                 <p>Edit</p>
                             </Button>
-                            <br />
+                            <br/>
                             <Button
                                 size={"xs"}
                                 color="failure"

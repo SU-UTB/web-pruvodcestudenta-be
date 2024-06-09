@@ -1,21 +1,22 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, router } from "@inertiajs/react";
-import { PageProps } from "@/types";
+import {Head, router} from "@inertiajs/react";
+import {PageProps} from "@/types";
 import SectionsTable from "@/Components/Tables/SectionsTable";
-import { Button, Pagination, TextInput } from "flowbite-react";
-import React, { FormEvent, useState } from "react";
+import {Button, Pagination, TextInput} from "flowbite-react";
+import React, {FormEvent, useState} from "react";
 import TopicsTable from "@/Components/Tables/TopicsTable";
-import { ITopic, TopicModal } from "@/Components/Modals/TopicModal";
-import { ISection } from "@/Components/Modals/SectionModal";
+import {ITopic, TopicModal} from "@/Components/Modals/TopicModal";
+import {ISection} from "@/Components/Modals/SectionModal";
+import {FaBox, FaNewspaper} from "react-icons/fa6";
 
 export default function Topics({
-    auth,
-    paginationTopics,
-    topicImages,
-    sections,
-    locations,
-    search,
-}: any) {
+                                   auth,
+                                   paginationTopics,
+                                   topicImages,
+                                   sections,
+                                   locations,
+                                   search,
+                               }: any) {
     const [modalData, setModalData] = useState<{
         isVisible: boolean;
         topic: ITopic | null;
@@ -25,11 +26,17 @@ export default function Topics({
         topic: null,
         image: null,
     });
+
+    const breadCrumbs = [{
+        href: route("topics"),
+        icon: FaNewspaper,
+        label: 'Články'
+    }]
     const [searchInput, setSearchInput] = useState<string>(search);
 
     function submitSearch(e: FormEvent) {
         e.preventDefault();
-        router.post("/admin/topics/search", { search: searchInput });
+        router.post("/admin/topics/search", {search: searchInput});
     }
 
     function onDeleteTopic(id: number) {
@@ -52,10 +59,11 @@ export default function Topics({
                     Topics
                 </h2>
             }
+            breadCrumbs={breadCrumbs}
+
         >
-            <Head title="Topics" />
-            <br />
-            <div className="mx-auto flex justify-center items-center px-4">
+            <Head title="Topics"/>
+            <div className="mx-auto flex justify-center items-center">
                 <form
                     className="flex max-w-md flex-row gap-4"
                     name="search-topics-form"
@@ -64,16 +72,19 @@ export default function Topics({
                     onSubmit={submitSearch}
                 >
                     <TextInput
+                        color={'gray'}
+
                         type="text"
                         id="search"
                         name="search"
-                        placeholder="Search..."
+                        placeholder="Výraz..."
                         value={searchInput}
                         onChange={(val) => setSearchInput(val.target.value)}
                     />
-                    <Button type="submit">Search</Button>
+                    <Button type="submit" color={'primary'}>Hledat</Button>
                 </form>
                 <Button
+                    color={'primary'}
                     className="ml-auto"
                     onClick={() =>
                         setModalData({
@@ -82,19 +93,21 @@ export default function Topics({
                         })
                     }
                 >
-                    Add Topic
+                    Přidat článek
                 </Button>
             </div>
-            <br />
-            <TopicsTable
-                topics={paginationTopics.data}
-                sections={sections}
-                locations={locations}
-                onDeleteTopic={onDeleteTopic}
-                onEditTopic={onEditTopic}
-                topicImages={topicImages}
-            />
-            <br />
+            <br/>
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-w-full">
+                <TopicsTable
+                    topics={paginationTopics.data}
+                    sections={sections}
+                    locations={locations}
+                    onDeleteTopic={onDeleteTopic}
+                    onEditTopic={onEditTopic}
+                    topicImages={topicImages}
+                />
+            </div>
+            <br/>
             <div className="mx-auto flex justify-center items-center px-4">
                 <Pagination
                     currentPage={paginationTopics.current_page}
@@ -104,7 +117,7 @@ export default function Topics({
                     totalPages={paginationTopics.last_page}
                 />
             </div>
-            <br />
+            <br/>
             <TopicModal
                 key={modalData.topic?.toString()}
                 isVisible={modalData.isVisible}
