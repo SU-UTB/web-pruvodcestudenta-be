@@ -16,7 +16,7 @@ class UsersController extends Controller
     public static function index()
     {
         return Inertia::render('Admin/Users',
-            ['paginationUsers' => User::paginate(10), "search" => ""]);
+            ['paginationUsers' => User::with('roles')->paginate(10), "search" => ""]);
     }
 
     public function usersSearch(Request $request)

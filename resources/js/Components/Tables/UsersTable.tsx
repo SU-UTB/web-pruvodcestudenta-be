@@ -11,6 +11,7 @@ const UsersTable = ({
         <Table striped={true}>
             <Table.Head>
                 <Table.HeadCell>Jméno</Table.HeadCell>
+                <Table.HeadCell>Role</Table.HeadCell>
                 <Table.HeadCell>Email</Table.HeadCell>
                 <Table.HeadCell>Vytvořeno</Table.HeadCell>
                 <Table.HeadCell>Upraveno</Table.HeadCell>
@@ -24,7 +25,11 @@ const UsersTable = ({
                     >
                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                             {user.name}
-                        </Table.Cell> <Table.Cell
+                        </Table.Cell>
+                        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                       {user.roles[0].name}
+                        </Table.Cell>
+                        <Table.Cell
                         className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                         {user.email}
                     </Table.Cell>

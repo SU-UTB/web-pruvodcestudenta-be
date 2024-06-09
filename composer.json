@@ -17,6 +17,7 @@
         "mkocansey/bladewind": "^2.2",
         "spatie/image": "^2.2",
         "spatie/image-optimizer": "^1.7",
+        "spatie/laravel-permission": "^6.7",
         "tightenco/ziggy": "^1.0",
         "yoeriboven/laravel-log-db": "^1.1"
     },
