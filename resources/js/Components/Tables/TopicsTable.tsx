@@ -119,10 +119,11 @@ const TopicsTable = ({
 
                         <Table.Cell>
                             <Button
+                                color={'primary'}
                                 size={"xs"}
                                 onClick={() => onEditTopic(topic)}
                             >
-                                <p>Edit</p>
+                                <p>Upravit</p>
                             </Button>
                             <br/>
                             <Button
@@ -130,7 +131,7 @@ const TopicsTable = ({
                                 color="failure"
                                 onClick={() => onDeleteTopic(topic.id)}
                             >
-                                <p>Delete</p>
+                                <p>Smazat</p>
                             </Button>
                         </Table.Cell>
                     </Table.Row>

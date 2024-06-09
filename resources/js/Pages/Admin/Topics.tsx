@@ -110,6 +110,8 @@ export default function Topics({
             <br/>
             <div className="mx-auto flex justify-center items-center px-4">
                 <Pagination
+                    nextLabel={'Další'}
+                    previousLabel={'Předchozí'}
                     currentPage={paginationTopics.current_page}
                     onPageChange={(page) => {
                         router.visit(paginationTopics.path + "?page=" + page);

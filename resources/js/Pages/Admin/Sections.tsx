@@ -104,6 +104,8 @@ export default function Sections({
             <br />
             <div className="mx-auto flex justify-center items-center px-4">
                 <Pagination
+                    nextLabel={'Další'}
+                    previousLabel={'Předchozí'}
                     currentPage={paginationSections.current_page}
                     onPageChange={(page) => {
                         router.visit(paginationSections.path + "?page=" + page);
