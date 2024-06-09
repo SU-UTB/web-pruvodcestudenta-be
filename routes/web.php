@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\SectionsController;
 use App\Http\Controllers\Admin\TopicsController;
 use App\Http\Controllers\Admin\LocationsController;
 use App\Http\Controllers\Admin\LogsController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,10 @@ Route::middleware('auth')->group(function () {
     Route::put('/admin/locations/{id}/', [LocationsController::class, 'update'])->name('saveLocation');
     Route::post('/admin/locations', [LocationsController::class, 'store'])->name('admin.locations.create');
     Route::delete('/admin/locations/{id}', [LocationsController::class, 'delete'])->name('admin.locations.delete');
+
+    Route::get('/admin/users/', [UsersController::class, 'index'])->name('users');
+    Route::post('/admin/users/search/', [UsersController::class, 'usersSearch'])->name('search-users');
+    Route::get('/admin/users/search/', [UsersController::class, 'index'])->name('get-search-users');
 
     Route::get('/admin/topics/', [TopicsController::class, 'index'])->name('topics');
     Route::post('/admin/topics/search/', [TopicsController::class, 'topicsSearch'])->name('search-topics');

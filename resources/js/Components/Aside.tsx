@@ -1,5 +1,5 @@
 import {CustomFlowbiteTheme, Sidebar} from "flowbite-react";
-import {FaTable, FaBox, FaNewspaper, FaLocationDot, FaUser} from "react-icons/fa6";
+import {FaTable, FaBox, FaNewspaper, FaLocationDot, FaUser, FaUsers} from "react-icons/fa6";
 import {PropsWithChildren, ReactNode} from "react";
 import {User} from "@/types";
 
@@ -33,6 +33,14 @@ export function Aside({
 
                                   icon={FaLocationDot}>
                         Lokace
+                    </Sidebar.Item>
+                </Sidebar.ItemGroup>
+
+                <Sidebar.ItemGroup>
+                    <Sidebar.Item href={route("users")}
+
+                                  icon={FaUsers}>
+                        Uživatelé
                     </Sidebar.Item>
                 </Sidebar.ItemGroup>
                 <Sidebar.ItemGroup>
